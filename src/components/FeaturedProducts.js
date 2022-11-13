@@ -10,6 +10,7 @@ import { useProductsContext } from "../context/products_context";
 import { useDispatch, useSelector } from "react-redux";
 import { listProducts, listCategory } from '../actions/productActions'
 
+
 const FeaturedProducts = () => {
   const dispatch = useDispatch()
 
@@ -72,7 +73,7 @@ const Wrapper = styled.section`
   }
   @media (min-width: 576px) {
     .featured {
-      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     }
   }
 `;

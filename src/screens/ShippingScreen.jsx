@@ -70,6 +70,11 @@ const ShippingScreen = () => {
                         </Form.Group>
 
                         <Form.Group className='mb-3'>
+                            <Form.Label>Nhập Tỉnh/Thành phố</Form.Label>
+                            <Form.Control type='text' placeholder='Nhập Tỉnh/Thành phố' value={receiveProvince} onChange={(e) => setReceiveProvince(e.target.value)}></Form.Control>
+                        </Form.Group>
+
+                        <Form.Group className='mb-3'>
                             <Form.Label>Nhập Số điện thoại</Form.Label>
                             <Form.Control type='text' placeholder='Nhập Số điện thoại' value={receivePhone} onChange={(e) => setReceivePhone(e.target.value)}></Form.Control>
                         </Form.Group>
