@@ -26,10 +26,11 @@ const ShippingScreen = () => {
     const [receiveDistrict, setReceiveDistrict] = useState('')
     const [receiveVillage, setReceiveVillage] = useState('')
     const [receivePhone, setReceivePhone] = useState('')
+    const [paymentType, setPaymentType] = useState('Tiền mặt')
 
 
     const shipping = {
-        receiveName, receivePhone, receiveAddress,receiveProvince, receiveDistrict, receiveVillage
+        receiveName, receivePhone, receiveAddress,receiveProvince, receiveDistrict, receiveVillage, paymentType
     }
 
     const submitHandler = (e) => {
@@ -71,6 +72,18 @@ const ShippingScreen = () => {
                         <Form.Group className='mb-3'>
                             <Form.Label>Nhập Số điện thoại</Form.Label>
                             <Form.Control type='text' placeholder='Nhập Số điện thoại' value={receivePhone} onChange={(e) => setReceivePhone(e.target.value)}></Form.Control>
+                        </Form.Group>
+
+                        <Form.Group className='mb-3'>
+                            <Form.Label>Phương thức thanh toán</Form.Label>
+                            <Form.Select type='text' value={paymentType} onChange={(e) => setPaymentType(e.target.value)}>
+                                <option value="Tiền mặt">
+                                    Tiền mặt
+                                </option>
+                                <option>
+                                    Payl pal
+                                </option>
+                            </Form.Select>
                         </Form.Group>
 
                         <Row className='py-3 d-flex justify-content-center align-items-center'>
