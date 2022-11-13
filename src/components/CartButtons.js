@@ -53,7 +53,8 @@ const CartButtons = ({userInfo}) => {
         <span className="cart-container">
           <FaShoppingCart />
           {/* Này làm cái cộng lại nha */}
-          <span className="cart-value">{cartItems[0].count + cartItems[1].count}</span>
+          <span className="cart-value">10</span>         
+           {/* <span className="cart-value">{cartItems[0].count + cartItems[1].count}</span> */}
         </span>
       </Link>
       {userInfo ? (

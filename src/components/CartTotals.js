@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
@@ -6,33 +6,51 @@ import { useCartContext } from "../context/cart_context";
 import { useUserContext } from "../context/user_context";
 
 import { formatPrice } from "../utils/helpers";
+import { useDispatch, useSelector } from "react-redux";
+import { getCart } from "../actions/cartActions";
+import { NavLink } from "react-router-dom";
 
 const CartTotals = () => {
   const { totalAmount, shippingFee } = useCartContext();
   const { myUser, loginWithRedirect } = useUserContext();
+  const dispatch = useDispatch()
+  const userLogin = useSelector((state)=> state.userLogin)
+  console.log(userLogin.userInfo);
 
+
+  const {carts} = useSelector(state => state.cartList)
+  // const { cartItems } = cart
+  console.log('-=-=', carts)
+
+  useEffect(() => {
+      dispatch(getCart())
+      //dispatch(addToCart(productId, quantity))
+
+  }, [])
   return (
     <Wrapper>
       <div>
         <article>
           <h5>
-            subtotal : <span>{formatPrice(totalAmount)}</span>
+            Tổng loại sản phẩm : <span>{carts?.data?.totalProduct}</span>
           </h5>
-          <p>
+          {/* <p>
             shipping fee: <span>{formatPrice(shippingFee)}</span>
-          </p>
+          </p> */}
           <hr />
           <h4>
-            order total :<span>{formatPrice(totalAmount + shippingFee)}</span>
+            Tổng tiền :<span>{carts?.data?.totalPrice}</span>
           </h4>
         </article>
-        {myUser ? (
-          <Link to="/checkout" className="btn">
-            proceed to checkout
-          </Link>
+        {userLogin.userInfo ? (
+          <NavLink to={`/shipping/${carts?.data?.id}`}>
+            <button  className="btn">
+              Thanh toán
+            </button>
+          </NavLink>
         ) : (
           <button type="button" onClick={loginWithRedirect} className="btn">
-            login to checkout
+            Đăng nhập để thanh toán
           </button>
         )}
       </div>

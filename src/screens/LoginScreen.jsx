@@ -29,10 +29,10 @@ const LoginScreen = () => {
 
 
     useEffect(() => {
-        if (userInfo) {
-            navigate('/')
-            window.location.reload()
-        }
+        // if (userInfo) {
+        //     navigate('/')
+        //     window.location.reload()
+        // }
     }, [navigate, userInfo])
 
     const user = { email, password }

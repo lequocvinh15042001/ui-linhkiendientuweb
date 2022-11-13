@@ -69,7 +69,7 @@ const SingleProductPage = () => {
   useEffect(() => {
       dispatch(listProductDetails(productId))
       dispatch(listReviews(productId))
-  }, [dispatch, productId])
+  }, [productId])
 
   if (loading) {
     return <Loading />;

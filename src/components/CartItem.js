@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { FaTrash } from "react-icons/fa";
 
@@ -6,27 +6,31 @@ import { useCartContext } from "../context/cart_context";
 
 import { formatPrice } from "../utils/helpers";
 import AmountButtons from "./AmountButtons";
-import { removeFormCart } from "../actions/cartActions";
+import { deleteProductInCart, removeFormCart } from "../actions/cartActions";
 import { useDispatch } from "react-redux";
 
-const CartItem = ({ id, image, name, color, price, count }) => {
-  const { removeItem, toggleAmount } = useCartContext();
+const CartItem = ({ itemId, image, name, color, price, quantity }) => {
+  // const { removeItem, toggleAmount } = useCartContext();
+
+  console.log(itemId, image, name, color, price, quantity );
+  const [toggleAmount, setToggleAmount] = useState();
 
   const dispatch = useDispatch()
-  const removeFromCartHandler = (id) => {
-    dispatch(removeFormCart(id))
+  
+  const removeFromCartHandler = (itemId) => {
+    dispatch(deleteProductInCart(itemId))
   }
   const increase = () => {
-    toggleAmount(id, "inc");
+    setToggleAmount(itemId, "inc");
   };
   const decrease = () => {
-    toggleAmount(id, "dec");
+    setToggleAmount(itemId, "dec");
   };
 
   return (
     <Wrapper>
       <div className="title">
-        <img src={image} alt={name} />
+        <img src={image[0].url} alt={name} />
         <div>
           <h5 className="name">{name}</h5>
           <p className="color">
@@ -36,12 +40,12 @@ const CartItem = ({ id, image, name, color, price, count }) => {
         </div>
       </div>
       <h5 className="price">{formatPrice(price)}</h5>
-      <AmountButtons amount={count} increase={increase} decrease={decrease} />
-      <h5 className="subtotal">{formatPrice(price * count)}</h5>
+      <AmountButtons amount={quantity} increase={increase} decrease={decrease} />
+      <h5 className="subtotal">{formatPrice(price * quantity)}</h5>
       <button
         type="button"
         className="remove-btn"
-        onClick={() => removeFromCartHandler(id)}
+        onClick={() => removeFromCartHandler(itemId)}
       >
         <FaTrash />
       </button>

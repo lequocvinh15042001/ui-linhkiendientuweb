@@ -21,6 +21,8 @@ import {
   History,
   ItemList,
 } from "./pages";
+import ShippingScreen from "./screens/ShippingScreen";
+import PaymentScreen from "./screens/PaymentScreen";
 
 function App() {
   const { theme } = useThemeContext();
@@ -71,9 +73,13 @@ function App() {
 
         <Route exact path="/products/:id" element={<SingleProduct />} />
 
-        <Route exact path="/checkout" element= { <Checkout />}>
-         
-        </Route>
+        <Route exact path="/checkout" element= { <Checkout />} />
+
+        <Route path='/shipping/:id' element={<ShippingScreen />} />
+
+        <Route path='/payment' element={<PaymentScreen />} />
+          
+
 
         <Route path="*" element={<Error />}>
           

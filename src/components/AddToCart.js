@@ -5,10 +5,13 @@ import { FaCheck } from "react-icons/fa";
 
 import { useCartContext } from "../context/cart_context";
 import AmountButtons from "./AmountButtons";
+import { addToCart } from "../actions/cartActions";
+import { useDispatch } from "react-redux";
 
 const AddToCart = ({ product }) => {
-  const { addToCart } = useCartContext();
+  // const { addToCart } = useCartContext();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   // const { id, stock, colors } = product;
   console.log(product);
   //const [mainColor, setMainColor] = useState(colors[0]);
@@ -32,6 +35,7 @@ const AddToCart = ({ product }) => {
 
   const addToCartHandler = () => {
     //navigate(`/cart`)
+    dispatch(addToCart(product.data?.id, amount))
     console.log(product.data?.id, amount);
     navigate(`/cart/${product.data?.id}?qty=${amount}`)
   }
