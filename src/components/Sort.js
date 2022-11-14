@@ -26,7 +26,7 @@ const Sort = () => {
 
   return (
     <Wrapper>
-      <div className="btn-container">
+      {/* <div className="btn-container">
         <button
           type="button"
           onClick={setGridView}
@@ -41,8 +41,8 @@ const Sort = () => {
         >
           <BsList />
         </button>
-      </div>
-      <p>{products.data?.list?.length} sản phẩm được tìm thấy</p>
+      </div> */}
+      <p>Có {products.data?.list?.length} sản phẩm được tìm thấy</p>
       <hr />
       <form>
         <label htmlFor="sort">Lọc theo</label>
