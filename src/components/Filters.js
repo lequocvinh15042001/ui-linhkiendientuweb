@@ -1,9 +1,10 @@
 import React, { useRef, useEffect } from "react";
 import styled from "styled-components";
 import { FaCheck } from "react-icons/fa";
-
+import { useDispatch, useSelector } from 'react-redux';
 import { useFilterContext } from "../context/filter_context";
 import { getUniqueValues, formatPrice } from "../utils/helpers";
+import { listCategory } from "../actions/productActions";
 
 const Filters = () => {
   const refContainer = useRef(null);
@@ -23,14 +24,19 @@ const Filters = () => {
     clearFilters,
     allProducts,
   } = useFilterContext();
+  const dispatch = useDispatch()
 
-  const categories = getUniqueValues(allProducts, "category");
-  const companies = getUniqueValues(allProducts, "company");
-  const colors = getUniqueValues(allProducts, "colors");
+  const { categories } = useSelector(state => state.categoryList)
+    // console.log(products);
+
+  // const categories = getUniqueValues(allProducts, "category");
+  // const companies = getUniqueValues(allProducts, "company");
+  // const colors = getUniqueValues(allProducts, "colors");
 
   useEffect(() => {
-    refContainer.current.focus();
-  });
+    dispatch(listCategory())
+    // refContainer.current.focus();
+  }, [dispatch]);
 
   return (
     <Wrapper>
@@ -44,13 +50,13 @@ const Filters = () => {
               placeholder="search"
               className="search-input"
               value={text}
-              onChange={updateFilters}
+              // onChange={updateFilters}
             />
           </div>
           <div className="form-control">
-            <h5>category</h5>
+            <h5>Danh mục sản phẩm</h5>
             <div>
-              {categories.map((c, index) => {
+              {categories?.data?.map((c, index) => {
                 return (
                   <button
                     onClick={updateFilters}
@@ -58,16 +64,16 @@ const Filters = () => {
                     type="button"
                     key={index}
                     className={`${
-                      category === c.toLowerCase() ? "active" : null
+                      category === c?.name.toLowerCase() ? "active" : null
                     }`}
                   >
-                    {c}
+                    {c.name}
                   </button>
                 );
               })}
             </div>
           </div>
-          <div className="form-control">
+          {/* <div className="form-control">
             <h5>company</h5>
             <select
               name="company"
@@ -133,8 +139,8 @@ const Filters = () => {
               max={maxPrice}
               value={price}
             />
-          </div>
-          <div className="form-control">
+          </div> */}
+          {/* <div className="form-control">
             <label htmlFor="shipping">Free Shipping </label>
             <input
               type="checkbox"
@@ -143,7 +149,7 @@ const Filters = () => {
               checked={shipping}
               onChange={updateFilters}
             />
-          </div>
+          </div> */}
         </form>
         <button type="button" className="clear-btn" onClick={clearFilters}>
           clear filters

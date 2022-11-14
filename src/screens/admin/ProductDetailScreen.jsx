@@ -55,15 +55,15 @@ const ProductDetailAdminScreen = () => {
                     <p style={{ width: 'auto', cursor: 'pointer' }} className='mx-0 my-0 px-2'>Quay lại</p>
                 </Link>
             </Row>
-            <Row className='align-items-center mx-4 mt-4 px-4' style={{ background: 'white' }}>
-                <h5 className='d-flex justify-content-center py-3'>Chi tiết thông tin sản phẩm</h5>
+            <Row className='align-items-center mx-4 mt-4 px-4 py-3' style={{ background: 'white' }}>
+                <h5 style={{fontSize: '20px'}} className='d-flex justify-content-center py-3'>Chi tiết thông tin sản phẩm</h5>
                 {loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> :
                     (
                         <>
                             <Row className='d-flex justify-content-center align-items-center pb-5'>
-                                <Row className='py-1 d-flex justify-content-center align-items-center'>
+                                <Row className='py-3 d-flex justify-content-center align-items-center'>
                                     <Col xl={3}>
-                                        <h6>ID sản phẩm</h6>
+                                        <h6 style={{fontSize: '14px'}}>ID sản phẩm</h6>
                                     </Col>
                                     <Col xl={8} className='d-flex'>
                                         <p className='mx-0 my-0' style={{ width: 'auto' }}>{product?.data?.id}</p>
@@ -72,9 +72,9 @@ const ProductDetailAdminScreen = () => {
                                         </CopyToClipboard>
                                     </Col>
                                 </Row>
-                                <Row className='py-1 d-flex justify-content-center align-items-center'>
+                                <Row className='py-3 d-flex justify-content-center align-items-center'>
                                     <Col xl={3}>
-                                        <h6>Trạng thái sản phẩm</h6>
+                                        <h6 style={{fontSize: '14px'}}>Trạng thái sản phẩm</h6>
                                     </Col>
                                     {
                                         (product?.data?.state === 'enable') ?
@@ -86,73 +86,73 @@ const ProductDetailAdminScreen = () => {
                                             </Col>
                                     }
                                 </Row>
-                                <Row className='py-1 d-flex justify-content-center align-items-center'>
+                                <Row className='py-3 d-flex justify-content-center align-items-center'>
                                     <Col xl={3}>
-                                        <h6>Tên sản phẩm</h6>
+                                        <h6 style={{fontSize: '14px'}}>Tên sản phẩm</h6>
                                     </Col>
                                     <Col xl={8} className='d-flex'>
                                         <p className='mx-0 my-0'>{product?.data?.name}</p>
                                     </Col>
                                 </Row>
-                                <Row className='py-1 d-flex justify-content-center align-items-center'>
+                                <Row className='py-3 d-flex justify-content-center align-items-center'>
                                     <Col xl={3}>
-                                        <h6>Danh mục</h6>
+                                        <h6 style={{fontSize: '14px'}}>Danh mục</h6>
                                     </Col>
                                     <Col xl={8} className='d-flex'>
                                         <p className='mx-0 my-0'>{product?.data?.category}</p>
                                     </Col>
                                 </Row>
-                                <Row className='py-1 d-flex justify-content-center align-items-center'>
+                                <Row className='py-3 d-flex justify-content-center align-items-center'>
                                     <Col xl={3}>
-                                        <h6>Mô tả sản phẩm</h6>
+                                        <h6 style={{fontSize: '14px'}}>Mô tả sản phẩm</h6>
                                     </Col>
                                     <Col xl={8} className='d-flex'>
                                         <p className='mx-0 my-0'>{product?.data?.description}</p>
                                     </Col>
                                 </Row>
-                                <Row className='py-1 d-flex justify-content-center align-items-center'>
+                                <Row className='py-3 d-flex justify-content-center align-items-center'>
                                     <Col xl={3}>
-                                        <h6>Số lượng</h6>
+                                        <h6 style={{fontSize: '14px'}}>Số lượng</h6>
                                     </Col>
                                     <Col xl={8} className='d-flex'>
                                         <p className='mx-0 my-0'>{product?.data?.quantity}</p>
                                     </Col>
                                 </Row>
-                                <Row className='py-1 d-flex justify-content-center align-items-center'>
+                                <Row className='py-3 d-flex justify-content-center align-items-center'>
                                     <Col xl={3}>
-                                        <h6>Đã bán</h6>
+                                        <h6 style={{fontSize: '14px'}}>Đã bán</h6>
                                     </Col>
                                     <Col xl={8} className='d-flex'>
                                         <p className='mx-0 my-0'>{product?.data?.sold}</p>
                                     </Col>
                                 </Row>
-                                <Row className='py-1 d-flex justify-content-center align-items-center'>
+                                <Row className='py-3 d-flex justify-content-center align-items-center'>
                                     <Col xl={3}>
-                                        <h6>Đánh giá</h6>
+                                        <h6 style={{fontSize: '14px'}}>Đánh giá</h6>
                                     </Col>
                                     <Col xl={8} className='d-flex'>
                                         <p className='mx-0 my-0'>{product?.data?.rate} sao</p>
                                     </Col>
                                 </Row>
-                                <Row className='py-1 d-flex justify-content-center align-items-center'>
+                                <Row className='py-3 d-flex justify-content-center align-items-center'>
                                     <Col xl={3}>
-                                        <h6>Ngày tạo sản phẩm</h6>
+                                        <h6 style={{fontSize: '14px'}}>Ngày tạo sản phẩm</h6>
                                     </Col>
                                     <Col xl={8} className='d-flex'>
                                         <p className='mx-0 my-0'>{product?.data?.createdDate}</p>
                                     </Col>
                                 </Row>
-                                <Row className='py-1 d-flex justify-content-center align-items-center'>
+                                <Row className='py-3 d-flex justify-content-center align-items-center'>
                                     <Col xl={3}>
-                                        <h6>Lần cuối cập nhật</h6>
+                                        <h6 style={{fontSize: '14px'}}>Lần cuối cập nhật</h6>
                                     </Col>
                                     <Col xl={8} className='d-flex'>
                                         <p className='mx-0 my-0'>{product?.data?.updateDate}</p>
                                     </Col>
                                 </Row>
-                                <Row className='py-1 d-flex justify-content-center align-items-center'>
+                                <Row className='py-3 d-flex justify-content-center align-items-center'>
                                     <Col xl={3}>
-                                        <h6>Hình ảnh</h6>
+                                        <h6 style={{fontSize: '14px'}}>Hình ảnh</h6>
                                     </Col>
                                     <Col xl={8} className='d-flex flex-wrap'>
                                         {

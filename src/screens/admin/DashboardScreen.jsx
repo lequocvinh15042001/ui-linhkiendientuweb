@@ -9,7 +9,7 @@ import { getAllOrders, listOrderAdmin } from "../../actions/orderActions";
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 
-const ProductListScreen = () => {
+const DashboardScreen = () => {
   const [pageNum, setPageNum] = useState(1);
   const [pageSize, setPageSize] = useState(5);
 
@@ -106,10 +106,6 @@ const ProductListScreen = () => {
           <div className='d-flex align-items-center'>
             <i className='fas fa-home'></i>
             <a href='/admin/dashboard' className='my-0 mx-1' style={{ textDecoration: 'none', color: 'black' }}>Trang điều khiển</a>
-          </div>
-          <div className='d-flex align-items-center'>
-            <i className="fas fa-chevron-right mx-2"></i>
-            <a href='/admin/orderlist' className='my-0 mx-1' style={{ textDecoration: 'none', color: 'black' }}>Quản lý đơn hàng</a>
           </div>
         </div>
       </div>
@@ -283,4 +279,4 @@ const ProductListScreen = () => {
   )
 }
 
-export default ProductListScreen
+export default DashboardScreen

@@ -44,8 +44,8 @@ const ProductListScreen = () => {
 
   const paginationPage = (num, pageSize) => {
     let page = 0
-    if ((num / pageSize) > ((num / pageSize) - (num % pageSize)/pageSize)) {
-      page = ((num / pageSize) - (num % pageSize)/pageSize + 1)
+    if ((num / pageSize) > ((num / pageSize) - (num % pageSize) / pageSize)) {
+      page = ((num / pageSize) - (num % pageSize) / pageSize + 1)
     } else if ((num % pageSize) === 0) {
       page = (num / pageSize)
     }
@@ -158,17 +158,17 @@ const ProductListScreen = () => {
           </div>
         </div>
         <div className='d-flex justify-content-end py-4'>
-          <Button style={{ background: '#03a9f3', border: 'none', fontSize: '14px' }} onClick={handleShowAdd}>
+          <Button className='my-0' style={{ background: '#03a9f3', border: 'none', fontSize: '14px', textTransform: 'none' }} onClick={handleShowAdd}>
             Thêm sản phẩm
           </Button>
         </div>
       </div>
       <Row className='align-items-center mx-4 mt-4 px-4' style={{ background: 'white' }}>
         <Col className='px-0'>
-          <h5 className='pb-4 pt-4'>DANH SÁCH SẢN PHẨM</h5>
+          <h5 style={{ fontSize: '16px' }} className='pb-4 pt-4'>DANH SÁCH SẢN PHẨM</h5>
         </Col>
         <Col className='d-flex justify-content-end px-0'>
-          <h6 className='pb-4 pt-4'>Tổng số lượng: {productAll?.data?.length} sản phẩm</h6>
+          <h6 style={{ fontSize: '14px' }} className='pb-4 pt-4'>Tổng số lượng: {productAll?.data?.length} sản phẩm</h6>
         </Col>
       </Row>
       <Row className='d-flex justify-content-end align-items-center mx-4 mt-0 px-4' style={{ background: 'white' }}>
@@ -210,18 +210,18 @@ const ProductListScreen = () => {
                     {
                       (product.state === 'enable') ?
                         <div className='d-flex justify-content-center align-items-center'>
-                          <p style={{ background: '#00c292', color: '#e7fff8', borderRadius: '5px' }} className='my-0 mx-3 py-1 px-2'>Hoạt động</p>
+                          <p style={{ background: '#00c292', color: '#e7fff8', borderRadius: '5px', fontSize: '12px' }} className='my-0 mx-3 py-1 px-2'>Hoạt động</p>
                         </div> :
                         <div className='d-flex justify-content-center align-items-center'>
-                          <p style={{ background: '#e46a76', color: '#e7fff8', borderRadius: '5px' }} className='my-0 mx-3 py-1 px-2'>Đã khóa</p>
+                          <p style={{ background: '#e46a76', color: '#e7fff8', borderRadius: '5px', fontSize: '12px' }} className='my-0 mx-3 py-1 px-2'>Đã khóa</p>
                         </div>
                     }
                   </td>
                   <td className='d-flex justify-content-center'>
-                    <LinkContainer data-tip data-for="tip1" to={`/admin/product/${product.id}/detail`}>
+                    <LinkContainer style={{ width: 'auto', height: 'auto' }} data-tip data-for="tip1" to={`/admin/product/${product.id}/detail`}>
                       <Button
                         disabled={product.state === 'disable' ? 'true' : ''}
-                        variant='secondary' className='btn-sm'>
+                        variant='secondary' className='my-0 mx-0'>
                         <i className='fas fa-eye'></i>
                       </Button>
                     </LinkContainer>
@@ -229,11 +229,11 @@ const ProductListScreen = () => {
                       Chi tiết
                     </ReactTooltip>
 
-                    <LinkContainer data-tip data-for="tip2" to={`/admin/product/${product.id}/edit`}>
+                    <LinkContainer style={{ width: 'auto', height: 'auto' }} data-tip data-for="tip2" to={`/admin/product/${product.id}/edit`}>
                       <Button
                         disabled={product.state === 'disable' ? 'true' : ''}
                         style={{ background: '#03a9f3' }}
-                        className='btn-sm mx-2'>
+                        className='my-0 mx-2'>
                         <i className='fas fa-edit'></i>
                       </Button>
                     </LinkContainer>
@@ -245,16 +245,16 @@ const ProductListScreen = () => {
                     {
                       product.state === 'enable' ?
                         <Button data-tip data-for="tip3"
-                          style={{ background: '#ee5261', border: '2px solid #ee5261' }}
-                          className='btn-sm'
+                          style={{ background: '#ee5261', border: '2px solid #ee5261', width: 'auto', height: 'auto' }}
+                          className='my-0 mx-0'
                           onClick={() => handleShowBlock(product.id)}
                         >
                           <i className="fas fa-lock"></i>
                         </Button>
                         :
                         <Button data-tip data-for="tip4"
-                          style={{ background: '#00c292', border: '2px solid #00c292' }}
-                          className='btn-sm'
+                          style={{ background: '#00c292', border: '2px solid #00c292', width: 'auto', height: 'auto' }}
+                          className='my-0 mx-0'
                           onClick={() => handleShowUnlock(product.id)}
                         >
                           <i className="fas fa-unlock"></i>
@@ -295,14 +295,14 @@ const ProductListScreen = () => {
         <Modal.Header closeButton>
           <Modal.Title>Thông báo</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body style={{ fontSize: '14px', textTransform: 'none', width: 'auto' }}>
           Bạn có chắc chắn muốn khóa sản phẩm này không?
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseBlock}>
+          <Button variant="secondary" onClick={handleCloseBlock} style={{ fontSize: '14px', textTransform: 'none', width: 'auto' }}>
             Hủy
           </Button>
-          <Button variant="danger" onClick={() => blockHandler(idDelete)}>
+          <Button variant="danger" onClick={() => blockHandler(idDelete)} style={{ fontSize: '14px', textTransform: 'none', width: 'auto' }}>
             Đồng ý
           </Button>
         </Modal.Footer>
@@ -318,14 +318,14 @@ const ProductListScreen = () => {
         <Modal.Header closeButton>
           <Modal.Title>Thông báo</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body style={{ fontSize: '14px', textTransform: 'none', width: 'auto' }}>
           Bạn có chắc chắn muốn mở khóa sản phẩm này không?
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseUnlock}>
+          <Button variant="secondary" onClick={handleCloseUnlock} style={{ fontSize: '14px', textTransform: 'none', width: 'auto' }}>
             Hủy
           </Button>
-          <Button variant="success" onClick={() => unlockHandler(idUnlock)}>
+          <Button variant="success" onClick={() => unlockHandler(idUnlock)} style={{ fontSize: '14px', textTransform: 'none', width: 'auto' }}>
             Đồng ý
           </Button>
         </Modal.Footer>
@@ -339,8 +339,9 @@ const ProductListScreen = () => {
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Tên sản phẩm</Form.Label>
+              <Form.Label style={{ fontSize: '14px' }}>Tên sản phẩm</Form.Label>
               <Form.Control
+                style={{ fontSize: '14px' }}
                 onChange={(e) => setName(e.target.value)}
                 type="text"
                 placeholder="Nhập tên danh mục"
@@ -348,8 +349,9 @@ const ProductListScreen = () => {
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Mô tả sản phẩm</Form.Label>
+              <Form.Label style={{ fontSize: '14px' }}>Mô tả sản phẩm</Form.Label>
               <Form.Control
+                style={{ fontSize: '14px' }}
                 onChange={(e) => setDescription(e.target.value)}
                 type="text"
                 as="textarea"
@@ -358,29 +360,33 @@ const ProductListScreen = () => {
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Giá (VNĐ)</Form.Label>
+              <Form.Label style={{ fontSize: '14px' }}>Giá (VNĐ)</Form.Label>
               <Form.Control
+                style={{ fontSize: '14px' }}
                 onChange={(e) => setPtice(e.target.value)}
                 type="number"
+                min={1}
                 placeholder="Nhập giá"
                 autoFocus
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Danh mục</Form.Label>
-              <Form.Select onChange={(e) => setIdCategory(e.target.value)} aria-label="Default select example">
+              <Form.Label style={{ fontSize: '14px' }}>Danh mục</Form.Label>
+              <Form.Select style={{fontSize:'14px'}} onChange={(e) => setIdCategory(e.target.value)} aria-label="Default select example">
                 {
                   categories?.data?.map(category => (
-                    <option value={category.id}>{category.name}</option>
+                    <option style={{ fontSize: '14px' }} value={category.id}>{category.name}</option>
                   ))
                 }
               </Form.Select>
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Số lượng</Form.Label>
+              <Form.Label style={{ fontSize: '14px' }}>Số lượng</Form.Label>
               <Form.Control
+                style={{ fontSize: '14px' }}
                 onChange={(e) => setQuantity(e.target.value)}
                 type="number"
+                min={1}
                 placeholder="Nhập số lượng"
                 autoFocus
               />
@@ -388,13 +394,14 @@ const ProductListScreen = () => {
             {
               images &&
               <Row className='px-0 py-0 my-3'>
-                <p>Xem trước</p>
+                <p style={{ fontSize: '14px' }}>Xem trước</p>
                 <Image style={{ width: '30%', margin: '0 auto' }} src={URL.createObjectURL(images)}></Image>
               </Row>
             }
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Hình ảnh</Form.Label>
+              <Form.Label style={{ fontSize: '14px' }}>Hình ảnh</Form.Label>
               <Form.Control
+                style={{ fontSize: '14px' }}
                 onChange={(e) => setImages(e.target.files[0])}
                 type="file"
                 autoFocus
@@ -404,10 +411,10 @@ const ProductListScreen = () => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="danger" onClick={handleCloseAdd}>
+          <Button style={{fontSize:'14px', textTransform: 'none', width: 'auto'}} variant="danger" onClick={handleCloseAdd}>
             Hủy
           </Button>
-          <Button variant="primary" onClick={addHandler}>
+          <Button style={{fontSize:'14px', textTransform: 'none', width: 'auto'}} variant="primary" onClick={addHandler}>
             Lưu sản phẩm
           </Button>
         </Modal.Footer>

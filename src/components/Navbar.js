@@ -14,6 +14,7 @@ import { useThemeContext } from "../context/theme_context";
 import { useProductsContext } from "../context/products_context";
 import { useUserContext } from "../context/user_context";
 import ThemeChange from './ThemeChange';
+import Search from './Search';
 
 
 const Nav = () => {
@@ -30,46 +31,48 @@ const Nav = () => {
   console.log(userInfo);
 
   return (
-    <NavContainer>
-      <div className="nav-center">
-        <div className="nav-header">
-
-          {theme === "light-theme" ? (
-            <Link to="/">
-              <img src={logo} alt="nav logo" />
-            </Link>
-          ) : (
-            <Link to="/">
-              <img src={logoDark} alt="nav logo" />
-            </Link>
-          )}
-          <button onClick={openSidebar} type="button" className="nav-toggle">
-            <FaBars />
-          </button>
+    <>
+      <NavContainer>
+        <div className="nav-center">
+          <div className="nav-header">
+            {theme === "light-theme" ? (
+              <Link to="/">
+                <img src={logo} alt="nav logo" />
+              </Link>
+            ) : (
+              <Link to="/">
+                <img src={logoDark} alt="nav logo" />
+              </Link>
+            )}
+            <button onClick={openSidebar} type="button" className="nav-toggle">
+              <FaBars />
+            </button>
+          </div>
+          <Search />
+          <ul className="nav-links">
+            {links.map((link) => {
+              const { id, url, text } = link;
+              return (
+                <li key={id}>
+                  <Link to={url}>{text}</Link>
+                </li>
+              );
+            })}
+            {userInfo && (
+              <>
+                <li>
+                  <Link to="/history">history</Link>
+                </li>
+                <li>
+                  <Link to="/scan">scan</Link>
+                </li>
+              </>
+            )}
+          </ul>
+          <CartButtons userInfo={userInfo} />
         </div>
-        <ul className="nav-links">
-          {links.map((link) => {
-            const { id, url, text } = link;
-            return (
-              <li key={id}>
-                <Link to={url}>{text}</Link>
-              </li>
-            );
-          })}
-          {userInfo && (
-            <>
-              <li>
-                <Link to="/history">history</Link>
-              </li>
-              <li>
-                <Link to="/scan">scan</Link>
-              </li>
-            </>
-          )}
-        </ul>
-        <CartButtons userInfo={userInfo}/>
-      </div>
-    </NavContainer>
+      </NavContainer>
+    </>
   );
 };
 

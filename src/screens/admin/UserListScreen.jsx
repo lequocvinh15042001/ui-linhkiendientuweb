@@ -25,8 +25,8 @@ const UserListScreen = () => {
   const num = userAll?.data?.length
   const paginationPage = (num, pageSize) => {
     let page = 0
-    if ((num / pageSize) > ((num / pageSize) - (num % pageSize)/pageSize)) {
-      page = ((num / pageSize) - (num % pageSize)/pageSize + 1)
+    if ((num / pageSize) > ((num / pageSize) - (num % pageSize) / pageSize)) {
+      page = ((num / pageSize) - (num % pageSize) / pageSize + 1)
     } else if ((num % pageSize) === 0) {
       page = (num / pageSize)
     }
@@ -103,17 +103,17 @@ const UserListScreen = () => {
       </div>
       <Row className='align-items-center mx-4 mt-4 px-4' style={{ background: 'white' }}>
         <Col className='px-0'>
-          <h5 className='pb-4 pt-4'>DANH SÁCH NGƯỜI DÙNG</h5>
+          <h5 style={{fontSize: '16px'}} className='pb-4 pt-4'>DANH SÁCH NGƯỜI DÙNG</h5>
         </Col>
         <Col className='d-flex justify-content-end px-0'>
-          <h6 className='pb-4 pt-4'>Tổng số lượng: {userAll?.data?.length} người dùng</h6>
+          <h6 style={{fontSize: '14px'}} className='pb-4 pt-4'>Tổng số lượng: {userAll?.data?.length} người dùng</h6>
         </Col>
       </Row>
       <Row className='d-flex justify-content-end align-items-center mx-4 mt-0 px-4' style={{ background: 'white' }}>
         {/* <div style={{ width: 'auto', fontSize: '20px' }} className='d-flex justify-content-center align-items-center'>
           <i style={{ width: 'auto' }} className="fas fa-sort-amount-down-alt"></i>
         </div> */}
-        <Form.Select onChange={(e) => setPageSize(e.target.value)} style={{ width: 'auto' }} aria-label="Default select example">
+        <Form.Select onChange={(e) => setPageSize(e.target.value)} style={{ width: 'auto', fontSize: '14px' }} aria-label="Default select example">
           <option value="5">5</option>
           <option value="10">10</option>
           <option value="15">15</option>
@@ -157,18 +157,18 @@ const UserListScreen = () => {
                     {
                       (user.state === 'active') ?
                         <div className='d-flex justify-content-center align-items-center'>
-                          <p style={{ background: '#00c292', color: '#e7fff8', borderRadius: '5px' }} className='my-0 mx-3 py-1 px-2'>Hoạt động</p>
+                          <p style={{ background: '#00c292', color: '#e7fff8', borderRadius: '5px', fontSize: '12px' }} className='my-0 mx-3 py-1 px-2'>Hoạt động</p>
                         </div> :
                         <div className='d-flex justify-content-center align-items-center'>
-                          <p style={{ background: '#e46a76', color: '#e7fff8', borderRadius: '5px' }} className='my-0 mx-3 py-1 px-2'>Đã khóa</p>
+                          <p style={{ background: '#e46a76', color: '#e7fff8', borderRadius: '5px', fontSize: '12px' }} className='my-0 mx-3 py-1 px-2'>Đã khóa</p>
                         </div>
                     }
                   </td>
                   <td className='d-flex justify-content-center'>
-                    <LinkContainer data-tip data-for="tip1" to={`/admin/user/${user.id}/detail`}>
+                    <LinkContainer style={{ width: 'auto', height: 'auto' }} data-tip data-for="tip1" to={`/admin/user/${user.id}/detail`}>
                       <Button
                         disabled={user.state === 'block' ? 'true' : ''}
-                        variant='secondary' className='btn-sm mx-2'>
+                        variant='secondary' className='my-0 mx-2'>
                         <i className='fas fa-eye'></i>
                       </Button>
                     </LinkContainer>
@@ -193,16 +193,16 @@ const UserListScreen = () => {
                       user.state === 'active' ?
                         <Button data-tip data-for="tip3"
                           disabled={user.state === 'block' || user.role === "role_admin" ? 'true' : ''}
-                          style={{ background: '#ee5261', border: '2px solid #ee5261' }}
-                          className='btn-sm'
+                          style={{ background: '#ee5261', border: '2px solid #ee5261', width: 'auto', height: 'auto' }}
+                          className='my-0 mx-0'
                           onClick={() => handleShowBlock(user.id)}
                         >
                           <i className="fas fa-lock"></i>
                         </Button>
                         :
                         <Button data-tip data-for="tip4"
-                          style={{ background: '#00c292', border: '2px solid #00c292' }}
-                          className='btn-sm'
+                          style={{ background: '#00c292', border: '2px solid #00c292', width: 'auto', height: 'auto' }}
+                          className='my-0 mx-0'
                           onClick={() => handleShowUnlock(user.id)}
                         >
                           <i className="fas fa-unlock"></i>
@@ -243,14 +243,14 @@ const UserListScreen = () => {
         <Modal.Header closeButton>
           <Modal.Title>Thông báo</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body style={{ fontSize: '14px', textTransform: 'none', width: 'auto' }}>
           Bạn có chắc chắn muốn khóa người dùng này không?
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseBlock}>
+          <Button variant="secondary" onClick={handleCloseBlock} style={{ fontSize: '14px', textTransform: 'none', width: 'auto' }}>
             Hủy
           </Button>
-          <Button variant="danger" onClick={() => blockHandler(idDelete)}>
+          <Button variant="danger" onClick={() => blockHandler(idDelete)} style={{ fontSize: '14px', textTransform: 'none', width: 'auto' }}>
             Đồng ý
           </Button>
         </Modal.Footer>
@@ -266,14 +266,14 @@ const UserListScreen = () => {
         <Modal.Header closeButton>
           <Modal.Title>Thông báo</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body style={{ fontSize: '14px', textTransform: 'none', width: 'auto' }}>
           Bạn có chắc chắn muốn mở khóa người dùng này không?
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseUnlock}>
+          <Button variant="secondary" onClick={handleCloseUnlock} style={{ fontSize: '14px', textTransform: 'none', width: 'auto' }}>
             Hủy
           </Button>
-          <Button variant="success" onClick={() => unlockHandler(idUnlock)}>
+          <Button variant="success" onClick={() => unlockHandler(idUnlock)} style={{ fontSize: '14px', textTransform: 'none', width: 'auto' }}>
             Đồng ý
           </Button>
         </Modal.Footer>

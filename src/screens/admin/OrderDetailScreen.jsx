@@ -45,7 +45,7 @@ const OrderDetailScreen = () => {
                     </div>
                     <div className='d-flex align-items-center'>
                         <i className="fas fa-chevron-right mx-2"></i>
-                        <Link to={`/admin/order/${orderId}/detail`} className='my-0 mx-1' style={{ textDecoration: 'none', color: 'black' }}>Chi tiết danh mục</Link>
+                        <Link to={`/admin/order/${orderId}/detail`} className='my-0 mx-1' style={{ textDecoration: 'none', color: 'black' }}>Chi tiết đơn hàng</Link>
                     </div>
                 </div>
             </div>
@@ -56,14 +56,14 @@ const OrderDetailScreen = () => {
                 </Link>
             </Row>
             <Row className='align-items-center mx-4 mt-4 px-4' style={{ background: 'white' }}>
-                <h5 className='d-flex justify-content-center py-3'>Chi tiết thông tin đơn hàng</h5>
+                <h5 className='d-flex justify-content-center py-3' style={{ fontSize: '20px' }}>Chi tiết thông tin đơn hàng</h5>
                 {loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> :
                     (
                         <>
-                            <Row className='d-flex justify-content-center align-items-center'>
-                                <Row className='py-2'>
+                            <Row className='d-flex justify-content-center align-items-center py-3'>
+                                <Row className='py-3'>
                                     <Col xl={3}>
-                                        <h6>ID đơn hàng</h6>
+                                        <h6 style={{ fontSize: '14px' }}>ID đơn hàng</h6>
                                     </Col>
                                     <Col xl={8} className='d-flex'>
                                         <p className='mx-0 my-0' style={{ width: 'auto' }}>{order?.data?.id}</p>
@@ -72,57 +72,83 @@ const OrderDetailScreen = () => {
                                         </CopyToClipboard>
                                     </Col>
                                 </Row>
-                                <Row className='py-2'>
+                                <Row className='py-3'>
                                     <Col xl={3}>
-                                        <h6>Trạng thái đơn hàng</h6>
+                                        <h6 style={{ fontSize: '14px' }}>Trạng thái đơn hàng</h6>
                                     </Col>
                                     {
                                         (order?.data?.state === 'process') ?
                                             <Col xl={8} className='d-flex justify-content-start align-items-center'>
-                                                <p style={{ background: '#00c292', color: '#e7fff8', borderRadius: '5px' }} className='mx-0 my-0 py-1 px-2'>Hoạt động</p>
+                                                <p style={{ background: '#fec107', color: '#e7fff8', borderRadius: '5px' }} className='mx-0 my-0 py-1 px-2'>Chờ xác nhận</p>
                                             </Col> :
                                             <Col xl={8} className='d-flex justify-content-start align-items-center'>
-                                                <p style={{ background: '#e46a76', color: '#e7fff8', borderRadius: '5px' }} className='mx-0 my-0 py-1 px-2'>Đã khóa</p>
+                                                <p style={{ background: '#00c292', color: '#e7fff8', borderRadius: '5px' }} className='mx-0 my-0 py-1 px-2'>Đã khóa</p>
                                             </Col>
                                     }
                                 </Row>
-                                <Row className='py-2'>
+                                <Row className='py-3'>
                                     <Col xl={3}>
-                                        <h6>Người đặt hàng</h6>
+                                        <h6 style={{ fontSize: '14px' }}>Tài khoản đặt hàng</h6>
                                     </Col>
                                     <Col xl={8} className='d-flex'>
                                         <p className='mx-0 my-0'>{order?.data?.userName}</p>
                                     </Col>
                                 </Row>
-                                <Row className='py-2'>
+                                <Row className='py-3'>
                                     <Col xl={3}>
-                                        <h6>Tổng loại sản phẩm</h6>
+                                        <h6 style={{ fontSize: '14px' }}>Thông tin giao hàng</h6>
+                                    </Col>
+                                    <Col xl={2}>
+                                        <p style={{ fontSize: '14px' }}><h6 style={{ fontSize: '14px' }}>Tên người nhận:</h6> {order?.data?.receiveOrder?.receiveName}</p>
+                                    </Col>
+                                    <Col xl={4} className='d-flex'>
+                                        <p style={{ fontSize: '14px' }}><h6 style={{ fontSize: '14px' }}>Địa chỉ giao hàng:</h6>
+                                            {order?.data?.receiveOrder?.receiveAddress}, {order?.data?.receiveOrder?.receiveVillage}, {order?.data?.receiveOrder?.receiveDistrict}, {order?.data?.receiveOrder?.receiveProvince}
+                                        </p>
+                                    </Col>
+                                    <Col xl={2}>
+                                        <p style={{ fontSize: '14px' }}><h6 style={{ fontSize: '14px' }}>Số điện thoại:</h6> {order?.data?.receiveOrder?.receivePhone}</p>
+                                    </Col>
+                                </Row>
+                                <Row className='py-3'>
+                                    <Col xl={3}>
+                                        <h6 style={{ fontSize: '14px' }}>Tổng loại sản phẩm</h6>
                                     </Col>
                                     <Col xl={8} className='d-flex'>
                                         <p className='mx-0 my-0'>{order?.data?.totalProduct}</p>
                                     </Col>
                                 </Row>
-                                <Row className='py-2'>
+                                <Row className='py-3'>
                                     <Col xl={3}>
-                                        <h6>Tổng thanh toán</h6>
+                                        <h6 style={{ fontSize: '14px' }}>Tổng thanh toán</h6>
                                     </Col>
                                     <Col xl={8} className='d-flex'>
                                         <p className='mx-0 my-0'>{order?.data?.totalPrice?.toLocaleString('vi', { style: 'currency', currency: 'VND' })}</p>
                                     </Col>
                                 </Row>
-                                <Row className='py-2'>
+                                <Row className='py-3'>
                                     <Col xl={3}>
-                                        <h6>Chi tiết đơn hàng</h6>
+                                        <h6 style={{ fontSize: '14px' }}>Chi tiết đơn hàng</h6>
                                     </Col>
                                 </Row>
-                                <Row className='py-2'>
+                                <Row className='py-3'>
+                                    <Row className='d-flex justify-content-center align-items-center pb-5'>
+                                        <Col style={{ fontWeight: 'bold' }} xl={3}>Hình ảnh</Col>
+                                        <Col style={{ fontWeight: 'bold' }} xl={3}>Tên</Col>
+                                        <Col style={{ fontWeight: 'bold' }} xl={2}>Giá</Col>
+                                        <Col style={{ fontWeight: 'bold' }} xl={2}>Số lượng</Col>
+                                        <Col style={{ fontWeight: 'bold' }} xl={2}>Tổng</Col>
+                                    </Row>
                                     {
                                         order?.data?.items?.map(item => (
-                                            <Row >
+                                            <Row className='d-flex justify-content-center align-items-center'>
                                                 <Col xl={3}>
-                                                    <Image style={{width: '50%'}} src={item?.image[0]?.url} alt={item.name}></Image>
+                                                    <Image style={{ width: '50%' }} src={item?.image[0]?.url} alt={item.name}></Image>
                                                 </Col>
                                                 <Col xl={3}>{item.name}</Col>
+                                                <Col xl={2}>{item.price?.toLocaleString('vi', { style: 'currency', currency: 'VND' })}</Col>
+                                                <Col xl={2}>{item.quantity}</Col>
+                                                <Col xl={2}>{(item.quantity * item.price)?.toLocaleString('vi', { style: 'currency', currency: 'VND' })}</Col>
                                             </Row>
                                         ))
                                     }
