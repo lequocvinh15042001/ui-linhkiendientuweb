@@ -67,8 +67,8 @@ const SingleProductPage = () => {
   // console.log('==', product);
 
   useEffect(() => {
-      dispatch(listProductDetails(productId))
-      dispatch(listReviews(productId))
+    dispatch(listProductDetails(productId))
+    dispatch(listReviews(productId))
   }, [productId])
 
   if (loading) {
@@ -91,49 +91,49 @@ const SingleProductPage = () => {
   //   company,
   // } = product;
 
-      // submit Comment   
-    const submitComment = () => {
-      // console.log('==', commentProduct)
-      if (userInfo) {
-          dispatch(createProductReview(content, productId, rate))
-          window.location.reload()
-      }
+  // submit Comment   
+  const submitComment = () => {
+    // console.log('==', commentProduct)
+    if (userInfo) {
+      dispatch(createProductReview(content, productId, rate))
+      window.location.reload()
     }
+  }
 
-    // view Comment
-    const viewComment = () => {
-        window.location.href = '#comment'
-    }
+  // view Comment
+  const viewComment = () => {
+    window.location.href = '#comment'
+  }
   return (
     <Wrapper>
       <PageHero title={(product.data?.name)} product />
-      <div className="section section-center page">
-        <Link to="/products" className="btn">
-          Trở về
+      <div className="section section-center page py-3 my-5">
+        <Link to="/products" className="py-3 px-5" style={{ textTransform: 'none', fontSize: '14px', border:'2px solid #cccccc', color: 'gray', textDecoration: 'none', borderRadius: '5px' }}>
+          <i style={{ fontSize: '16px', color: 'gray' }} className="fas fa-long-arrow-alt-left me-3"></i> Quay lại
         </Link>
-        <div className="product-center" key={(product.id)}>
+        <div className="d-flex justify-content-between flex-wrap mt-5" key={(product.id)}>
           <ProductImages images={product.data?.images} />
-          <section className="content">
-            <h2>{(product.data?.name)}</h2>
+          <div style={{margin: '0 auto'}}>
+            <h2 className="mb-3">{(product.data?.name)}</h2>
             {/* <Stars stars={(product.data?.rate)} reviews={reviews} /> */}
             <Stars stars={(product.data?.rate)} />
-            <h5 className="price">{formatPrice(product.data?.price)}</h5>
-            <p className="desc">{(product.data?.description)}</p>
+            <h5 style={{fontSize: '20px'}} className="price my-4">{formatPrice(product.data?.price)}</h5>
+            <p style={{fontSize: '14px'}} className="desc">{(product.data?.description)}</p>
             <p className="info">
-              <span>Tình trạng :</span>
-              {(product.data?.quantity) > 0 ? "Còn hàng" : "Hết hàng"}
-            </p> 
-            <p className="info">
-              <span>Danh mục :</span>
-              {(product.data?.category) }
+              <span style={{fontSize: '14px'}}>Tình trạng :</span>
+              {(product.data?.quantity) > 0 ? <p style={{fontSize: '14px'}}>Còn hàng</p> : <p style={{fontSize: '14px'}}>Hết hàng</p>}
+            </p>
+            <p className="info" style={{fontSize: '14px'}}>
+              <span style={{fontSize: '14px'}}>Danh mục :</span>
+              {(product.data?.category)}
             </p>
             {/* <p className="info">
               <span>Thương hiệu :</span>
               {(product.supplier?.id?.name)}
             </p> */}
             <hr />
-            {(product.data?.quantity) > 0 && <AddToCart product={product} key={(product.id)}/>}
-          </section> 
+            {(product.data?.quantity) > 0 && <AddToCart product={product} key={(product.id)} />}
+          </div>
         </div>
       </div>
     </Wrapper>

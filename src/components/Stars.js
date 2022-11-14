@@ -21,7 +21,7 @@ const Stars = ({ stars, reviews }) => {
   return (
     <Wrapper>
       <div className="stars">{starArray}</div>
-      <div className="reviews">({reviews} customer reviews)</div>
+      <div style={{fontSize: '14px'}} className="reviews">({reviews} Đánh giá)</div>
     </Wrapper>
   );
 };
@@ -31,7 +31,7 @@ const Wrapper = styled.div`
   align-items: center;
   span {
     color: #ffb900;
-    font-size: 1rem;
+    font-size: 1.5rem;
     margin-right: 0.25rem;
   }
   p {
