@@ -1,12 +1,12 @@
-import React from "react";
+import React, { Fragment } from "react";
 import styled from "styled-components";
 
-import { PageHero } from "../components";
+import { Footer, Navbar, PageHero, Sidebar } from "../components";
 import aboutImg from "../assets/hero-bcg.jpeg";
 
 const AboutPage = () => {
   return (
-    <main>
+    <Fragment>
       <PageHero title="about" />
       <Wrapper className="page section section-center">
         <img src={aboutImg} alt="heroimage" className="" />
@@ -25,8 +25,9 @@ const AboutPage = () => {
             maxime unde.
           </p>
         </article>
+        <Footer />
       </Wrapper>
-    </main>
+    </Fragment>
   );
 };
 

@@ -45,16 +45,16 @@ const Wrapper = styled.section`
   @media (min-width: 992px) {
     height: calc(100vh - 5rem);
     grid-template-columns: 1fr 1fr;
-    gap: 8rem;
+    gap: 5rem;
     h1 {
-      margin-bottom: 2rem;
+      margin-bottom: 3rem;
     }
     p {
-      font-size: 1.25rem;
+      font-size: 1rem;
     }
     .hero-btn {
       padding: 0.75rem 1.5rem;
-      font-size: 1rem;
+      font-size: 0.75rem;
     }
     .img-container {
       display: block;
@@ -62,7 +62,7 @@ const Wrapper = styled.section`
     }
     .main-img {
       width: 100%;
-      height: 550px;
+      height: 500px;
       position: relative;
       border-radius: var(--radius);
       display: block;
@@ -72,8 +72,8 @@ const Wrapper = styled.section`
       position: absolute;
       bottom: 0;
       left: 0;
-      width: 250px;
-      transform: translateX(-50%);
+      width: 350px;
+      transform: translateX(-30%);
       border-radius: var(--radius);
     }
     .img-container::before {
@@ -83,7 +83,7 @@ const Wrapper = styled.section`
       height: 80%;
       background: var(--clr-primary-9);
       bottom: 0%;
-      left: -8%;
+      left: -7%;
       border-radius: var(--radius);
     }
   }

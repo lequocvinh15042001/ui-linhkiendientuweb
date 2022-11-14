@@ -81,8 +81,10 @@ const NavContainer = styled.nav`
 
   .nav-center {
     width: 90vw;
+    height: 5rem;
     margin: 0 auto;
     max-width: var(--max-width);
+    position: fixed;
   }
   .nav-header {
     display: flex;
@@ -90,12 +92,13 @@ const NavContainer = styled.nav`
     justify-content: space-between;
     img {
       width: 175px;
-      margin-left: -15px;
+      // margin-left: -15px;
     }
   }
   .nav-toggle {
     background: transparent;
     border: transparent;
+    margin-right:15px;
     color: var(--clr-primary-5);
     cursor: pointer;
     svg {
@@ -116,6 +119,9 @@ const NavContainer = styled.nav`
       display: grid;
       grid-template-columns: auto 1fr auto;
       align-items: center;
+      z-index:9999;
+      background-color: white;
+      border-radius: 3px;
     }
     .nav-links {
       display: flex;
@@ -125,10 +131,10 @@ const NavContainer = styled.nav`
       }
       a {
         color: var(--clr-grey-3);
-        font-size: 1rem;
+        font-size: 0.75rem;
         text-transform: capitalize;
         letter-spacing: var(--spacing);
-        padding: 0.5rem;
+        padding: 0.75rem;
         &:hover {
           border-bottom: 2px solid var(--clr-primary-7);
         }
