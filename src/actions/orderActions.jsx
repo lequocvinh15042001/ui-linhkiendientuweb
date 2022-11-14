@@ -18,6 +18,9 @@ import { ORDER_CREATE_REQUEST, ORDER_CREATE_SUCCESS, ORDER_CREATE_FAIL, RESET_CA
     ORDER_ALL_REQUEST,
     ORDER_ALL_SUCCESS,
     ORDER_ALL_FAIL,
+    ORDER_DETAIL_REQUEST,
+    ORDER_DETAIL_SUCCESS,
+    ORDER_DETAIL_FAIL,
 } from "../constants/orderConstants";
 import { logout } from './userActions'
 
@@ -313,6 +316,43 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
       }
       dispatch({
         type: ORDER_LIST_FAIL,
+        payload: message,
+      })
+    }
+  }
+
+  export const getOrderDetail = (id) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: ORDER_DETAIL_REQUEST,
+      })
+  
+      const {
+        userLogin: { userInfo },
+      } = getState()
+  
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.accessToken}`,
+        },
+      }
+  
+      const { data } = await axios.get(`http://localhost:8080/api/admin/manage/orders/${id}`, config)
+  
+      dispatch({
+        type: ORDER_DETAIL_SUCCESS,
+        payload: data,
+      })
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+      if (message === 'Not authorized, token failed') {
+        dispatch(logout())
+      }
+      dispatch({
+        type: ORDER_DETAIL_FAIL,
         payload: message,
       })
     }

@@ -144,7 +144,7 @@ const ProductListScreen = () => {
                 <th>Người đặt hàng</th>
                 <th className='text-center'>Tổng sản phẩm</th>
                 <th className='text-end'>Tổng thanh toán</th>
-                <th>Trạng thái đơn hàng</th>
+                <th className='text-center'>Trạng thái đơn hàng</th>
                 <th></th>
               </tr>
             </thead>
@@ -156,16 +156,15 @@ const ProductListScreen = () => {
                   <td className='text-center'>{order.totalProduct}</td>
                   <td className='text-end'>{order.totalPrice?.toLocaleString('vi', { style: 'currency', currency: 'VND' })}</td>
                   <td className='text-center'>
-                    <td>{order.state}</td>
-                    {/* {
-                      (product.state === 'enable') ?
+                    {
+                      (order.state === 'process') ?
                         <div className='d-flex justify-content-center align-items-center'>
-                          <p style={{ background: '#00c292', color: '#e7fff8', borderRadius: '5px' }} className='my-0 mx-3 py-1 px-2'>Hoạt động</p>
+                          <p style={{ background: '#fec107', color: '#e7fff8', borderRadius: '5px' }} className='my-0 mx-3 py-1 px-2'>Chờ xác nhận</p>
                         </div> :
                         <div className='d-flex justify-content-center align-items-center'>
-                          <p style={{ background: '#e46a76', color: '#e7fff8', borderRadius: '5px' }} className='my-0 mx-3 py-1 px-2'>Đã khóa</p>
+                          <p style={{ background: '#00c292', color: '#e7fff8', borderRadius: '5px' }} className='my-0 mx-3 py-1 px-2'>Đã khóa</p>
                         </div>
-                    } */}
+                    }
                   </td>
                   <td className='d-flex justify-content-center'>
                     <LinkContainer data-tip data-for="tip1" to={`/admin/order/${order.id}/detail`}>
@@ -192,7 +191,7 @@ const ProductListScreen = () => {
                     </ReactTooltip>
 
                     {/* Block product */}
-                    {
+                    {/* {
                       order.state === 'enable' ?
                         <Button data-tip data-for="tip3"
                           style={{ background: '#ee5261', border: '2px solid #ee5261' }}
@@ -209,7 +208,7 @@ const ProductListScreen = () => {
                         >
                           <i className="fas fa-unlock"></i>
                         </Button>
-                    }
+                    } */}
                     <ReactTooltip id="tip3" place="top" effect="solid">
                       Khóa
                     </ReactTooltip>

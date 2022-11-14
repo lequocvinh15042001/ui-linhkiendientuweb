@@ -31,6 +31,7 @@ import AdminEditCategory from "./pages/adminPages/AdminCategoryEdit";
 import AdminProductList from "./pages/adminPages/AdminProductList";
 import AdminDetailProduct from "./pages/adminPages/AdminProductDetail";
 import AdminOrdertList from "./pages/adminPages/AdminOrderList";
+import AdminOrderDetail from "./pages/adminPages/AdminOrderDetail";
 
 function App() {
   const { theme } = useThemeContext();
@@ -104,12 +105,12 @@ function App() {
 
           {/* Admin Product */}
           <Route path='/admin/productlist' element={<AdminProductList />} exact />
-          {/* <Route path='/admin/productlist/:pageNumber' element={<AdminProductList />} exact /> */}
           <Route path='/admin/product/:id/detail' element={<AdminDetailProduct />} />
           {/* <Route path='/admin/product/:id/edit' element={<AdminProductEdit />} /> */}
 
           {/* Admin Order */}
           <Route path='/admin/orderlist' element={<AdminOrdertList />} />
+          <Route path='/admin/order/:id/detail' element={<AdminOrderDetail />} />
 
         </Routes>
         {/* <Footer /> */}
