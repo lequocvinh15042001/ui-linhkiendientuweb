@@ -1,8 +1,5 @@
 import {
   PRODUCT_LIST_REQUEST, PRODUCT_LIST_SUCCESS, PRODUCT_LIST_FAIL,
-  PRODUCT_DELETE_REQUEST,
-  PRODUCT_DELETE_SUCCESS,
-  PRODUCT_DELETE_FAIL,
   PRODUCT_CREATE_RESET,
   PRODUCT_CREATE_FAIL,
   PRODUCT_CREATE_SUCCESS,
@@ -20,7 +17,16 @@ import {
   PRODUCT_TOP_FAIL,
   PRODUCT_GET_REVIEW_REQUEST,
   PRODUCT_GET_REVIEW_SUCCESS,
-  PRODUCT_GET_REVIEW_FAIL
+  PRODUCT_GET_REVIEW_FAIL,
+  PRODUCT_LIST_ADMIN_REQUEST,
+  PRODUCT_LIST_ADMIN_SUCCESS,
+  PRODUCT_LIST_ADMIN_FAIL,
+  PRODUCT_ALL_REQUEST,
+  PRODUCT_ALL_SUCCESS,
+  PRODUCT_ALL_FAIL,
+  PRODUCT_LOCK_REQUEST,
+  PRODUCT_LOCK_SUCCESS,
+  PRODUCT_LOCK_FAIL
 } from '../constants/productConstants'
 import { PRODUCT_DETAILS_REQUEST, PRODUCT_DETAILS_SUCCESS, PRODUCT_DETAILS_FAIL } from '../constants/productConstants'
 import { PRODUCT_CATEGORY_REQUEST, PRODUCT_CATEGORY_SUCCESS, PRODUCT_CATEGORY_FAIL } from '../constants/productConstants'
@@ -33,6 +39,33 @@ export const categoryListReducer = (state = { categories: [] }, action) => {
       return { loadings: false, categories: action.payload }
     case PRODUCT_CATEGORY_FAIL:
       return { loadings: false, errors: action.payload }
+    default:
+      return state
+  }
+}
+
+// Admin
+export const productAllAdminReducer = (state = { productAll: [] }, action) => {
+  switch (action.type) {
+    case PRODUCT_ALL_REQUEST:
+      return { loading: true, productAll: [] }
+    case PRODUCT_ALL_SUCCESS:
+      return { loading: false, productAll: action.payload }
+    case PRODUCT_ALL_FAIL:
+      return { loading: false, error: action.payload }
+    default:
+      return state
+  }
+}
+
+export const productListAdminReducer = (state = { products: [] }, action) => {
+  switch (action.type) {
+    case PRODUCT_LIST_ADMIN_REQUEST:
+      return { loading: true, products: [] }
+    case PRODUCT_LIST_ADMIN_SUCCESS:
+      return { loading: false, products: action.payload }
+    case PRODUCT_LIST_ADMIN_FAIL:
+      return { loading: false, error: action.payload }
     default:
       return state
   }
@@ -83,14 +116,14 @@ export const getReviewReducer = (
   }
 }
 
-//Vinh
-export const productDeleteReducer = (state = {}, action) => {
+//Admin
+export const productLockReducer = (state = {}, action) => {
   switch (action.type) {
-    case PRODUCT_DELETE_REQUEST:
+    case PRODUCT_LOCK_REQUEST:
       return { loading: true }
-    case PRODUCT_DELETE_SUCCESS:
+    case PRODUCT_LOCK_SUCCESS:
       return { loading: false, success: true }
-    case PRODUCT_DELETE_FAIL:
+    case PRODUCT_LOCK_FAIL:
       return { loading: false, error: action.payload }
     default:
       return state

@@ -19,6 +19,9 @@ import {
   USER_UNLOCK_REQUEST,
   USER_UNLOCK_SUCCESS,
   USER_UNLOCK_FAIL,
+  USER_ALL_REQUEST,
+  USER_ALL_SUCCESS,
+  USER_ALL_FAIL,
 } from "../constants/userConstants";
 
 import axios from 'axios'
@@ -220,9 +223,40 @@ export const forgotPassword = (email) => async (dispatch) => {
   }
 }
 
-//vinh
+//Admin
+// Get All User
+export const getAllUsersAdmin = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: USER_ALL_REQUEST })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.accessToken}`,
+      },
+    }
+
+    const { data } = await axios.get('http://localhost:8080/api/admin/manage/get/users', config)
+
+    dispatch({
+      type: USER_ALL_SUCCESS,
+      payload: data
+    })
+
+  } catch (error) {
+    dispatch({
+      type: USER_ALL_FAIL,
+      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+    })
+  }
+}
+
+// Get User Page
 export const listUsers = (page, size) => async (dispatch, getState) => {
-  // console.log('==page', page, size)
   try {
     dispatch({
       type: USER_LIST_REQUEST,
@@ -294,7 +328,6 @@ export const deleteUser = (id) => async (dispatch, getState) => {
 }
 
 export const unlockUser = (id) => async (dispatch, getState) => {
-  // console.log('==id', id)
   try {
     dispatch({
       type: USER_UNLOCK_REQUEST,

@@ -20,6 +20,9 @@ import {
   USER_UNLOCK_REQUEST,
   USER_UNLOCK_SUCCESS,
   USER_UNLOCK_FAIL,
+  USER_ALL_REQUEST,
+  USER_ALL_SUCCESS,
+  USER_ALL_FAIL,
 
 } from "../constants/userConstants"
 
@@ -101,7 +104,20 @@ export const userForgotPasswordReducer = (state = {}, action) => {
   }
 }
 
-//Vinh
+//Admin
+export const userAllAdminReducer = (state = { userAll: [] }, action) => {
+  switch (action.type) {
+    case USER_ALL_REQUEST:
+      return { loading: true, userAll: [] }
+    case USER_ALL_SUCCESS:
+      return { loading: false, userAll: action.payload }
+    case USER_ALL_FAIL:
+      return { loading: false, error: action.payload }
+    default:
+      return state
+  }
+}
+
 export const userListReducer = (state = { users: [] }, action) => {
   switch (action.type) {
     case USER_LIST_REQUEST:

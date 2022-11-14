@@ -280,3 +280,21 @@ select:focus {
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+
+/* Dương - Admin Page */
+@media only screen and (min-width: 1240px) {
+  #side-bar-icon {
+    display: none;
+  }
+}
+
+.nav-item.dropdown.show a {
+  color: rgb(46, 49, 46);
+}
+
+#nav-dropdown-admin {
+  color: rgba(255, 255, 255, 0.879);
+  font-weight: bold;
+  font-size: 14px;
+}

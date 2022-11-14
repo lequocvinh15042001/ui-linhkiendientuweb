@@ -15,6 +15,9 @@ import { ORDER_CREATE_REQUEST, ORDER_CREATE_SUCCESS, ORDER_CREATE_FAIL, RESET_CA
     ORDER_DELIVER_FAIL,
     ORDER_DELIVER_SUCCESS,
     ORDER_DELIVER_REQUEST,
+    ORDER_ALL_REQUEST,
+    ORDER_ALL_SUCCESS,
+    ORDER_ALL_FAIL,
 } from "../constants/orderConstants";
 import { logout } from './userActions'
 
@@ -240,7 +243,45 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
     }
   }
   
-  export const listOrders = () => async (dispatch, getState) => {
+  // Admin - Order
+  export const getAllOrders = () => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: ORDER_ALL_REQUEST,
+      })
+  
+      const {
+        userLogin: { userInfo },
+      } = getState()
+  
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.accessToken}`,
+        },
+      }
+  
+      const { data } = await axios.get(`http://localhost:8080/api/admin/manage/get/orders`, config)
+  
+      dispatch({
+        type: ORDER_ALL_SUCCESS,
+        payload: data,
+      })
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+      if (message === 'Not authorized, token failed') {
+        dispatch(logout())
+      }
+      dispatch({
+        type: ORDER_ALL_FAIL,
+        payload: message,
+      })
+    }
+  }
+  
+  export const listOrderAdmin = (page, size) => async (dispatch, getState) => {
     try {
       dispatch({
         type: ORDER_LIST_REQUEST,
@@ -256,7 +297,7 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
         },
       }
   
-      const { data } = await axios.get(`http://localhost:8080/api/admin/manage/orders`, config)
+      const { data } = await axios.get(`http://localhost:8080/api/admin/manage/orders/?page=${page}&size=${size}`, config)
   
       dispatch({
         type: ORDER_LIST_SUCCESS,

@@ -1,13 +1,10 @@
 import axios from 'axios'
-import { PRODUCT_CATEGORY_REQUEST, PRODUCT_CATEGORY_SUCCESS, PRODUCT_CATEGORY_FAIL, PRODUCT_GET_REVIEW_REQUEST, PRODUCT_GET_REVIEW_SUCCESS, PRODUCT_GET_REVIEW_FAIL, PRODUCT_CATEGORY_ADMIN_REQUEST, PRODUCT_CATEGORY_ADMIN_SUCCESS, PRODUCT_CATEGORY_ADMIN_FAIL, PRODUCT_CATEGORY_DETAIL_ADMIN_REQUEST, PRODUCT_CATEGORY_DETAIL_ADMIN_SUCCESS, PRODUCT_CATEGORY_DETAIL_ADMIN_FAIL, BLOCK_CATEGORY_ADMIN_REQUEST, BLOCK_CATEGORY_ADMIN_SUCCESS, BLOCK_CATEGORY_ADMIN_FAIL, UNLOCK_CATEGORY_ADMIN_REQUEST, UNLOCK_CATEGORY_ADMIN_SUCCESS, UNLOCK_CATEGORY_ADMIN_FAIL, CREATE_CATEGORY_ADMIN_REQUEST, CREATE_CATEGORY_ADMIN_FAIL, CREATE_CATEGORY_ADMIN_SUCCESS } from '../constants/productConstants'
+import { PRODUCT_CATEGORY_REQUEST, PRODUCT_CATEGORY_SUCCESS, PRODUCT_CATEGORY_FAIL, PRODUCT_GET_REVIEW_REQUEST, PRODUCT_GET_REVIEW_SUCCESS, PRODUCT_GET_REVIEW_FAIL, PRODUCT_CATEGORY_ADMIN_REQUEST, PRODUCT_CATEGORY_ADMIN_SUCCESS, PRODUCT_CATEGORY_ADMIN_FAIL, PRODUCT_CATEGORY_DETAIL_ADMIN_REQUEST, PRODUCT_CATEGORY_DETAIL_ADMIN_SUCCESS, PRODUCT_CATEGORY_DETAIL_ADMIN_FAIL, BLOCK_CATEGORY_ADMIN_REQUEST, BLOCK_CATEGORY_ADMIN_SUCCESS, BLOCK_CATEGORY_ADMIN_FAIL, UNLOCK_CATEGORY_ADMIN_REQUEST, UNLOCK_CATEGORY_ADMIN_SUCCESS, UNLOCK_CATEGORY_ADMIN_FAIL, CREATE_CATEGORY_ADMIN_REQUEST, CREATE_CATEGORY_ADMIN_FAIL, CREATE_CATEGORY_ADMIN_SUCCESS, PRODUCT_LOCK_REQUEST, PRODUCT_LOCK_SUCCESS, PRODUCT_LOCK_FAIL, PRODUCT_LIST_ADMIN_REQUEST, PRODUCT_LIST_ADMIN_SUCCESS, PRODUCT_LIST_ADMIN_FAIL, PRODUCT_ALL_REQUEST, PRODUCT_ALL_SUCCESS, PRODUCT_ALL_FAIL } from '../constants/productConstants'
 import {
   PRODUCT_LIST_REQUEST, PRODUCT_LIST_SUCCESS, PRODUCT_LIST_FAIL,
   PRODUCT_DETAILS_REQUEST,
   PRODUCT_DETAILS_SUCCESS,
   PRODUCT_DETAILS_FAIL,
-  PRODUCT_DELETE_SUCCESS,
-  PRODUCT_DELETE_REQUEST,
-  PRODUCT_DELETE_FAIL,
   PRODUCT_CREATE_REQUEST,
   PRODUCT_CREATE_SUCCESS,
   PRODUCT_CREATE_FAIL,
@@ -207,6 +204,65 @@ export const listProducts = (page) => async (dispatch) => {
   }
 }
 
+export const getAllProductsAdmin = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: PRODUCT_ALL_REQUEST })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.accessToken}`,
+      },
+    }
+
+    const { data } = await axios.get('http://localhost:8080/api/admin/manage/productelec/productelec/get/all', config)
+
+    dispatch({
+      type: PRODUCT_ALL_SUCCESS,
+      payload: data
+    })
+
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_ALL_FAIL,
+      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+    })
+  }
+}
+
+export const listProductsAdmin = (page, size) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: PRODUCT_LIST_ADMIN_REQUEST })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.accessToken}`,
+      },
+    }
+
+    const { data } = await axios.get(`http://localhost:8080/api/admin/manage/productelec/productelec/all?page=${page}&size=${size}`, config)
+
+    dispatch({
+      type: PRODUCT_LIST_ADMIN_SUCCESS,
+      payload: data
+    })
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_LIST_ADMIN_FAIL,
+      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+    })
+  }
+}
+
 export const listProductDetails = (id) => async (dispatch, getState) => {
   try {
     dispatch({ type: PRODUCT_DETAILS_REQUEST })
@@ -237,11 +293,11 @@ export const listProductDetails = (id) => async (dispatch, getState) => {
   }
 }
 
-//Vinh
-export const deleteProduct = (id) => async (dispatch, getState) => {
+//Admin
+export const lockProduct = (id) => async (dispatch, getState) => {
   try {
     dispatch({
-      type: PRODUCT_DELETE_REQUEST,
+      type: PRODUCT_LOCK_REQUEST,
     })
 
     const {
@@ -254,10 +310,10 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
       },
     }
 
-    await axios.delete(`/api/products/${id}`, config)
+    await axios.delete(`http://localhost:8080/api/admin/manage/productelec/deactive/${id}`, config)
 
     dispatch({
-      type: PRODUCT_DELETE_SUCCESS,
+      type: PRODUCT_LOCK_SUCCESS,
     })
   } catch (error) {
     const message =
@@ -268,7 +324,7 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
       dispatch(logout())
     }
     dispatch({
-      type: PRODUCT_DELETE_FAIL,
+      type: PRODUCT_LOCK_FAIL,
       payload: message,
     })
   }

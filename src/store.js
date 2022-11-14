@@ -3,16 +3,21 @@ import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import {
   productListReducer, productDetailsReducer, categoryListReducer,
-  productDeleteReducer,
+  productLockReducer,
   productCreateReducer,
   productUpdateReducer,
   productReviewCreateReducer,
   productTopRatedReducer,
   getReviewReducer,
+  productAllAdminReducer,
+  productListAdminReducer,
 } from './reducers/productReducers'
 import { cartListReducer, cartReducer } from './reducers/cartReducers'
 import {
   userLoginReducer, userRegisterReducer, userDetailsReducer, userUpdateProfileReducer, userChangePasswordReducer, userForgotPasswordReducer,
+ 
+  // Admin
+  userAllAdminReducer,
   userListReducer,
   userDeleteReducer,
   userUnlockReducer,
@@ -23,7 +28,8 @@ import {
   orderPayReducer,
   orderDeliverReducer,
   orderListMyReducer,
-  orderListReducer,
+  orderListAdminReducer,
+  orderAllReducer,
 } from './reducers/orderReducers'
 
 import {
@@ -40,9 +46,11 @@ const reducer = combineReducers({
   blockCategory: blockCategoryReducer,
   createCategory: createCategoryReducer,
 
+  productAllAdmin: productAllAdminReducer,
+  productListAdmin: productListAdminReducer,
   productList: productListReducer,
   productDetails: productDetailsReducer,
-  productDelete: productDeleteReducer,
+  productLock: productLockReducer,
   productCreate: productCreateReducer,
   productUpdate: productUpdateReducer,
 
@@ -51,22 +59,30 @@ const reducer = combineReducers({
   productTopRated: productTopRatedReducer,
   cart: cartReducer,
   cartList: cartListReducer,
+  
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
   userDetails: userDetailsReducer,
   userUpdateProfile: userUpdateProfileReducer,
   userChangePassword: userChangePasswordReducer,
   userForgotPassword: userForgotPasswordReducer,
+
+  //Admin
+  userAllAdmin: userAllAdminReducer,
   userList: userListReducer,
   userDelete: userDeleteReducer,
   userUnlock: userUnlockReducer,
   userUpdate: userUpdateReducer,
+
+
   orderCreate: orderCreateReducer,
   orderList: getOrderReducer,
   orderPay: orderPayReducer,
   orderDeliver: orderDeliverReducer,
   orderListMy: orderListMyReducer,
-  orderList: orderListReducer,
+  // Admin - Order
+  orderAll: orderAllReducer,
+  orderListAdmin: orderListAdminReducer,
 })
 
 const cartItemsFromStorage = localStorage.getItem('cartItems')
