@@ -23,6 +23,10 @@ import {
 } from "./pages";
 import ShippingScreen from "./screens/ShippingScreen";
 import PaymentScreen from "./screens/PaymentScreen";
+import AdminUserList from "./pages/adminPages/AdminUserList";
+import AdminDetailUser from "./pages/adminPages/AdminUserDetail";
+import AdminProductList from "./pages/adminPages/AdminProductList";
+import AdminDetailProduct from "./pages/adminPages/AdminProductDetail";
 
 function App() {
   const { theme } = useThemeContext();
@@ -42,8 +46,8 @@ function App() {
   return (
     <AuthWrapper>
       <Fragment>
-      <Navbar />
-      <Sidebar />
+      {/* <Navbar />
+      <Sidebar /> */}
 
       <Routes>
         <Route exact path="/" element= {<Home />}/>
@@ -79,13 +83,19 @@ function App() {
 
         <Route path='/payment' element={<PaymentScreen />} />
           
+        <Route path="*" element={<Error />}></Route>
 
+        {/* Admin */}
+        {/* User */}
+        <Route exact path="admin/userlist" element={<AdminUserList />} />
+        <Route exact path="admin/user/:id/detail" element={<AdminDetailUser />} />
+        
+        {/* Product */}
+        <Route exact path="admin/productlist" element={<AdminProductList />} />
+        <Route exact path="admin/product/:id/detail" element={<AdminDetailProduct />} />
 
-        <Route path="*" element={<Error />}>
-          
-        </Route>
       </Routes>
-      <Footer />
+      {/* <Footer /> */}
       </Fragment>
     </AuthWrapper>
   );
