@@ -1,10 +1,10 @@
 import { React, useState, useEffect } from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
-import { Button, Form, Row, Card, Col } from 'react-bootstrap'
+import { Button, Form, Row, Modal, Col, Image } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../../components/Message'
 import Loader from '../../components/Loader'
-import { listCategory, listProductDetails, listProducts, updateProduct } from '../../actions/productActions'
+import { addImageProduct, deleteImageProduct, listCategory, listProductDetails, listProducts, updateProduct } from '../../actions/productActions'
 
 const ProductEditScreen = () => {
     const [name, setName] = useState('')
@@ -12,6 +12,7 @@ const ProductEditScreen = () => {
     const [price, setPrice] = useState(0)
     const [nameCategory, setNameCategory] = useState('')
     const [quantity, setQuantity] = useState(0)
+    const [images, setImages] = useState('')
 
     const productId = useParams().id
     // console.log('==', productId)
@@ -74,8 +75,31 @@ const ProductEditScreen = () => {
             quantity: quantity,
             state: 'enable',
         }
+        const formData = new FormData();
+        formData.append('files', images);
+        dispatch(addImageProduct(productId, formData))
         dispatch(updateProduct(product))
     }
+
+    // Block Product
+    const [show, setShow] = useState(false);
+    const handleCloseBlock = () => setShow(false);
+    const [idDelete, setIdDelete] = useState('')
+    const [idImageDelete, setIdImageDelete] = useState('')
+    const handleShowBlock = (id, idImage) => {
+        setShow(true);
+        setIdDelete(id);
+        setIdImageDelete(idImage)
+    }
+
+    const blockHandler = (id, imageId) => {
+        setShow(false);
+        const image = { id: id, imageId: imageId }
+        dispatch(deleteImageProduct(image))
+        window.location.reload()
+    }
+
+
 
     return (
         <div style={{ overflowY: 'scroll', height: '100%', width: '100%', fontSize: '14px', background: '#edf1f5' }}>
@@ -144,12 +168,65 @@ const ProductEditScreen = () => {
                                                 </Form.Label>
                                                 <Form.Control style={{ fontSize: '14px' }} type='number' min={0} placeholder='Nhập số lượng sản phẩm' value={quantity} onChange={(e) => setQuantity(e.target.value)}></Form.Control>
                                             </Form.Group>
+                                            <Form.Group controlId='username' className='py-2'>
+                                                <Form.Label>
+                                                    <h6 style={{ fontSize: '14px' }}>Hình ảnh sản phẩm</h6>
+                                                </Form.Label>
+                                                {
+                                                    product?.data?.images[0] ?
+                                                        <Row className='d-flex align-items-center justify-content-center flex-wrap'>
+                                                            <Image style={{ width: '30%' }} src={product?.data?.images[0]?.url} alt={product?.data?.name}></Image>
+                                                            <Button onClick={() => handleShowBlock(product?.data?.id, product?.data?.images[0]?.imageId)} className='py-0 px-0' style={{ width: '100px', height: '40px', fontSize: '14px', background: '#ee5261', border: 'none', textTransform: 'none' }}>Xóa ảnh</Button>
+                                                        </Row> :
+                                                        <Row className='d-flex align-items-center justify-content-center flex-wrap py-5'>
+                                                            {
+                                                                images &&
+                                                                <Row className='px-0 py-0 my-3'>
+                                                                    <p style={{ fontSize: '14px' }}>Xem trước</p>
+                                                                    <Image style={{ width: '30%', margin: '0 auto' }} src={URL.createObjectURL(images)}></Image>
+                                                                </Row>
+                                                            }
+                                                            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                                                                <Form.Label style={{ fontSize: '14px' }}>Hình ảnh</Form.Label>
+                                                                <Form.Control
+                                                                    style={{ fontSize: '14px' }}
+                                                                    onChange={(e) => setImages(e.target.files[0])}
+                                                                    type="file"
+                                                                    autoFocus
+                                                                    multiple
+                                                                />
+                                                            </Form.Group>
+                                                        </Row>
+                                                }
+                                            </Form.Group>
                                             <Form.Group className='d-flex justify-content-center py-3'>
                                                 <Button style={{ background: '#03a9f3', border: 'none', fontSize: '14px', textTransform: 'none', width: 'auto', padding: '10px' }} type='submit'>Cập nhật danh mục</Button>
                                             </Form.Group>
                                         </Form>
                                     </div>
                                 </Row>
+                                {/* Modal Delete Image */}
+                                <Modal
+                                    show={show}
+                                    onHide={handleCloseBlock}
+                                    backdrop="static"
+                                    keyboard={false}
+                                >
+                                    <Modal.Header closeButton>
+                                        <Modal.Title>Thông báo</Modal.Title>
+                                    </Modal.Header>
+                                    <Modal.Body style={{ fontSize: '14px', textTransform: 'none', width: 'auto' }}>
+                                        Bạn có chắc chắn muốn xóa ảnh sản phẩm này không?
+                                    </Modal.Body>
+                                    <Modal.Footer>
+                                        <Button variant="secondary" onClick={handleCloseBlock} style={{ fontSize: '14px', textTransform: 'none', width: 'auto' }}>
+                                            Hủy
+                                        </Button>
+                                        <Button variant="danger" onClick={() => blockHandler(idDelete, idImageDelete)} style={{ fontSize: '14px', textTransform: 'none', width: 'auto' }}>
+                                            Đồng ý
+                                        </Button>
+                                    </Modal.Footer>
+                                </Modal>
                             </Row>
                         </>
                     )}

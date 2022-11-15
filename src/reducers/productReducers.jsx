@@ -29,7 +29,10 @@ import {
   PRODUCT_LOCK_FAIL,
   PRODUCT_UNLOCK_REQUEST,
   PRODUCT_UNLOCK_SUCCESS,
-  PRODUCT_UNLOCK_FAIL
+  PRODUCT_UNLOCK_FAIL,
+  PRODUCT_DELETE_IMAGE_REQUEST,
+  PRODUCT_DELETE_IMAGE_SUCCESS,
+  PRODUCT_DELETE_IMAGE_FAIL
 } from '../constants/productConstants'
 import { PRODUCT_DETAILS_REQUEST, PRODUCT_DETAILS_SUCCESS, PRODUCT_DETAILS_FAIL } from '../constants/productConstants'
 import { PRODUCT_CATEGORY_REQUEST, PRODUCT_CATEGORY_SUCCESS, PRODUCT_CATEGORY_FAIL } from '../constants/productConstants'
@@ -97,6 +100,22 @@ export const productDetailsReducer = (
     case PRODUCT_DETAILS_SUCCESS:
       return { loading: false, product: action.payload }
     case PRODUCT_DETAILS_FAIL:
+      return { loading: false, error: action.payload }
+    default:
+      return state
+  }
+}
+
+export const productDeleteImageReducer = (
+  state = { },
+  action
+) => {
+  switch (action.type) {
+    case PRODUCT_DELETE_IMAGE_REQUEST:
+      return { ...state, loading: true }
+    case PRODUCT_DELETE_IMAGE_SUCCESS:
+      return { loading: false, product: action.payload }
+    case PRODUCT_DELETE_IMAGE_FAIL:
       return { loading: false, error: action.payload }
     default:
       return state
