@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import ReactTooltip from 'react-tooltip'
 import Message from '../../components/Message'
 import Loader from '../../components/Loader'
-import { getAllOrders, listOrderAdmin } from "../../actions/orderActions";
+import { getAllOrders, listOrderAdmin, setPaidOrder } from "../../actions/orderActions";
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 
@@ -21,6 +21,14 @@ const ProductListScreen = () => {
   const { loading, error, orders, page } = useSelector((state) => state.orderListAdmin)
   // console.log('==', productAll?.data?.length);
 
+  const orderSetDelivery = useSelector(state => state.orderSetDelivery)
+  const { success: deliverySuccess } = orderSetDelivery
+  // console.log('==', userInfo)
+
+  const orderSetPaid = useSelector(state => state.orderSetPaid)
+  const { success: paidSuccess } = orderSetPaid
+  // console.log('==', userInfo)
+
   // Check order
   const arrOrderAll = []
   const checkOrderAll = () => {
@@ -30,7 +38,7 @@ const ProductListScreen = () => {
       }
     })
   }
-  console.log('item', arrOrderAll)
+  // console.log('item', arrOrderAll)
   checkOrderAll()
 
   const arrOrderPage = []
@@ -67,7 +75,7 @@ const ProductListScreen = () => {
     } else {
       navigate('/login')
     }
-  }, [dispatch, navigate, userInfo, pageNum, pageSize])
+  }, [dispatch, navigate, userInfo, paidSuccess, pageNum, pageSize])
 
   // Edit state O
   const [show, setShow] = useState(false);
@@ -80,7 +88,7 @@ const ProductListScreen = () => {
 
   const updateStatekHandler = (id) => {
     setShow(false);
-    // dispatch(unlockUser(id))
+    dispatch(setPaidOrder(id))
     // window.location.reload()
   }
 
@@ -145,10 +153,16 @@ const ProductListScreen = () => {
                       (order.state === 'process') ?
                         <div className='d-flex justify-content-center align-items-center'>
                           <p style={{ background: '#fec107', color: '#e7fff8', borderRadius: '5px' }} className='my-0 mx-3 py-1 px-2'>Chờ xác nhận</p>
-                        </div> :
-                        <div className='d-flex justify-content-center align-items-center'>
-                          <p style={{ background: '#00c292', color: '#e7fff8', borderRadius: '5px' }} className='my-0 mx-3 py-1 px-2'>Đã khóa</p>
-                        </div>
+                        </div> : (order.state === 'delivery') ?
+                          <div className='d-flex justify-content-center align-items-center'>
+                            <p style={{ background: '#03a9f3', color: '#e7fff8', borderRadius: '5px' }} className='my-0 mx-3 py-1 px-2'>Đang giao hàng</p>
+                          </div> : (order.state === 'cancel') ?
+                          <div className='d-flex justify-content-center align-items-center'>
+                            <p style={{ background: '#ee5261', color: '#e7fff8', borderRadius: '5px' }} className='my-0 mx-3 py-1 px-2'>Đang giao hàng</p>
+                          </div> :
+                          <div className='d-flex justify-content-center align-items-center'>
+                            <p style={{ background: '#00c292', color: '#e7fff8', borderRadius: '5px' }} className='my-0 mx-3 py-1 px-2'>Đã nhận và thanh toán</p>
+                          </div>
                     }
                   </td>
                   <td className='d-flex justify-content-center'>
@@ -165,14 +179,14 @@ const ProductListScreen = () => {
 
                     <Button
                       data-tip data-for="tip2"
-                      disabled={order.state === 'disable' ? 'true' : ''}
+                      disabled={order.state === 'process' || order.state === 'paid' ? 'true' : ''}
                       style={{ background: '#03a9f3', width: 'auto', height: 'auto' }}
                       onClick={() => handleEditStateOrder(order.id)}
                       className='my-0 mx-2'>
-                      <i className='fas fa-edit'></i>
+                      <i className="fas fa-vote-yea"></i>
                     </Button>
                     <ReactTooltip id="tip2" place="top" effect="solid">
-                      Chỉnh sửa trạng thái
+                      Xác nhận thanh toán
                     </ReactTooltip>
                   </td>
                 </tr>
@@ -205,7 +219,7 @@ const ProductListScreen = () => {
           <Modal.Title>Thông báo</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Bạn có chắc chắn muốn mở khóa sản phẩm này không?
+          Xác nhận thanh toán thành công
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>

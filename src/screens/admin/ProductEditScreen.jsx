@@ -175,7 +175,7 @@ const ProductEditScreen = () => {
                                                 {
                                                     product?.data?.images[0] ?
                                                         <Row className='d-flex align-items-center justify-content-center flex-wrap'>
-                                                            <Image style={{ width: '30%' }} src={product?.data?.images[0]?.url} alt={product?.data?.name}></Image>
+                                                            <Image style={{ width: '30%', margin: '20px 10px 0 0', marginBottom: '10px', border: '1px solid #dddddd', borderRadius: '5px' }} src={product?.data?.images[0]?.url} alt={product?.data?.name}></Image>
                                                             <Button onClick={() => handleShowBlock(product?.data?.id, product?.data?.images[0]?.imageId)} className='py-0 px-0' style={{ width: '100px', height: '40px', fontSize: '14px', background: '#ee5261', border: 'none', textTransform: 'none' }}>Xóa ảnh</Button>
                                                         </Row> :
                                                         <Row className='d-flex align-items-center justify-content-center flex-wrap py-5'>
@@ -183,7 +183,7 @@ const ProductEditScreen = () => {
                                                                 images &&
                                                                 <Row className='px-0 py-0 my-3'>
                                                                     <p style={{ fontSize: '14px' }}>Xem trước</p>
-                                                                    <Image style={{ width: '30%', margin: '0 auto' }} src={URL.createObjectURL(images)}></Image>
+                                                                    <Image style={{ width: '30%', margin: '20px 10px 0 0', marginBottom: '10px', border: '1px solid #dddddd', borderRadius: '5px' }} src={URL.createObjectURL(images)}></Image>
                                                                 </Row>
                                                             }
                                                             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">

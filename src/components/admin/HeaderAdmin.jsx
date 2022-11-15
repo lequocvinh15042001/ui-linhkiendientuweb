@@ -1,22 +1,26 @@
 import { React, useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { LinkContainer } from 'react-router-bootstrap'
 import ReactTooltip from 'react-tooltip'
 import { Container, Navbar, Nav, NavDropdown, Row, Modal, Button } from 'react-bootstrap'
 // import { getOrder, updateOrder } from '../actions/orderActions'
 import { logout } from '../../actions/userActions'
+import { getAllOrders, setDeliveryOrder } from '../../actions/orderActions'
 
 const HeaderAdmin = () => {
     const [lgShow, setLgShow] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch()
 
-    // const { loading, error, orders } = useSelector(state => state.orderList)
-    // console.log('==', orders)
+    const { orderAll } = useSelector(state => state.orderAll)
+    // console.log('==', orderAll)
 
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
+
+    const orderSetDelivery = useSelector(state => state.orderSetDelivery)
+    const { success: deliverySuccess } = orderSetDelivery
     // console.log('==', userInfo)
 
     const logoutHandler = () => {
@@ -32,37 +36,32 @@ const HeaderAdmin = () => {
 
     // Get new notification
     const arrNotification = []
-    // const getNotification = () => {
-    //     orders.forEach(order => {
-    //         if (order.status === 'PROCESSING') {
-    //             arrNotification.push(order._id)
-    //         }
-    //     })
-    // }
-    // getNotification()
+    const getNotification = () => {
+        orderAll?.data?.forEach(order => {
+            if (order.state === 'process') {
+                arrNotification.push(order.id)
+            }
+        })
+    }
+    getNotification()
 
     useEffect(() => {
-        // dispatch(getOrder()) 
+        dispatch(getAllOrders())
         //eslint-disable-next-line 
-    }, [dispatch])
+    }, [dispatch, deliverySuccess])
 
     // confirm All Order
-    const statusAll = 'CONFIRMED'
     const confirmAllOrder = () => {
-        // orders.forEach(order => {
-        //     if (order.status === 'PROCESSING') {
-        //         dispatch(updateOrder(order._id, statusAll))
-        //     }
-        // })
-        window.location.reload(false)
+        orderAll?.data?.forEach(order => {
+            if (order.state === 'process') {
+                dispatch(setDeliveryOrder(order.id))
+            }
+        })
     }
 
     // Confirm Order
-    const status = 'CONFIRMED'
     const confirmOrder = (idOrder) => {
-        // dispatch(updateOrder(idOrder, status))
-        window.location.reload(false)
-
+        dispatch(setDeliveryOrder(idOrder))
     }
 
     return (
@@ -73,13 +72,13 @@ const HeaderAdmin = () => {
             <ReactTooltip id="tip5" place="top" effect="solid">
                 Tải lại trang
             </ReactTooltip>
-            {/* <ReactTooltip id="tip6" place="top" effect="solid">
-                Thông báo
-            </ReactTooltip> */}
+            <ReactTooltip id="tip6" place="top" effect="solid">
+                Có {arrNotification.length} thông báo mới
+            </ReactTooltip>
             <Container className="justify-content-end">
                 <Row className='d-flex justify-content-center align-items-center'>
                     <Navbar.Collapse>
-                        <Row onClick={() => setLgShow(true)} className='py-0 d-flex justify-content-center align-items-center' style={{ width: 'auto', marginRight: '60px', position: 'relative' }}>
+                        <Row onClick={() => setLgShow(true)} className='py-0 d-flex justify-content-center align-items-center' style={{ width: 'auto', marginRight: '20px', position: 'relative' }}>
                             <i data-tip data-for="tip6" style={{ cursor: 'pointer', fontSize: '20px', color: '#f2f2f2' }} className="far fa-bell"></i>
                             {
                                 arrNotification.length !== 0 ?
@@ -110,7 +109,11 @@ const HeaderAdmin = () => {
                                     arrNotification.length !== 0 ?
                                         arrNotification.map(order => (
                                             <Row className='d-flex justify-content-between align-items-center px-2 mb-3'>
-                                                <h6 className='mx-0' style={{ width: 'auto' }}>Đơn hàng: ID {order} yêu cầu xác nhận</h6>
+                                                <h6 style={{ fontSize: '14px', width: 'auto' }} className='mx-0'>Đơn hàng: ID
+                                                    <Link to={`/admin/order/${order}/detail`}>
+                                                        {' '}{order}{' '}
+                                                    </Link>
+                                                    yêu cầu xác nhận</h6>
                                                 <Button variant="outline-primary" onClick={() => confirmOrder(order)} style={{ width: 'auto' }}>Xác nhận</Button>
                                             </Row>
                                         )) :
@@ -118,11 +121,11 @@ const HeaderAdmin = () => {
                                 }
                             </Modal.Body>
                         </Modal>
-                        <Nav className='d-flex justify-content-end'>
+                        <Nav className='d-flex justify-content-end pe-3'>
                             {userInfo ? (
                                 <NavDropdown title={`${userInfo.name}`} id='nav-dropdown-admin'>
                                     <LinkContainer to='/profile'>
-                                        <NavDropdown.Item style={{color: 'red'}}>Thông tin</NavDropdown.Item>
+                                        <NavDropdown.Item style={{ color: 'red' }}>Thông tin</NavDropdown.Item>
                                     </LinkContainer>
                                     <NavDropdown.Item onClick={logoutHandler}>Đăng xuất</NavDropdown.Item>
                                 </NavDropdown>

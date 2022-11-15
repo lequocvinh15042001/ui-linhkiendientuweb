@@ -21,6 +21,12 @@ import { ORDER_CREATE_REQUEST, ORDER_CREATE_SUCCESS, ORDER_CREATE_FAIL, RESET_CA
     ORDER_DETAIL_REQUEST,
     ORDER_DETAIL_SUCCESS,
     ORDER_DETAIL_FAIL,
+    ORDER_SET_DELEVERY_REQUEST,
+    ORDER_SET_DELEVERY_SUCCESS,
+    ORDER_SET_DELEVERY_FAIL,
+    ORDER_SET_PAID_REQUEST,
+    ORDER_SET_PAID_SUCCESS,
+    ORDER_SET_PAID_FAIL,
 } from "../constants/orderConstants";
 import { logout } from './userActions'
 
@@ -353,6 +359,87 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
       }
       dispatch({
         type: ORDER_DETAIL_FAIL,
+        payload: message,
+      })
+    }
+  }
+
+  export const setDeliveryOrder = (id) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: ORDER_SET_DELEVERY_REQUEST,
+      })
+  
+      const {
+        userLogin: { userInfo },
+      } = getState()
+  
+      var config = {
+        method: 'put',
+        url: `http://localhost:8080/api/admin/manage/orders/setdelivery/${id}`,
+        headers: { 
+          'Authorization': `Bearer ${userInfo.accessToken}`
+        }
+      };
+  
+      axios(config)
+      .then(function (response) {
+        dispatch({
+          type: ORDER_SET_DELEVERY_SUCCESS,
+          payload: response.data,
+        })
+      })
+  
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+      if (message === 'Not authorized, token failed') {
+        dispatch(logout())
+      }
+      dispatch({
+        type: ORDER_SET_DELEVERY_FAIL,
+        payload: message,
+      })
+    }
+  }
+
+  export const setPaidOrder = (id) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: ORDER_SET_PAID_REQUEST,
+      })
+  
+      const {
+        userLogin: { userInfo },
+      } = getState()
+  
+      var config = {
+        method: 'put',
+        url: `http://localhost:8080/api/admin/manage/orders/setpaid/${id}`,
+        headers: { 
+          'Authorization': `Bearer ${userInfo.accessToken}`
+        }
+      };
+      
+      axios(config)
+      .then(function (response) {
+        dispatch({
+          type: ORDER_SET_PAID_SUCCESS,
+          payload: response.data,
+        })
+      })
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+      if (message === 'Not authorized, token failed') {
+        dispatch(logout())
+      }
+      dispatch({
+        type: ORDER_SET_PAID_FAIL,
         payload: message,
       })
     }
