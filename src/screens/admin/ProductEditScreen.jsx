@@ -200,7 +200,7 @@ const ProductEditScreen = () => {
                                                 }
                                             </Form.Group>
                                             <Form.Group className='d-flex justify-content-center py-3'>
-                                                <Button style={{ background: '#03a9f3', border: 'none', fontSize: '14px', textTransform: 'none', width: 'auto', padding: '10px' }} type='submit'>Cập nhật danh mục</Button>
+                                                <Button style={{ background: '#03a9f3', border: 'none', fontSize: '14px', textTransform: 'none', width: 'auto', padding: '10px' }} type='submit'>Cập nhật sản phẩm</Button>
                                             </Form.Group>
                                         </Form>
                                     </div>
