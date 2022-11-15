@@ -79,7 +79,7 @@ const CategoryEditScreen = () => {
                                                 <Form.Label>
                                                     <h6 style={{ fontSize: '14px' }}>Tên danh mục</h6>
                                                 </Form.Label>
-                                                <Form.Control style={{ fontSize: '14px' }} type='name' placeholder='Nhập tên người dùng' value={name} onChange={(e) => setName(e.target.value)}></Form.Control>
+                                                <Form.Control style={{ fontSize: '14px' }} type='name' placeholder='Nhập tên danh mục' value={name} onChange={(e) => setName(e.target.value)}></Form.Control>
                                             </Form.Group>
                                             <Form.Group className='d-flex justify-content-center py-3'>
                                                 <Button style={{ background: '#03a9f3', border: 'none', fontSize: '14px', textTransform: 'none', width: 'auto', padding: '10px' }} type='submit'>Cập nhật danh mục</Button>

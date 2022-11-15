@@ -3,6 +3,7 @@ import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import {
   productListReducer, productDetailsReducer, categoryListReducer,
+  productUnlockReducer,
   productLockReducer,
   productCreateReducer,
   productUpdateReducer,
@@ -14,7 +15,8 @@ import {
 } from './reducers/productReducers'
 import { cartListReducer, cartReducer } from './reducers/cartReducers'
 import {
-  userLoginReducer, userRegisterReducer, userDetailsReducer, userUpdateProfileReducer, userChangePasswordReducer, userForgotPasswordReducer,
+  userLoginReducer, userRegisterReducer, userDetailsReducer, userUpdateProfileReducer, 
+  userChangePasswordReducer, userForgotPasswordReducer,
  
   // Admin
   userAllAdminReducer,
@@ -51,6 +53,7 @@ const reducer = combineReducers({
   productListAdmin: productListAdminReducer,
   productList: productListReducer,
   productDetails: productDetailsReducer,
+  productUnlock: productUnlockReducer,
   productLock: productLockReducer,
   productCreate: productCreateReducer,
   productUpdate: productUpdateReducer,

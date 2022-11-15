@@ -32,6 +32,7 @@ import AdminProductList from "./pages/adminPages/AdminProductList";
 import AdminDetailProduct from "./pages/adminPages/AdminProductDetail";
 import AdminOrdertList from "./pages/adminPages/AdminOrderList";
 import AdminOrderDetail from "./pages/adminPages/AdminOrderDetail";
+import AdminEditProduct from "./pages/adminPages/AdminProductEdit";
 
 function App() {
   const { theme } = useThemeContext();
@@ -106,7 +107,7 @@ function App() {
           {/* Admin Product */}
           <Route path='/admin/productlist' element={<AdminProductList />} exact />
           <Route path='/admin/product/:id/detail' element={<AdminDetailProduct />} />
-          {/* <Route path='/admin/product/:id/edit' element={<AdminProductEdit />} /> */}
+          <Route path='/admin/product/:id/edit' element={<AdminEditProduct />} />
 
           {/* Admin Order */}
           <Route path='/admin/orderlist' element={<AdminOrdertList />} />
