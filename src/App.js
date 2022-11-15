@@ -27,6 +27,10 @@ import AdminUserList from "./pages/adminPages/AdminUserList";
 import AdminDetailUser from "./pages/adminPages/AdminUserDetail";
 import AdminProductList from "./pages/adminPages/AdminProductList";
 import AdminDetailProduct from "./pages/adminPages/AdminProductDetail";
+import AdminEditProduct from "./pages/adminPages/AdminProductEdit";
+import AdminCategoryList from "./pages/adminPages/AdminCategoryList";
+import AdminCategoryDetail from "./pages/adminPages/AdminCategoryDetail";
+import AdminEditCategory from "./pages/adminPages/AdminCategoryEdit";
 
 function App() {
   const { theme } = useThemeContext();
@@ -89,10 +93,16 @@ function App() {
         {/* User */}
         <Route exact path="admin/userlist" element={<AdminUserList />} />
         <Route exact path="admin/user/:id/detail" element={<AdminDetailUser />} />
+
+        {/* Category */}
+        <Route exact path="admin/categorylist" element={<AdminCategoryList />} />
+        <Route exact path="admin/category/:id/detail" element={<AdminCategoryDetail />} />
+        <Route exact path="admin/category/:id/edit" element={<AdminEditCategory />} />
         
         {/* Product */}
         <Route exact path="admin/productlist" element={<AdminProductList />} />
         <Route exact path="admin/product/:id/detail" element={<AdminDetailProduct />} />
+        <Route exact path="admin/product/:id/edit" element={<AdminEditProduct />} />
 
       </Routes>
       {/* <Footer /> */}
