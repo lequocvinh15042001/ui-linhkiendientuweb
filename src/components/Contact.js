@@ -7,14 +7,11 @@ const Contact = () => {
   return (
     <Wrapper>
       <div className="section-center">
-        <h3>Join out newsletter and get 25% off</h3>
+        <h3>Nhập thông tin email, theo dõi thông báo và được giảm giá 25%</h3>
         <div className="content">
           <p>
             {" "}
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
-            necessitatibus ex, aliquam et veritatis placeat totam debitis rem,
-            blanditiis harum, esse laborum impedit mollitia fuga velit maiores
-            voluptatibus sunt dicta.
+            Công ty linh kiện điện tử chúng tôi là một công ty rất thành công. Chúng tôi không có lý do nào để từ chối mọi yêu cầu của khách hàng,bởi sự thành công này sẽ thật sự tồn tại và được gây dựng nên bởi lòng tin của bạn...
           </p>
           <form
             method="POST"
@@ -24,11 +21,11 @@ const Contact = () => {
             <input
               type="email"
               name="_replyto"
-              placeholder="enter email"
+              placeholder="Nhập email"
               className="form-input"
             />
             <button type="submit" className="submit-btn">
-              subscribe
+              Đăng ký
             </button>
           </form>
         </div>
