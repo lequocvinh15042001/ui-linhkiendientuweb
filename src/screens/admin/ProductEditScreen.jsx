@@ -4,7 +4,7 @@ import { Button, Form, Row, Card, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../../components/Message'
 import Loader from '../../components/Loader'
-import { listProductDetails, listProducts, updateProduct } from '../../actions/productActions'
+import { listCategory, listProductDetails, listProducts, updateProduct } from '../../actions/productActions'
 
 const ProductEditScreen = () => {
     const [name, setName] = useState('')
@@ -24,10 +24,24 @@ const ProductEditScreen = () => {
     // console.log('==', categories)
 
     const { loading, error, product } = useSelector(state => state.productDetails)
-    console.log('==', product)
+    // console.log('==', product)
 
     const productUpdate = useSelector(state => state.productUpdate)
     const { loading: loadingUpdate, error: errorUpdate, success: successUpdate } = productUpdate
+
+    // Get ID Category
+    let arrGetCateId = []
+    const getCategoryId = () => {
+        categories?.data?.forEach(cate => {
+            if (nameCategory === cate.name) {
+                arrGetCateId.push(cate.id)
+            }
+        })
+    }
+
+    getCategoryId()
+    let category = arrGetCateId[0]
+    // console.log('==', category);
 
     useEffect(() => {
         if (successUpdate) {
@@ -35,18 +49,19 @@ const ProductEditScreen = () => {
             navigate('/admin/productlist')
             window.location.reload()
         } else {
-            if (!product?.data?.name || product?.data?._id !== productId) {
+            if (!product?.data?.name || product?.data?.id !== productId) {
                 dispatch(listProductDetails(productId))
+                dispatch(listCategory())
                 dispatch(listProducts())
             } else {
                 setName(product?.data?.name)
-                // setDescription(product?.data?.description)
-                // setPrice(product?.data?.price)
-                // setNameCategory(product?.data?.category)
-                // setQuantity(product?.data?.quantity)
+                setDescription(product?.data?.description)
+                setPrice(product?.data?.price)
+                setNameCategory(product?.data?.category)
+                setQuantity(product?.data?.quantity)
             }
         }
-    }, [dispatch, navigate, productId, successUpdate])
+    }, [dispatch, navigate, productId, product, categories, successUpdate])
 
     const submitHandler = (e) => {
         e.preventDefault()
@@ -55,11 +70,11 @@ const ProductEditScreen = () => {
             name: name,
             description: description,
             price: price,
-            category: nameCategory,
+            category: category,
             quantity: quantity,
             state: 'enable',
         }
-        dispatch(updateProduct())
+        dispatch(updateProduct(product))
     }
 
     return (
@@ -87,7 +102,7 @@ const ProductEditScreen = () => {
                 </Link>
             </Row>
             <Row className='align-items-center mx-4 mt-4 px-4' style={{ background: 'white' }}>
-                <h5 style={{fontSize: '20px'}} className='d-flex justify-content-center py-3'>Chỉnh sửa thông tin sản phẩm</h5>
+                <h5 style={{ fontSize: '20px' }} className='d-flex justify-content-center py-3'>Chỉnh sửa thông tin sản phẩm</h5>
                 {loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> :
                     (
                         <>
@@ -103,21 +118,31 @@ const ProductEditScreen = () => {
                                             </Form.Group>
                                             <Form.Group controlId='username' className='py-2'>
                                                 <Form.Label>
-                                                    <h6 style={{ fontSize: '14px' }}>Tên sản phẩm</h6>
+                                                    <h6 style={{ fontSize: '14px' }}>Mổ tả sản phẩm</h6>
                                                 </Form.Label>
-                                                <Form.Control style={{ fontSize: '14px' }} type='name' placeholder='Nhập tên sản phẩm' value={name} onChange={(e) => setName(e.target.value)}></Form.Control>
+                                                <Form.Control style={{ fontSize: '14px' }} type='text' as="textarea" placeholder='Mô tả sản phẩm' value={description} onChange={(e) => setDescription(e.target.value)}></Form.Control>
                                             </Form.Group>
                                             <Form.Group controlId='username' className='py-2'>
                                                 <Form.Label>
-                                                    <h6 style={{ fontSize: '14px' }}>Tên sản phẩm</h6>
+                                                    <h6 style={{ fontSize: '14px' }}>Giá sản phẩm</h6>
                                                 </Form.Label>
-                                                <Form.Control style={{ fontSize: '14px' }} type='name' placeholder='Nhập tên sản phẩm' value={name} onChange={(e) => setName(e.target.value)}></Form.Control>
+                                                <Form.Control style={{ fontSize: '14px' }} type='name' placeholder='Nhập giá sản phẩm' value={price} onChange={(e) => setPrice(e.target.value)}></Form.Control>
                                             </Form.Group>
                                             <Form.Group controlId='username' className='py-2'>
                                                 <Form.Label>
-                                                    <h6 style={{ fontSize: '14px' }}>Tên sản phẩm</h6>
+                                                    <h6 style={{ fontSize: '14px' }}>Danh mục</h6>
                                                 </Form.Label>
-                                                <Form.Control style={{ fontSize: '14px' }} type='name' placeholder='Nhập tên sản phẩm' value={name} onChange={(e) => setName(e.target.value)}></Form.Control>
+                                                <Form.Select className='mb-3' size="sm" value={nameCategory} onChange={(e) => setNameCategory(e.target.value)}>
+                                                    {categories?.data?.map(cate => (
+                                                        <option>{cate.name}</option>
+                                                    ))}
+                                                </Form.Select>
+                                            </Form.Group>
+                                            <Form.Group controlId='username' className='py-2'>
+                                                <Form.Label>
+                                                    <h6 style={{ fontSize: '14px' }}>Số lượng sản phẩm</h6>
+                                                </Form.Label>
+                                                <Form.Control style={{ fontSize: '14px' }} type='number' min={0} placeholder='Nhập số lượng sản phẩm' value={quantity} onChange={(e) => setQuantity(e.target.value)}></Form.Control>
                                             </Form.Group>
                                             <Form.Group className='d-flex justify-content-center py-3'>
                                                 <Button style={{ background: '#03a9f3', border: 'none', fontSize: '14px', textTransform: 'none', width: 'auto', padding: '10px' }} type='submit'>Cập nhật danh mục</Button>

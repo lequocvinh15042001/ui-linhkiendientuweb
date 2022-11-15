@@ -111,7 +111,7 @@ const DashboardScreen = () => {
       </div>
       <Row className='align-items-center mx-4 mt-4 px-4' style={{ background: 'white' }}>
         <Col className='px-0'>
-          <h5 style={{fontSize: '16px'}} className='pb-4 pt-4'>DANH SÁCH ĐƠN HÀNG</h5>
+          <h5 style={{fontSize: '16px'}} className='pb-4 pt-4'>TRANG ĐIỀU KHIỂN</h5>
         </Col>
         <Col className='d-flex justify-content-end px-0'>
           <h6 style={{fontSize: '14px'}} className='pb-4 pt-4'>Tổng số lượng: {arrOrderAll?.length} đơn hàng</h6>

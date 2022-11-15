@@ -404,6 +404,7 @@ export const createProduct = (product) => async (dispatch, getState) => {
 }
 
 export const updateProduct = (product) => async (dispatch, getState) => {
+  console.log('==', product);
   try {
     dispatch({
       type: PRODUCT_UPDATE_REQUEST,
@@ -419,7 +420,7 @@ export const updateProduct = (product) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.accessToken}`,
       },
     }
-    // console.log("product: ", product);
+    console.log("product: ", product);
     const { data } = await axios.put(
       `http://localhost:8080/api/admin/manage/productelec/update/${product.id}`,
       product,

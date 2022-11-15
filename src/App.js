@@ -33,6 +33,7 @@ import AdminCategoryDetail from "./pages/adminPages/AdminCategoryDetail";
 import AdminEditCategory from "./pages/adminPages/AdminCategoryEdit";
 import AdminOrdertList from "./pages/adminPages/AdminOrderList";
 import AdminOrderDetail from "./pages/adminPages/AdminOrderDetail";
+import AdminDashboard from "./pages/adminPages/AdminDashboard";
 
 function App() {
   const { theme } = useThemeContext();
@@ -52,66 +53,69 @@ function App() {
   return (
     <AuthWrapper>
       <Fragment>
-      {/* <Navbar />
+        {/* <Navbar />
       <Sidebar /> */}
 
-      <Routes>
-        <Route exact path="/" element= {<Home />}/>
-        <Route exact path="/about" element= {<About />}/>
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+          <Route exact path="/about" element={<About />} />
 
-        <Route path='/login' element={<LoginPage />} />
-        <Route path='/register' element={<RegisterPage />} />
+          <Route path='/login' element={<LoginPage />} />
+          <Route path='/register' element={<RegisterPage />} />
 
-        <Route exact path="/cart" element= {<Cart />}>
-        </Route>
+          <Route exact path="/cart" element={<Cart />}>
+          </Route>
 
-        <Route exact path="/cart/:id" element= {<Cart />}>
-        </Route>
+          <Route exact path="/cart/:id" element={<Cart />}>
+          </Route>
 
-        <Route exact path="/products" element= {<Products />}>
-          
-        </Route>
+          <Route exact path="/products" element={<Products />}>
 
-        <Route exact path="/history" element= { <History />}>
-          
-        </Route>
+          </Route>
 
-        <Route exact path="/scan" element = {<Scan /> }>
-          
-          {/* <ItemList /> */}
-        </Route>
+          <Route exact path="/history" element={<History />}>
 
-        <Route exact path="/products/:id" element={<SingleProduct />} />
+          </Route>
 
-        <Route exact path="/checkout" element= { <Checkout />} />
+          <Route exact path="/scan" element={<Scan />}>
 
-        <Route path='/shipping/:id' element={<ShippingScreen />} />
+            {/* <ItemList /> */}
+          </Route>
 
-        <Route path='/payment' element={<PaymentScreen />} />
-          
-        <Route path="*" element={<Error />}></Route>
+          <Route exact path="/products/:id" element={<SingleProduct />} />
 
-        {/* Admin */}
-        {/* User */}
-        <Route exact path="admin/userlist" element={<AdminUserList />} />
-        <Route exact path="admin/user/:id/detail" element={<AdminDetailUser />} />
+          <Route exact path="/checkout" element={<Checkout />} />
 
-        {/* Category */}
-        <Route exact path="admin/categorylist" element={<AdminCategoryList />} />
-        <Route exact path="admin/category/:id/detail" element={<AdminCategoryDetail />} />
-        <Route exact path="admin/category/:id/edit" element={<AdminEditCategory />} />
-        
-        {/* Product */}
-        <Route exact path="admin/productlist" element={<AdminProductList />} />
-        <Route exact path="admin/product/:id/detail" element={<AdminDetailProduct />} />
-        <Route exact path="admin/product/:id/edit" element={<AdminEditProduct />} />
+          <Route path='/shipping/:id' element={<ShippingScreen />} />
 
-        {/* Order */}
-        <Route exact path="admin/orderlist" element={<AdminOrdertList />} />
-        <Route exact path="admin/order/:id/detail" element={<AdminOrderDetail/>} />
+          <Route path='/payment' element={<PaymentScreen />} />
 
-      </Routes>
-      {/* <Footer /> */}
+          <Route path="*" element={<Error />}></Route>
+
+          {/* Admin */}
+          {/* Dashboard */}
+          <Route exact path="admin/dashboard" element={<AdminDashboard />} />
+
+          {/* User */}
+          <Route exact path="admin/userlist" element={<AdminUserList />} />
+          <Route exact path="admin/user/:id/detail" element={<AdminDetailUser />} />
+
+          {/* Category */}
+          <Route exact path="admin/categorylist" element={<AdminCategoryList />} />
+          <Route exact path="admin/category/:id/detail" element={<AdminCategoryDetail />} />
+          <Route exact path="admin/category/:id/edit" element={<AdminEditCategory />} />
+
+          {/* Product */}
+          <Route exact path="admin/productlist" element={<AdminProductList />} />
+          <Route exact path="admin/product/:id/detail" element={<AdminDetailProduct />} />
+          <Route exact path="admin/product/:id/edit" element={<AdminEditProduct />} />
+
+          {/* Order */}
+          <Route exact path="admin/orderlist" element={<AdminOrdertList />} />
+          <Route exact path="admin/order/:id/detail" element={<AdminOrderDetail />} />
+
+        </Routes>
+        {/* <Footer /> */}
       </Fragment>
     </AuthWrapper>
   );
