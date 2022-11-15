@@ -94,17 +94,17 @@ const CategoryListScreen = () => {
                     </div>
                 </div>
                 <div className='d-flex justify-content-end py-4'>
-                    <Button style={{ background: '#03a9f3', border: 'none', fontSize: '14px' }} onClick={handleShowAdd}>
+                    <Button className='my-0' style={{ background: '#03a9f3', border: 'none', fontSize: '14px', textTransform: 'none' }} onClick={handleShowAdd}>
                         Thêm danh mục
                     </Button>
                 </div>
             </div>
-            <Row className='align-items-center mx-4 mt-4 px-4' style={{ background: 'white' }}>
+            <Row className='align-items-center mx-4 mt-4 px-4 py-3' style={{ background: 'white' }}>
                 <Col className='px-0'>
-                    <h5 className='pb-4 pt-4'>DANH SÁCH DANH MỤC SẢN PHẨM</h5>
+                    <h5 style={{ fontSize: '16px' }} className='pb-4 pt-4'>DANH SÁCH DANH MỤC SẢN PHẨM</h5>
                 </Col>
                 <Col className='d-flex justify-content-end px-0'>
-                    <h6 className='pb-4 pt-4'>Tổng số lượng: {categories?.data?.length} danh mục</h6>
+                    <h6 style={{ fontSize: '14px' }} className='pb-4 pt-4'>Tổng số lượng: {categories?.data?.length} danh mục</h6>
                 </Col>
             </Row>
             {loading ? (
@@ -125,34 +125,35 @@ const CategoryListScreen = () => {
                         <tbody>
                             {categories?.data?.map((category, index) => (
                                 <tr style={{ margin: '60px 0' }} key={category.id}>
-                                    <td>{index + 1}</td>
+                                    <td style={{ fontWeight: 'bold' }}>{index + 1}</td>
                                     <td>{category.name}</td>
                                     {/* <td className='text-center'>{user.phone}</td> */}
                                     <td className='text-center'>
                                         {
                                             (category.state === 'enable') ?
                                                 <div className='d-flex justify-content-center align-items-center'>
-                                                    <p style={{ background: '#00c292', color: '#e7fff8', borderRadius: '5px' }} className='my-0 mx-3 py-1 px-2'>Hoạt động</p>
+                                                    <p style={{ background: '#00c292', color: '#e7fff8', borderRadius: '5px', fontSize: '12px' }} className='my-0 mx-3 py-1 px-2'>Hoạt động</p>
                                                 </div> :
                                                 <div className='d-flex justify-content-center align-items-center'>
-                                                    <p style={{ background: '#e46a76', color: '#e7fff8', borderRadius: '5px' }} className='my-0 mx-3 py-1 px-2'>Đã khóa</p>
+                                                    <p style={{ background: '#e46a76', color: '#e7fff8', borderRadius: '5px', fontSize: '12px' }} className='my-0 mx-3 py-1 px-2'>Đã khóa</p>
                                                 </div>
                                         }
                                     </td>
                                     <td className='d-flex justify-content-center'>
-                                        <LinkContainer to={`/admin/category/${category.id}/detail`}>
+                                        <LinkContainer style={{ width: 'auto', height: 'auto' }} to={`/admin/category/${category.id}/detail`}>
                                             <Button
+                                                className='my-0 mx-0'
                                                 data-tip data-for="tip1"
-                                                disabled={category.state === 'disable' ? 'true' : ''} variant='secondary' className='btn-sm'>
+                                                disabled={category.state === 'disable' ? 'true' : ''} variant='secondary'>
                                                 <i className='fas fa-eye'></i>
                                             </Button>
                                         </LinkContainer>
-                                        <LinkContainer to={`/admin/category/${category.id}/edit`}>
+                                        <LinkContainer style={{ width: 'auto', height: 'auto' }} to={`/admin/category/${category.id}/edit`}>
                                             <Button
                                                 data-tip data-for="tip2"
                                                 disabled={category.state === 'disable' ? 'true' : ''}
                                                 style={{ background: '#03a9f3' }}
-                                                className='btn-sm mx-2'>
+                                                className='my-0 mx-2'>
                                                 <i className='fas fa-edit'></i>
                                             </Button>
                                         </LinkContainer>
@@ -160,16 +161,16 @@ const CategoryListScreen = () => {
                                         {
                                             category.state === 'enable' ?
                                                 <Button data-tip data-for="tip3"
-                                                    style={{ background: '#ee5261', border: '2px solid #ee5261' }}
-                                                    className='btn-sm'
+                                                    style={{ background: '#ee5261', border: '2px solid #ee5261', width: 'auto', height: 'auto' }}
+                                                    className='my-0 mx-0'
                                                     onClick={() => handleShowBlock(category.id)}
                                                 >
                                                     <i className="fas fa-lock"></i>
                                                 </Button>
                                                 :
                                                 <Button data-tip data-for="tip4"
-                                                    style={{ background: '#00c292', border: '2px solid #00c292' }}
-                                                    className='btn-sm'
+                                                    style={{ background: '#00c292', border: '2px solid #00c292', width: 'auto', height: 'auto' }}
+                                                    className='my-0 mx-0'
                                                     onClick={() => handleShowUnlock(category.id, category.name)}
                                                 >
                                                     <i className="fas fa-unlock"></i>
@@ -204,14 +205,14 @@ const CategoryListScreen = () => {
                 <Modal.Header closeButton>
                     <Modal.Title>Thông báo</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body style={{ fontSize: '14px' }}>
                     Bạn có chắc chắn muốn khóa danh mục này không?
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleCloseBlock}>
+                    <Button variant="secondary" onClick={handleCloseBlock} style={{ fontSize: '14px', textTransform: 'none', width: 'auto' }}>
                         Hủy
                     </Button>
-                    <Button variant="danger" onClick={() => blockHandler(idDelete)}>
+                    <Button variant="danger" onClick={() => blockHandler(idDelete)} style={{ fontSize: '14px', textTransform: 'none', width: 'auto' }}>
                         Đồng ý
                     </Button>
                 </Modal.Footer>
@@ -226,14 +227,14 @@ const CategoryListScreen = () => {
                 <Modal.Header closeButton>
                     <Modal.Title>Thông báo</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body style={{ fontSize: '14px' }}>
                     Bạn có chắc chắn muốn mở khóa danh mục này không?
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleCloseUnlock}>
+                    <Button variant="secondary" onClick={handleCloseUnlock} style={{ fontSize: '14px', textTransform: 'none', width: 'auto' }}>
                         Hủy
                     </Button>
-                    <Button variant="success" onClick={() => unlockHandler(idUnlock, nameUnlock)}>
+                    <Button variant="success" onClick={() => unlockHandler(idUnlock, nameUnlock)} style={{ fontSize: '14px', textTransform: 'none', width: 'auto' }}>
                         Đồng ý
                     </Button>
                 </Modal.Footer>
@@ -247,8 +248,9 @@ const CategoryListScreen = () => {
                 <Modal.Body>
                     <Form>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                            <Form.Label>Tên danh mục</Form.Label>
+                            <Form.Label style={{ fontSize: '14px' }}>Tên danh mục</Form.Label>
                             <Form.Control
+                                style={{ fontSize: '14px' }}
                                 onChange={(e) => setNewName(e.target.value)}
                                 type="text"
                                 placeholder="Nhập tên danh mục"
@@ -258,10 +260,10 @@ const CategoryListScreen = () => {
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="danger" onClick={handleCloseAdd}>
+                    <Button style={{ fontSize: '14px', textTransform: 'none', width: 'auto' }} variant="danger" onClick={handleCloseAdd}>
                         Hủy
                     </Button>
-                    <Button variant="primary" onClick={addHandler}>
+                    <Button style={{ fontSize: '14px', textTransform: 'none', width: 'auto' }} variant="primary" onClick={addHandler}>
                         Lưu danh mục
                     </Button>
                 </Modal.Footer>

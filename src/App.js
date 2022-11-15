@@ -31,6 +31,7 @@ import AdminEditCategory from "./pages/adminPages/AdminCategoryEdit";
 import AdminProductList from "./pages/adminPages/AdminProductList";
 import AdminDetailProduct from "./pages/adminPages/AdminProductDetail";
 import AdminOrdertList from "./pages/adminPages/AdminOrderList";
+import AdminOrderDetail from "./pages/adminPages/AdminOrderDetail";
 import HomeClient from "./pages/clientPages/HomeClient";
 import AboutClient from "./pages/clientPages/AboutClient";
 import CartClient from "./pages/clientPages/CartClient";
@@ -43,6 +44,8 @@ import ErrorClient from "./pages/clientPages/ErrorClient";
 import "./scss/index.scss";
 import ForgotPasswordClient from "./pages/clientPages/ForgotPasswordClient";
 import ChangePasswordClient from "./pages/clientPages/ChangePasswordClient";
+import MyOrderClient from "./pages/clientPages/MyOrderClient";
+import UserDetailClient from "./pages/clientPages/UserDetailClient";
 
 function App() {
   const { theme } = useThemeContext();
@@ -103,6 +106,10 @@ function App() {
 
           <Route path='/forgotpassword' element={<ForgotPasswordClient />} />
 
+          <Route path='/myorder' element={<MyOrderClient />} />
+
+          <Route path='/profile' element={<UserDetailClient />} />
+
           {/* Admin */}
           {/* Dashboard */}
           {/* <Route path='/admin/dashboard' element={<AdminDashboard />} /> */}
@@ -119,12 +126,12 @@ function App() {
 
           {/* Admin Product */}
           <Route path='/admin/productlist' element={<AdminProductList />} exact />
-          {/* <Route path='/admin/productlist/:pageNumber' element={<AdminProductList />} exact /> */}
           <Route path='/admin/product/:id/detail' element={<AdminDetailProduct />} />
           {/* <Route path='/admin/product/:id/edit' element={<AdminProductEdit />} /> */}
 
           {/* Admin Order */}
           <Route path='/admin/orderlist' element={<AdminOrdertList />} />
+          <Route path='/admin/order/:id/detail' element={<AdminOrderDetail />} />
 
         </Routes>
         {/* <Footer /> */}

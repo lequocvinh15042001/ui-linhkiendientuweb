@@ -67,7 +67,7 @@ const CategoryEditScreen = () => {
                 </Link>
             </Row>
             <Row className='align-items-center mx-4 mt-4 px-4' style={{ background: 'white' }}>
-                <h5 className='d-flex justify-content-center py-3'>Chỉnh sửa thông tin danh mục</h5>
+                <h5 style={{fontSize: '20px'}} className='d-flex justify-content-center py-3'>Chỉnh sửa thông tin danh mục</h5>
                 {loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> :
                     (
                         <>
@@ -82,7 +82,7 @@ const CategoryEditScreen = () => {
                                                 <Form.Control style={{ fontSize: '14px' }} type='name' placeholder='Nhập tên người dùng' value={name} onChange={(e) => setName(e.target.value)}></Form.Control>
                                             </Form.Group>
                                             <Form.Group className='d-flex justify-content-center py-3'>
-                                                <Button style={{ background: '#03a9f3', border: 'none', fontSize: '14px' }} type='submit'>Cập nhật danh mục</Button>
+                                                <Button style={{ background: '#03a9f3', border: 'none', fontSize: '14px', textTransform: 'none', width: 'auto', padding: '10px' }} type='submit'>Cập nhật danh mục</Button>
                                             </Form.Group>
                                         </Form>
                                     </div>

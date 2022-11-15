@@ -3,6 +3,11 @@
 .navbar1{
     padding: 16px 0 0 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 9999;
+    background-color: white;
     &-brand{
         font-size: 30px;
         font-weight: 700;
@@ -35,6 +40,7 @@
         align-items: stretch;
         &-input{
             width: 100%;
+            min-width: 75px;
             border: 0.5px solid rgba(0, 0, 0, 0.05);
             color: $clr-light-blue;
             height: 30px;
@@ -51,7 +57,7 @@
 
             &:hover{
                 background-color: $clr-regal-blue;
-            }
+            }   
         }
     }
 

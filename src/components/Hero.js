@@ -29,6 +29,7 @@ const Hero = () => {
 
 const Wrapper = styled.section`
   min-height: 60vh;
+  margin-top: 6rem;
   display: grid;
   place-items: center;
   .img-container {
@@ -53,8 +54,15 @@ const Wrapper = styled.section`
       font-size: 1rem;
     }
     .hero-btn {
-      padding: 0.75rem 1.5rem;
-      font-size: 0.75rem;
+      padding: 2rem 2rem !important;
+      font-size: 1rem !important;
+      color: darkblue;
+      font-weight: 700;
+      :hover{
+        background-color: darkblue;
+        color: white;
+
+      }
     }
     .img-container {
       display: block;

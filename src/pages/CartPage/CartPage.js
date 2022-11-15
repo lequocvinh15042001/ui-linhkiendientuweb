@@ -1,20 +1,38 @@
 import React, {useEffect} from 'react';
 import "./CartPage.scss";
 import { useSelector, useDispatch } from 'react-redux';
-import {Link} from "react-router-dom";
-import { removeFromCart, toggleCartQty, getCartTotal, clearCart } from '../../store/cartSlice';
+import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
+// import { removeFromCart, toggleCartQty, getCartTotal, clearCart } from '../../store/cartSlice';
 import {formatPrice} from "../../utils/helpers";
+import { deleteProductInCart, getCart } from '../../actions/cartActions';
 
 const CartPage = () => {
-    const dispatch = useDispatch();
-    const {data: cartProducts, totalItems, totalAmount, deliveryCharge} = useSelector(state => state.cart);
+    let location = useLocation();
+    const productId = useParams().id
+    // console.log('==', productId)
+    const quantity = location.search ? Number(location.search.split('=')[1]) : 1
+    // console.log('==', quantity)
 
+    const userLogin = useSelector((state)=> state.userLogin)
+    console.log(userLogin.userInfo);
+
+    const dispatch = useDispatch()
+  
+    const navigate = useNavigate()
+  
+    const {carts} = useSelector(state => state.cartList)
+    // const { cartItems } = cart
+    console.log('-=-=', carts)
+  
     useEffect(() => {
-        dispatch(getCartTotal());
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [useSelector(state => state.cart)]); 
-
-    const emptyCartMsg = <h4 className='text-red fw-6'>No items found!</h4>;
+        dispatch(getCart())
+    }, [productId, quantity])
+  
+    const removeFromCartHandler = (id) => {
+        dispatch(deleteProductInCart(id))
+        navigate('/cart')
+    }
+    const emptyCartMsg = <h4 className='text-red fw-6'>Không có sản phẩm được chọn!</h4>;
 
     return (
       <div className = "cart-page">
@@ -39,39 +57,39 @@ const CartPage = () => {
                     <h3 className = "text-uppercase fw-7 text-regal-blue ls-1">My Cart</h3>
                 </div>
                 {
-                    cartProducts.length === 0 ? emptyCartMsg : (
+                    carts.data?.totalProduct === 0 || carts === undefined ? emptyCartMsg : (
                         <div className = "cart-content grid">
                             <div className='cart-left'>
                                 <div className = "cart-items grid">
                                     {
-                                        cartProducts.map(cartProduct => (
+                                        carts.data?.items?.map(cartProduct => (
                                             <div className='cart-item grid' key = {cartProduct.id}>
                                                 <div className='cart-item-img flex flex-column bg-white'>
-                                                    <img src = {cartProduct.images[0]} alt = {cartProduct.title} />
-                                                    <button type = "button" className='btn-square rmv-from-cart-btn' onClick={() => dispatch(removeFromCart(cartProduct.id))}>
+                                                    <img src = {cartProduct.image[0].url} alt = {cartProduct.name} />
+                                                    <button type = "button" className='btn-square rmv-from-cart-btn' onClick={() => dispatch(removeFromCartHandler(cartProduct.itemId))}>
                                                         <span className='btn-square-icon'><i className='fas fa-trash'></i></span>
                                                     </button>
                                                 </div>
 
                                                 <div className='cart-item-info'>
-                                                    <h6 className='fs-16 fw-5 text-light-blue'>{cartProduct.title}</h6>
+                                                    <h6 className='fs-16 fw-5 text-light-blue'>{cartProduct.name}</h6>
                                                     <div className = "qty flex">
-                                                        <span className = "text-light-blue qty-text">Qty: </span>
+                                                        <span className = "text-light-blue qty-text">SL: </span>
                                                         <div className = "qty-change flex">
-                                                        <button type = "button" className='qty-dec fs-14' onClick={() => dispatch(toggleCartQty({id: cartProduct.id, type: "DEC"}))}>
+                                                        <button type = "button" className='qty-dec fs-14'>
                                                             <i className = "fas fa-minus text-light-blue"></i>
                                                         </button>
                                                         <span className = "qty-value flex flex-center">{cartProduct.quantity}</span>
-                                                        <button type = "button" className='qty-inc fs-14 text-light-blue' onClick={() => dispatch(toggleCartQty({id: cartProduct.id, type: "INC"}))}>
+                                                        <button type = "button" className='qty-inc fs-14 text-light-blue'>
                                                             <i className = "fas fa-plus"></i>
                                                         </button>
                                                         </div>
                                                     </div>
                                                     <div className = "flex flex-between">
-                                                        <div className='text-pine-green fw-4 fs-15 price'>Price : {formatPrice(cartProduct.price)}.00</div>
+                                                        <div className='text-pine-green fw-4 fs-15 price'>Price : {formatPrice(cartProduct.price)}</div>
                                                         <div className='sub-total fw-6 fs-18 text-regal-blue'>
-                                                            <span>Sub Total: </span>
-                                                            <span className=''>{formatPrice(cartProduct.totalPrice)}</span>
+                                                            <span>Tổng: </span>
+                                                            <span className=''>{formatPrice(cartProduct.price * cartProduct.quantity)}</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -79,41 +97,54 @@ const CartPage = () => {
                                         ))
                                     }
                                 </div>
-                                <button type = "button" className='btn-danger' onClick={() => dispatch(clearCart())}>
+                                {/* <button type = "button" className='btn-danger'>
                                     <span className = "fs-16">Clear Cart</span> 
-                                </button>
+                                </button> */}
                             </div>
                             <div className='cart-right bg-white'>
                                 <div className = 'cart-summary text-light-blue'>
                                     <div className='cart-summary-title'>
-                                        <h6 className='fs-20 fw-5'>Order Summary</h6>
+                                        <h6 className='fs-20 fw-5'>Thông tin đơn hàng</h6>
                                     </div>
                                     <ul className = 'cart-summary-info'>
                                         <li className = "flex flex-between">
-                                            <span className='fw-4'>Selected {totalItems} items(s) Price</span>
-                                            <span className='fw-7'>{formatPrice(totalAmount)}</span>
+                                            <span className='fw-4'>Đã chọn {carts.data?.totalProduct} sản phẩm - Giá</span>
+                                            <span className='fw-7'>{formatPrice(carts.data?.totalPrice)}</span>
                                         </li>
                                         <li className='flex flex-between'>
-                                            <span className='fw-4'>Discount</span>
+                                            <span className='fw-4'>Giảm giá</span>
                                             <span className='fw-7'>
                                                 <span className='fw-5 text-red'>-&nbsp;</span>
                                                 {formatPrice(0)}
                                             </span>
                                         </li>
                                         <li className='flex flex-between'>
-                                            <span className='fw-4'>Delivery Cost</span>
+                                            <span className='fw-4'>Phí vận chuyển</span>
                                             <span className='fw-7'>
-                                                <span className='fw-5 text-gold'>+&nbsp;</span>{formatPrice(deliveryCharge)}
+                                                <span className='fw-5 text-gold'>+&nbsp;50.000VND</span>
                                             </span>
                                         </li>
                                     </ul>
                                     <div className='cart-summary-total flex flex-between fs-18'>
                                         <span className='fw-6'>Grand Total: </span>
-                                        <span className='fw-6'>{formatPrice(totalAmount + deliveryCharge)}</span>
+                                        <span className='fw-6'>
+                                            {carts.data?.totalPrice + 50000}
+                                        </span>
                                     </div>
                                     <div className='cart-summary-btn'>
-                                        <button type = "button" className='btn-secondary'>Proceed to Checkout</button>
+                                    {userLogin.userInfo ? (
+                                    <Link to={`/shipping/${carts?.data?.id}`}>
+                                        <button  className="btn-secondary">
+                                        Thanh toán
+                                        </button>
+                                    </Link>
+                                    ) : (
+                                    <button type="button" onClick={null} className="btn-secondary">
+                                        Đăng nhập để thanh toán
+                                    </button>
+                                    )}
                                     </div>
+                                        {/* <button type = "button" className='btn-secondary'>Proceed to Checkout</button> */}
                                 </div>
                             </div>
                         </div>

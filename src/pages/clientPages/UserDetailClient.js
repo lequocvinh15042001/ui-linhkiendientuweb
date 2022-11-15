@@ -1,19 +1,20 @@
 import React, { Fragment } from 'react'
-import { Cart } from '..'
-import { Footer, Navbar, Sidebar } from '../../components'
 import Navbar1 from './../../components/Navbar/Navbar'
 import Footerr from "./../../components/Footerr"
-import CartPage from '../../pages/CartPage/CartPage'
+import Profile from '../Profile'
+import { Sidebar } from '../../components'
+import ContactHelp from '../../components/ContactHelp'
 
-const CartClient = () => {
+const UserDetailClient = () => {
   return (
     <Fragment>
     <Navbar1/>
     <Sidebar/>
-    <CartPage/>
+    <Profile/>
+    <ContactHelp/>
     <Footerr/>
     </Fragment>
   )
 }
 
-export default CartClient
+export default UserDetailClient

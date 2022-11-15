@@ -30,6 +30,7 @@ import {
   orderListMyReducer,
   orderListAdminReducer,
   orderAllReducer,
+  orderDetailAdminReducer,
 } from './reducers/orderReducers'
 
 import {
@@ -83,6 +84,7 @@ const reducer = combineReducers({
   // Admin - Order
   orderAll: orderAllReducer,
   orderListAdmin: orderListAdminReducer,
+  orderDetailAdmin: orderDetailAdminReducer,
 })
 
 const cartItemsFromStorage = localStorage.getItem('cartItems')

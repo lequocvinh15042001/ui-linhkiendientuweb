@@ -59,19 +59,26 @@ const AddToCart = ({ product }) => {
           })}
         </div>
       </div> */}
-      <div className="btn-container">
-        <AmountButtons
-          amount={amount}
-          increase={increase}
-          decrease={decrease}
-        />
-        <button
+      <div className="d-flex justify-content-between flex-wrap">
+        <div className="d-flex justify-content-between align-items-center" style={{margin: '0 auto'}}>
+          <h4 className="my-0 me-3">
+            Số lượng: 
+          </h4>
+          <AmountButtons
+            amount={amount}
+            increase={increase}
+            decrease={decrease}
+          />
+        </div>
+        <button 
+          style={{ background: '#3399ff', color: 'white', fontSize: '14px', width: 'auto', textTransform: 'none', padding: '10px 20px', margin: '10px auto' }}
           //to="/cart"
           className="btn"
           onClick={() => {
-            addToCartHandler()}}
+            addToCartHandler()
+          }}
         >
-          add to cart
+          Thêm vào giỏ hàng
         </button>
       </div>
     </Wrapper>

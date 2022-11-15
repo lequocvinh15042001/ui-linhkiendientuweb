@@ -56,14 +56,14 @@ const CategoryDetailScreen = () => {
                 </Link>
             </Row>
             <Row className='align-items-center mx-4 mt-4 px-4' style={{ background: 'white' }}>
-                <h5 className='d-flex justify-content-center py-3'>Chi tiết thông tin danh mục</h5>
+                <h5 style={{ fontSize: '20px' }} className='d-flex justify-content-center py-3'>Chi tiết thông tin danh mục</h5>
                 {loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> :
                     (
                         <>
-                            <Row className='d-flex justify-content-center align-items-center'>
-                                <Row className='py-2'>
-                                    <Col xl={3}>
-                                        <h6>ID danh mục</h6>
+                            <Row className='d-flex justify-content-center align-items-center py-3'>
+                                <Row className='py-3'>
+                                    <Col style={{ fontSize: '14px' }} xl={3}>
+                                        <h6 style={{fontSize: '14px'}}>ID danh mục</h6>
                                     </Col>
                                     <Col xl={8} className='d-flex'>
                                         <p className='mx-0 my-0' style={{ width: 'auto' }}>{category?.data?.id}</p>
@@ -72,9 +72,9 @@ const CategoryDetailScreen = () => {
                                         </CopyToClipboard>
                                     </Col>
                                 </Row>
-                                <Row className='py-2'>
-                                    <Col xl={3}>
-                                        <h6>Trạng thái danh mục</h6>
+                                <Row className='py-3'>
+                                    <Col style={{ fontSize: '14px' }} xl={3}>
+                                        <h6 style={{fontSize: '14px'}}>Trạng thái danh mục</h6>
                                     </Col>
                                     {
                                         (category?.data?.state === 'enable') ?
@@ -86,9 +86,9 @@ const CategoryDetailScreen = () => {
                                             </Col>
                                     }
                                 </Row>
-                                <Row className='pt-2 pb-3'>
-                                    <Col xl={3}>
-                                        <h6>Tên danh mục</h6>
+                                <Row className='py-3'>
+                                    <Col style={{ fontSize: '14px' }} xl={3}>
+                                        <h6 style={{fontSize: '14px'}}>Tên danh mục</h6>
                                     </Col>
                                     <Col xl={8} className='d-flex'>
                                         <p className='mx-0 my-0'>{category?.data?.name}</p>

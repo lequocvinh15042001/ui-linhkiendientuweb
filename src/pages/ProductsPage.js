@@ -7,7 +7,7 @@ import AllProduct from "./../components/AllProduct/AllProduct"
 const ProductsPage = () => {
   return (
     <main id="main">
-      <PageHero title="products" />
+      <PageHero title="Sản phẩm" />
       <Wrapper className="page">
         <div className="section-center products">
           <Filters />

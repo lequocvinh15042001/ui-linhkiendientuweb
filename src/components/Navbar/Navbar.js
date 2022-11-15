@@ -8,6 +8,10 @@ import { links } from "./../../utils/constants";
 import { getCart } from '../../actions/cartActions';
 import { Nav, NavDropdown } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
+import { logout } from '../../actions/userActions';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import TextField from '@material-ui/core/TextField';
+import { Button } from 'react-bootstrap'
 
 
 const Navbar = () => {
@@ -37,7 +41,7 @@ const Navbar = () => {
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, []);
   const logoutHandler = () => {
-    //dispatch(logout())
+    dispatch(logout())
     navigate('/')
     window.location.reload()
   }
@@ -55,6 +59,33 @@ const Navbar = () => {
         return null;
     }
   };
+//search
+const productList = useSelector(state => state.productList)
+const { products } = productList
+console.log('==', products?.data?.list)
+
+// Search
+const myOptions = [];
+const getDataSearch = (product) => {
+    product?.data?.list?.forEach(prod => {
+        myOptions.push(prod.name)
+    })
+}
+
+getDataSearch(products)
+
+const [selectedOptions, setSelectedOptions] = useState('');
+
+const handleSubmit = () => {
+    // console.log('==', selectedOptions);
+    products?.data?.list?.find(prod => {
+        if (prod.name === selectedOptions) {
+            navigate(`/products/${prod.id}`)
+        }
+    })
+}
+
+
   return (
     <nav className = "navbar1">
       <div className='navbar1-content'>
@@ -65,10 +96,47 @@ const Navbar = () => {
               </Link>
 
               <form className = "navbar1-search flex">
-                <input className= "navbar1-search-input" type = "text" placeholder='Search here ...' />
-                <button type = "submit" className = "navbar1-search-btn">
+                <div>
+                <Autocomplete disablePortal options={myOptions.sort()} onChange={(event, value) => setSelectedOptions(value)}
+                        renderInput={(params) => (
+                            <TextField
+                            style={{ minWidth: '30rem',     
+                            width: "100%",
+                            border: "1px solid black",
+                            color: "$clr-light-blue",
+                            paddingLeft: "4px",
+                            fontSize: "medium",
+                            }}
+                                className= "navbar1-search-input"
+                                {...params}
+                                InputProps={{ ...params.InputProps, disableUnderline: true }}
+                                placeholder='Nhập tên sản phẩm cần tìm, ví dụ: Cảm biến hồng ngoại'
+                            />
+                        )}
+                    />
+                </div>
+                {/* <div className='d-flex align-items-center mb-5 py-0 px-3 shadow-sm p-3 mb-5 bg-white rounded' style={{ background: '#ffffff', borderRadius: '10px', border: 'solid 1px #3CB371' }}>
+                <div className='w-100'>
+                    <Autocomplete disablePortal options={myOptions.sort()} onChange={(event, value) => setSelectedOptions(value)}
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                InputProps={{ ...params.InputProps, disableUnderline: true }}
+                                placeholder='Nhập tên sản phẩm cần tìm, ví dụ: Cà chua'
+                            />
+                        )}
+                    />
+                </div>
+
+                </div> */}
+                {/* <button type = "submit" className = "navbar1-search-btn">
                   <i className = "fas fa-search"></i>
-                </button>
+                </button> */}
+                <div>
+                  <button onClick={handleSubmit} className = "navbar1-search-btn">
+                    <i className = "fas fa-search"></i>
+                  </button>
+                </div>
               </form>
 
               <div className = "navbar1-btns">
@@ -106,6 +174,9 @@ const Navbar = () => {
                       </LinkContainer>
                       <LinkContainer to='/changepassword'>
                           <NavDropdown.Item>Đổi mật khẩu</NavDropdown.Item>
+                      </LinkContainer>
+                      <LinkContainer to='/myorder'>
+                          <NavDropdown.Item>Đơn hàng của tôi</NavDropdown.Item>
                       </LinkContainer>
                       <NavDropdown.Item onClick={logoutHandler}>Đăng xuất</NavDropdown.Item>
                   </NavDropdown>

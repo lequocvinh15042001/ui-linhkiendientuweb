@@ -6,8 +6,8 @@ const ProductImages = ({ images = [{ url: "" }] }) => {
   console.log(images);
 
   return (
-    <Wrapper>
-      <img src={main.url} alt="main_image" className="main" />
+    <Wrapper style={{ margin: '0 auto' }}>
+      <img src={main.url} alt="main_image" className="main" style={{ width: '400px', height: '400px' }} />
       <div className="gallery">
         {images.map((image, index) => {
           return (
@@ -27,7 +27,7 @@ const ProductImages = ({ images = [{ url: "" }] }) => {
 
 const Wrapper = styled.section`
   .main {
-    height: 600px;
+    height: auto;
   }
   img {
     width: 100%;
@@ -51,6 +51,24 @@ const Wrapper = styled.section`
   @media (max-width: 576px) {
     .main {
       height: 300px;
+    }
+    img {
+      width: 100%;
+      padding: 0%;
+    }
+    .gallery {
+      img {
+        height: 50px;
+      }
+    }
+  }
+  @media (max-width: 780px) {
+    .main {
+      height: 300px;
+    }
+    img {
+      width: 100%;
+      padding: 0%;
     }
     .gallery {
       img {
