@@ -22,12 +22,11 @@ $transition: all 300ms linear;
   box-sizing: border-box;
   scroll-behavior: smooth;
 }
-html{
-  font-size: 10px;
-}
+// html{
+//   font-size: 18px;
+// }
 body{
-  font-size: 1.6rem;
-  line-height: 1.6;
+  line-height: 1;
   font-family: $fnt-base;
   color: $clr-black;
 }
@@ -50,14 +49,6 @@ img{
     width: 100%;
     height: 100%;
     object-fit: cover;
-}
-button{
-    cursor: pointer;
-    outline: 0;
-    border: none;
-    background-color: transparent;
-    font-family: inherit;
-    font-size: 1.8rem;
 }
 input, textarea, select{
     outline: 0;
@@ -195,6 +186,7 @@ input, textarea, select{
   display: inline-block;
   border-radius: 6px;
   transition: $transition;
+  background-color: #eeb808;
 
   .btn-icon{
     margin-right: 8px;

@@ -3,29 +3,33 @@ import styled from "styled-components";
 
 import { ThemeChange } from "./index";
 
-const Contact = () => {
+const ContactHelp = () => {
   return (
     <Wrapper>
       <div className="section-center">
-        <h3>Nhập thông tin email, theo dõi thông báo và được giảm giá 25%</h3>
+        <h3>Nhập thông tin phản hồi để được liên hệ hỗ trợ</h3>
         <div className="content">
           <p>
             {" "}
-            Công ty linh kiện điện tử chúng tôi là một công ty rất thành công. Chúng tôi không có lý do nào để từ chối mọi yêu cầu của khách hàng,bởi sự thành công này sẽ thật sự tồn tại và được gây dựng nên bởi lòng tin của bạn...
+            Chúng tôi mong muốn nhận được những phản hồi từ khách hàng, nhằm giúp nâng cao chất lượng dịch vụ!
+          </p>
+          <p>
+            {" "}
+            Hotline: (+84) 9999 999 99
           </p>
           <form
             method="POST"
             action="https://formspree.io/f/xbjpwdyq"
             className="contact-form"
           >
-            <input
+            <textarea
               type="email"
               name="_replyto"
-              placeholder="Nhập email"
+              placeholder="Nhập thông tin phản hồi"
               className="form-input"
             />
             <button type="submit" className="submit-btn">
-              Đăng ký
+              Gửi
             </button>
           </form>
         </div>
@@ -38,26 +42,26 @@ const Contact = () => {
             marginTop: "50px",
           }}
         ></div>
-        <ThemeChange />
       </div>
     </Wrapper>
   );
 };
 const Wrapper = styled.section`
-  padding: 5rem 0;
+  padding: 2rem 0;
   h3 {
     text-transform: none;
   }
   p {
     line-height: 2;
     max-width: 45em;
-    color: var(--clr-grey-5);
+    color: var(--dark-blue);
   }
   .contact-form {
     width: 90vw;
     max-width: 500px;
     display: grid;
     grid-template-columns: 1fr auto;
+
   }
 
   .form-input,
@@ -70,6 +74,8 @@ const Wrapper = styled.section`
     border-right: none;
     border-top-left-radius: var(--radius);
     border-bottom-left-radius: var(--radius);
+    height: 100px;
+    justify-items:center;
   }
   .submit-btn {
     border-top-right-radius: var(--radius);
@@ -80,15 +86,16 @@ const Wrapper = styled.section`
     text-transform: capitalize;
   }
   .submit-btn {
-    background: var(--clr-primary-5);
+    background: var(--dark-blue);
     text-transform: capitalize;
     letter-spacing: var(--spacing);
     cursor: pointer;
     transition: var(--transition);
-    color: var(--clr-black);
+    color: orange;
   }
   .submit-btn:hover {
-    color: var(--clr-white);
+    color: var(--dark-blue);
+    background-color: orange;
   }
   @media (min-width: 992px) {
     .content {
@@ -107,4 +114,4 @@ const Wrapper = styled.section`
   }
 `;
 
-export default Contact;
+export default ContactHelp;

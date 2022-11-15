@@ -9,13 +9,12 @@ const Services = () => {
       <div className="section-center">
         <article className="header">
           <h3>
-            custom furniture <br />
-            built only for you
+            Lựa chọn những sản phẩm <br />
+            xây dựng nên cá nhân bạn
           </h3>
           <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Velit,
-            modi quaerat deserunt quam odit nostrum amet blanditiis sed nisi
-            neque!
+            Chúng tôi tự hào là đơn vị đi đầu trong lĩnh vực kinh doanh thiết bị, liên kiện điện tử số 1 Thành phố Hồ Chí Minh, Việt Nam.
+            Hãy đến với chúng tôi, chọn những sản phẩm phù hợp và tốt nhất dành cho bạn!
           </p>
         </article>
         <div className="services-center">

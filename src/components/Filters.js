@@ -41,8 +41,8 @@ const Filters = () => {
   return (
     <Wrapper>
       <div className="content">
-        <form onSubmit={(e) => e.preventDefault()}>
-          <div className="form-control">
+        <form className="formm" onSubmit={(e) => e.preventDefault()}>
+          {/* <div className="form-control">
             <input
               ref={refContainer}
               type="text"
@@ -52,9 +52,9 @@ const Filters = () => {
               value={text}
               // onChange={updateFilters}
             />
-          </div>
-          <div className="form-control">
-            <h5>Danh mục sản phẩm</h5>
+          </div> */}
+          <div className="formm-control">
+            <h5 className="content">Danh mục sản phẩm</h5>
             <div>
               {categories?.data?.map((c, index) => {
                 return (
@@ -151,16 +151,26 @@ const Filters = () => {
             />
           </div> */}
         </form>
-        <button type="button" className="clear-btn" onClick={clearFilters}>
+        {/* <button type="button" className="clear-btn" onClick={clearFilters}>
           clear filters
-        </button>
+        </button> */}
       </div>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.section`
-  .form-control {
+  .content{
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  .formm{
+    min-width: 13rem;
+    border: 1px solid darkblue;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  .formm-control {
     margin-bottom: 1.25rem;
     h5 {
       margin-bottom: 0.5rem;

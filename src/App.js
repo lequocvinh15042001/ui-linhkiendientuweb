@@ -32,7 +32,6 @@ import AdminProductList from "./pages/adminPages/AdminProductList";
 import AdminDetailProduct from "./pages/adminPages/AdminProductDetail";
 import AdminOrdertList from "./pages/adminPages/AdminOrderList";
 import AdminOrderDetail from "./pages/adminPages/AdminOrderDetail";
-import AdminEditProduct from "./pages/adminPages/AdminProductEdit";
 
 function App() {
   const { theme } = useThemeContext();
@@ -51,23 +50,22 @@ function App() {
 
   return (
     <AuthWrapper>
-      <Fragment>
-        {/* <Navbar /> */}
-        {/* <Sidebar /> */}
+        {/* <Navbar />
+        <Sidebar /> */}
         <Routes>
-          <Route exact path="/" element={<Home />} />
-          <Route exact path="/about" element={<About />} />
+          <Route exact path="/" element={<HomeClient />} />
+          <Route exact path="/about" element={<AboutClient />} />
 
           <Route path='/login' element={<LoginPage />} />
           <Route path='/register' element={<RegisterPage />} />
 
-          <Route exact path="/cart" element={<Cart />}>
+          <Route exact path="/cart" element={<CartClient />}>
           </Route>
 
-          <Route exact path="/cart/:id" element={<Cart />}>
+          <Route exact path="/cart/:id" element={<CartClient />}>
           </Route>
 
-          <Route exact path="/products" element={<Products />}>
+          <Route exact path="/products" element={<ProductsClient />}>
 
           </Route>
 
@@ -80,15 +78,23 @@ function App() {
             {/* <ItemList /> */}
           </Route>
 
-          <Route exact path="/products/:id" element={<SingleProduct />} />
+          <Route exact path="/products/:id" element={<SingleProductClient />} />
 
-          <Route exact path="/checkout" element={<Checkout />} />
+          <Route exact path="/checkout" element={<CheckoutClient />} />
 
-          <Route path='/shipping/:id' element={<ShippingScreen />} />
+          <Route path='/shipping/:id' element={<ShippingScreenClient />} />
 
-          <Route path='/payment' element={<PaymentScreen />} />
+          <Route path='/payment' element={<PaymentScreenClient />} />
 
-          <Route path="*" element={<Error />}></Route>
+          <Route path="*" element={<ErrorClient />}></Route>
+
+          <Route path='/changepassword' element={<ChangePasswordClient />} />
+
+          <Route path='/forgotpassword' element={<ForgotPasswordClient />} />
+
+          <Route path='/myorder' element={<MyOrderClient />} />
+
+          <Route path='/profile' element={<UserDetailClient />} />
 
           {/* Admin */}
           {/* Dashboard */}
@@ -115,7 +121,7 @@ function App() {
 
         </Routes>
         {/* <Footer /> */}
-      </Fragment>
+      {/* </Fragment> */}
     </AuthWrapper>
   );
 }

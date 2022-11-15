@@ -44,6 +44,7 @@ const RegisterScreen = () => {
             setMessage('Vui lòng điền đủ thông tin')
         } else {
             dispatch(register(name, email, password, phone, address))
+            navigate('/login')
         }
     }
 

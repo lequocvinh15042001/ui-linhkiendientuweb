@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import styled from "styled-components";
 
-import { Footer, Navbar, PageHero, Sidebar } from "../components";
+import { PageHero } from "../components";
 import aboutImg from "../assets/hero-bcg.jpeg";
 
 const AboutPage = () => {
@@ -25,7 +25,6 @@ const AboutPage = () => {
             maxime unde.
           </p>
         </article>
-        <Footer />
       </Wrapper>
     </Fragment>
   );

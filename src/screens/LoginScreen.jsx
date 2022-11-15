@@ -29,10 +29,10 @@ const LoginScreen = () => {
 
 
     useEffect(() => {
-        // if (userInfo) {
-        //     navigate('/')
-        //     window.location.reload()
-        // }
+        if (userInfo) {
+            navigate('/')
+            window.location.reload()
+        }
     }, [navigate, userInfo])
 
     const user = { email, password }
@@ -40,6 +40,7 @@ const LoginScreen = () => {
     const submitHandler = (e) => {
         e.preventDefault()
         dispatch(login(user))
+        navigate('/')
         console.log("==", user);
     }
 

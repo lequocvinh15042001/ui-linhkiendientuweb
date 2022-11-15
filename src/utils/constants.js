@@ -3,17 +3,17 @@ import { GiCompass, GiDiamondHard, GiStabbedNote } from 'react-icons/gi'
 export const links = [
   {
     id: 1,
-    text: 'trang chủ',
+    text: 'Trang chủ',
     url: '/',
   },
   {
     id: 2,
-    text: 'về chúng tôi',
+    text: 'Về chúng tôi',
     url: '/about',
   },
   {
     id: 3,
-    text: 'sản phẩm',
+    text: 'Sản phẩm',
     url: '/products',
   },
   {
@@ -32,23 +32,23 @@ export const services = [
   {
     id: 1,
     icon: <GiCompass />,
-    title: 'mission',
+    title: 'sứ mệnh',
     text:
-      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptates, ea. Perferendis corrupti reiciendis nesciunt rerum velit autem unde numquam nisi',
+      'Bản thân khách hàng, khách hàng sẽ có thể theo dõi những sản phẩm linh kiện của công ty. Những linh kiện, sản phẩm điện tử được chúng tôi  chọn lọc rất kỹ càng, mang đến niềm tin và độ chính xác cao cho khách hàng, tự hào là dịch vụ số một Thành phố Hồ Chí Minh',
   },
   {
     id: 2,
     icon: <GiDiamondHard />,
-    title: 'vision',
+    title: 'tầm nhìn',
     text:
-      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptates, ea. Perferendis corrupti reiciendis nesciunt rerum velit autem unde numquam nisi',
+      'Bản thân khách hàng, khách hàng sẽ có thể theo dõi những sản phẩm linh kiện của công ty. Những linh kiện, sản phẩm điện tử được chúng tôi  chọn lọc rất kỹ càng, mang đến niềm tin và độ chính xác cao cho khách hàng, tự hào là dịch vụ số một Thành phố Hồ Chí Minh',
   },
   {
     id: 3,
     icon: <GiStabbedNote />,
-    title: 'history',
+    title: 'hội nhập',
     text:
-      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptates, ea. Perferendis corrupti reiciendis nesciunt rerum velit autem unde numquam nisi',
+      'Bản thân khách hàng, khách hàng sẽ có thể theo dõi những sản phẩm linh kiện của công ty. Những linh kiện, sản phẩm điện tử được chúng tôi  chọn lọc rất kỹ càng, mang đến niềm tin và độ chính xác cao cho khách hàng, tự hào là dịch vụ số một Thành phố Hồ Chí Minh',
   },
 ]
 

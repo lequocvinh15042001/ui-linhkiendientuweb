@@ -53,9 +53,17 @@ const List = () => {
                     </div>
                 </div>
             </div>
-            <NavLink className="btn" to="/product">
+            <div style={{
+                textAlign: "center",
+                alignItems: "center",
+                alignContent: "center",
+                margin: "20px 0",
+            }}>
+            <NavLink className="btn" to="/products">
                 Xem tất cả
             </NavLink>
+            </div>
+
         </section>
   )
 }
