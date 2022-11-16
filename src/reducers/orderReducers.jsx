@@ -25,6 +25,12 @@ import {
   ORDER_DETAIL_REQUEST,
   ORDER_DETAIL_SUCCESS,
   ORDER_DETAIL_FAIL,
+  ORDER_SET_DELEVERY_REQUEST,
+  ORDER_SET_DELEVERY_SUCCESS,
+  ORDER_SET_DELEVERY_FAIL,
+  ORDER_SET_PAID_REQUEST,
+  ORDER_SET_PAID_SUCCESS,
+  ORDER_SET_PAID_FAIL,
 } from "../constants/orderConstants";
 
 export const orderCreateReducer = (state = {}, action) => {
@@ -203,6 +209,48 @@ export const orderDetailAdminReducer = (state = { order: {} }, action) => {
         order: action.payload,
       }
     case ORDER_DETAIL_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      }
+    default:
+      return state
+  }
+}
+
+export const orderSetDeliveryReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ORDER_SET_DELEVERY_REQUEST:
+      return {
+        loading: true,
+      }
+    case ORDER_SET_DELEVERY_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+      }
+    case ORDER_SET_DELEVERY_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      }
+    default:
+      return state
+  }
+}
+
+export const orderSetPaidReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ORDER_SET_PAID_REQUEST:
+      return {
+        loading: true,
+      }
+    case ORDER_SET_PAID_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+      }
+    case ORDER_SET_PAID_FAIL:
       return {
         loading: false,
         error: action.payload,

@@ -10,7 +10,8 @@ import {
   listProductsAdmin,
   lockProduct,
   createProduct,
-  listCategory
+  listCategory,
+  unlockProduct
 } from '../../actions/productActions'
 import { PRODUCT_CREATE_RESET } from '../../constants/productConstants'
 import { useNavigate } from 'react-router-dom'
@@ -61,6 +62,13 @@ const ProductListScreen = () => {
     success: successDelete,
   } = productDelete
 
+  const productUnlock = useSelector((state) => state.productUnlock)
+  const {
+    loading: loadingUnlock,
+    error: errorUnlock,
+    success: successUnlock,
+  } = productUnlock
+
   const productCreate = useSelector((state) => state.productCreate)
   const {
     loading: loadingCreate,
@@ -82,7 +90,7 @@ const ProductListScreen = () => {
     } else {
       navigate('/login')
     }
-  }, [dispatch, navigate, userInfo, successDelete, successCreate, createdProduct, pageNum, pageSize])
+  }, [dispatch, navigate, userInfo, successDelete, successCreate, successUnlock, createdProduct, pageNum, pageSize])
 
   // Block Product
   const [show, setShow] = useState(false);
@@ -110,7 +118,7 @@ const ProductListScreen = () => {
 
   const unlockHandler = (id) => {
     setShowUnlock(false);
-    // dispatch(unlockUser(id))
+    dispatch(unlockProduct(id))
     // window.location.reload()
   }
 
@@ -372,7 +380,7 @@ const ProductListScreen = () => {
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label style={{ fontSize: '14px' }}>Danh mục</Form.Label>
-              <Form.Select style={{fontSize:'14px'}} onChange={(e) => setIdCategory(e.target.value)} aria-label="Default select example">
+              <Form.Select style={{ fontSize: '14px' }} onChange={(e) => setIdCategory(e.target.value)} aria-label="Default select example">
                 {
                   categories?.data?.map(category => (
                     <option style={{ fontSize: '14px' }} value={category.id}>{category.name}</option>
@@ -411,10 +419,10 @@ const ProductListScreen = () => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button style={{fontSize:'14px', textTransform: 'none', width: 'auto'}} variant="danger" onClick={handleCloseAdd}>
+          <Button style={{ fontSize: '14px', textTransform: 'none', width: 'auto' }} variant="danger" onClick={handleCloseAdd}>
             Hủy
           </Button>
-          <Button style={{fontSize:'14px', textTransform: 'none', width: 'auto'}} variant="primary" onClick={addHandler}>
+          <Button style={{ fontSize: '14px', textTransform: 'none', width: 'auto' }} variant="primary" onClick={addHandler}>
             Lưu sản phẩm
           </Button>
         </Modal.Footer>

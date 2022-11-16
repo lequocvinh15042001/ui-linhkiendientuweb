@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import ReactTooltip from 'react-tooltip'
 import Message from '../../components/Message'
 import Loader from '../../components/Loader'
-import { getAllOrders, listOrderAdmin } from "../../actions/orderActions";
+import { getAllOrders, listOrderAdmin, setPaidOrder } from "../../actions/orderActions";
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 
@@ -21,16 +21,24 @@ const ProductListScreen = () => {
   const { loading, error, orders, page } = useSelector((state) => state.orderListAdmin)
   // console.log('==', productAll?.data?.length);
 
+  const orderSetDelivery = useSelector(state => state.orderSetDelivery)
+  const { success: deliverySuccess } = orderSetDelivery
+  // console.log('==', userInfo)
+
+  const orderSetPaid = useSelector(state => state.orderSetPaid)
+  const { success: paidSuccess } = orderSetPaid
+  // console.log('==', userInfo)
+
   // Check order
   const arrOrderAll = []
   const checkOrderAll = () => {
-    orderAll?.data?.find(item => {
+    orderAll?.data?.list?.find(item => {
       if (item.state !== 'in cart') {
         arrOrderAll.push(item)
       }
     })
   }
-  console.log('item', arrOrderAll)
+  // console.log('item', arrOrderAll)
   checkOrderAll()
 
   const arrOrderPage = []
@@ -67,35 +75,20 @@ const ProductListScreen = () => {
     } else {
       navigate('/login')
     }
-  }, [dispatch, navigate, userInfo, pageNum, pageSize])
+  }, [dispatch, navigate, userInfo, paidSuccess, pageNum, pageSize])
 
-  // Block Product
+  // Edit state O
   const [show, setShow] = useState(false);
-  const handleCloseBlock = () => setShow(false);
-  const [idDelete, setIdDelete] = useState('')
-  const handleShowBlock = (id) => {
+  const handleClose = () => setShow(false);
+  const [id, setId] = useState('')
+  const handleEditStateOrder = (id) => {
     setShow(true);
-    setIdDelete(id)
+    setId(id)
   }
 
-  const blockHandler = (id) => {
+  const updateStatekHandler = (id) => {
     setShow(false);
-    // dispatch(lockProduct(id))
-    // window.location.reload()
-  }
-
-  // Unlock user
-  const [showUnlock, setShowUnlock] = useState(false);
-  const handleCloseUnlock = () => setShowUnlock(false);
-  const [idUnlock, setIdUnlock] = useState('')
-  const handleShowUnlock = (id) => {
-    setShowUnlock(true);
-    setIdUnlock(id)
-  }
-
-  const unlockHandler = (id) => {
-    setShowUnlock(false);
-    // dispatch(unlockUser(id))
+    dispatch(setPaidOrder(id))
     // window.location.reload()
   }
 
@@ -115,10 +108,10 @@ const ProductListScreen = () => {
       </div>
       <Row className='align-items-center mx-4 mt-4 px-4' style={{ background: 'white' }}>
         <Col className='px-0'>
-          <h5 style={{fontSize: '16px'}} className='pb-4 pt-4'>DANH SÁCH ĐƠN HÀNG</h5>
+          <h5 style={{ fontSize: '16px' }} className='pb-4 pt-4'>DANH SÁCH ĐƠN HÀNG</h5>
         </Col>
         <Col className='d-flex justify-content-end px-0'>
-          <h6 style={{fontSize: '14px'}} className='pb-4 pt-4'>Tổng số lượng: {arrOrderAll?.length} đơn hàng</h6>
+          <h6 style={{ fontSize: '14px' }} className='pb-4 pt-4'>Tổng số lượng: {arrOrderAll?.length} đơn hàng</h6>
         </Col>
       </Row>
       <Row className='d-flex justify-content-end align-items-center mx-4 mt-0 px-4' style={{ background: 'white' }}>
@@ -160,10 +153,16 @@ const ProductListScreen = () => {
                       (order.state === 'process') ?
                         <div className='d-flex justify-content-center align-items-center'>
                           <p style={{ background: '#fec107', color: '#e7fff8', borderRadius: '5px' }} className='my-0 mx-3 py-1 px-2'>Chờ xác nhận</p>
-                        </div> :
-                        <div className='d-flex justify-content-center align-items-center'>
-                          <p style={{ background: '#00c292', color: '#e7fff8', borderRadius: '5px' }} className='my-0 mx-3 py-1 px-2'>Đã khóa</p>
-                        </div>
+                        </div> : (order.state === 'delivery') ?
+                          <div className='d-flex justify-content-center align-items-center'>
+                            <p style={{ background: '#03a9f3', color: '#e7fff8', borderRadius: '5px' }} className='my-0 mx-3 py-1 px-2'>Đang giao hàng</p>
+                          </div> : (order.state === 'cancel') ?
+                          <div className='d-flex justify-content-center align-items-center'>
+                            <p style={{ background: '#ee5261', color: '#e7fff8', borderRadius: '5px' }} className='my-0 mx-3 py-1 px-2'>Đang giao hàng</p>
+                          </div> :
+                          <div className='d-flex justify-content-center align-items-center'>
+                            <p style={{ background: '#00c292', color: '#e7fff8', borderRadius: '5px' }} className='my-0 mx-3 py-1 px-2'>Đã nhận và thanh toán</p>
+                          </div>
                     }
                   </td>
                   <td className='d-flex justify-content-center'>
@@ -178,42 +177,16 @@ const ProductListScreen = () => {
                       Chi tiết
                     </ReactTooltip>
 
-                    <LinkContainer style={{ width: 'auto', height: 'auto' }} data-tip data-for="tip2" to={`/admin/order/${order.id}/edit`}>
-                      <Button
-                        disabled={order.state === 'disable' ? 'true' : ''}
-                        style={{ background: '#03a9f3' }}
-                        className='my-0 mx-2'>
-                        <i className='fas fa-edit'></i>
-                      </Button>
-                    </LinkContainer>
+                    <Button
+                      data-tip data-for="tip2"
+                      disabled={order.state === 'process' || order.state === 'paid' ? 'true' : ''}
+                      style={{ background: '#03a9f3', width: 'auto', height: 'auto' }}
+                      onClick={() => handleEditStateOrder(order.id)}
+                      className='my-0 mx-2'>
+                      <i className="fas fa-vote-yea"></i>
+                    </Button>
                     <ReactTooltip id="tip2" place="top" effect="solid">
-                      Chỉnh sửa
-                    </ReactTooltip>
-
-                    {/* Block product */}
-                    {/* {
-                      order.state === 'enable' ?
-                        <Button data-tip data-for="tip3"
-                          style={{ background: '#ee5261', border: '2px solid #ee5261' }}
-                          className='btn-sm'
-                          onClick={() => handleShowBlock(order.id)}
-                        >
-                          <i className="fas fa-lock"></i>
-                        </Button>
-                        :
-                        <Button data-tip data-for="tip4"
-                          style={{ background: '#00c292', border: '2px solid #00c292' }}
-                          className='btn-sm'
-                          onClick={() => handleShowUnlock(order.id)}
-                        >
-                          <i className="fas fa-unlock"></i>
-                        </Button>
-                    } */}
-                    <ReactTooltip id="tip3" place="top" effect="solid">
-                      Khóa
-                    </ReactTooltip>
-                    <ReactTooltip id="tip4" place="top" effect="solid">
-                      Mở khóa
+                      Xác nhận thanh toán
                     </ReactTooltip>
                   </td>
                 </tr>
@@ -234,10 +207,11 @@ const ProductListScreen = () => {
           </Pagination>
         </div>
       )}
-      {/* Modal Block User */}
+
+      {/* Modal Edit State Order */}
       <Modal
         show={show}
-        onHide={handleCloseBlock}
+        onHide={handleClose}
         backdrop="static"
         keyboard={false}
       >
@@ -245,36 +219,13 @@ const ProductListScreen = () => {
           <Modal.Title>Thông báo</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Bạn có chắc chắn muốn khóa sản phẩm này không?
+          Xác nhận thanh toán thành công
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseBlock}>
+          <Button variant="secondary" onClick={handleClose}>
             Hủy
           </Button>
-          <Button variant="danger" onClick={() => blockHandler(idDelete)}>
-            Đồng ý
-          </Button>
-        </Modal.Footer>
-      </Modal>
-
-      {/* Modal Unlock User */}
-      <Modal
-        show={showUnlock}
-        onHide={handleCloseUnlock}
-        backdrop="static"
-        keyboard={false}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Thông báo</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          Bạn có chắc chắn muốn mở khóa sản phẩm này không?
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseUnlock}>
-            Hủy
-          </Button>
-          <Button variant="success" onClick={() => unlockHandler(idUnlock)}>
+          <Button variant="success" onClick={() => updateStatekHandler(id)}>
             Đồng ý
           </Button>
         </Modal.Footer>

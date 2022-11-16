@@ -46,6 +46,8 @@ import ForgotPasswordClient from "./pages/clientPages/ForgotPasswordClient";
 import ChangePasswordClient from "./pages/clientPages/ChangePasswordClient";
 import MyOrderClient from "./pages/clientPages/MyOrderClient";
 import UserDetailClient from "./pages/clientPages/UserDetailClient";
+import AdminDashboard from "./pages/adminPages/AdminDashboard";
+import AdminEditProduct from "./pages/adminPages/AdminProductEdit";
 
 function App() {
   const { theme } = useThemeContext();
@@ -114,28 +116,27 @@ function App() {
 
           <Route path='/profile' element={<UserDetailClient />} />
 
-          {/* Admin */}
+         {/* Admin */}
           {/* Dashboard */}
-          {/* <Route path='/admin/dashboard' element={<AdminDashboard />} /> */}
+          <Route exact path="admin/dashboard" element={<AdminDashboard />} />
 
-          {/* Admin User */}
-          <Route path='/admin/userlist' element={<AdminUserList />} />
-          {/* <Route path='/admin/user/:id/edit' element={<AdminUserEdit />} /> */}
-          <Route path='/admin/user/:id/detail' element={<AdminDetailUser />} />
+          {/* User */}
+          <Route exact path="admin/userlist" element={<AdminUserList />} />
+          <Route exact path="admin/user/:id/detail" element={<AdminDetailUser />} />
 
-          {/* Admin Category */}
-          <Route path='/admin/categorylist' element={<AdminCategoryList />} />
-          <Route path='/admin/category/:id/detail' element={<AdminCategoryDetail />} />
-          <Route path='/admin/category/:id/edit' element={<AdminEditCategory />} />
+          {/* Category */}
+          <Route exact path="admin/categorylist" element={<AdminCategoryList />} />
+          <Route exact path="admin/category/:id/detail" element={<AdminCategoryDetail />} />
+          <Route exact path="admin/category/:id/edit" element={<AdminEditCategory />} />
 
-          {/* Admin Product */}
-          <Route path='/admin/productlist' element={<AdminProductList />} exact />
-          <Route path='/admin/product/:id/detail' element={<AdminDetailProduct />} />
-          {/* <Route path='/admin/product/:id/edit' element={<AdminProductEdit />} /> */}
+          {/* Product */}
+          <Route exact path="admin/productlist" element={<AdminProductList />} />
+          <Route exact path="admin/product/:id/detail" element={<AdminDetailProduct />} />
+          <Route exact path="admin/product/:id/edit" element={<AdminEditProduct />} />
 
-          {/* Admin Order */}
-          <Route path='/admin/orderlist' element={<AdminOrdertList />} />
-          <Route path='/admin/order/:id/detail' element={<AdminOrderDetail />} />
+          {/* Order */}
+          <Route exact path="admin/orderlist" element={<AdminOrdertList />} />
+          <Route exact path="admin/order/:id/detail" element={<AdminOrderDetail />} />
 
         </Routes>
         {/* <Footer /> */}
