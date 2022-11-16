@@ -16,7 +16,7 @@ const DashboardScreen = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  // const { userAll } = useSelector((state) => state.userAllAdmin)
+  const { userAll } = useSelector((state) => state.userAllAdmin)
   const { categories } = useSelector((state) => state.categoryListAdmin)
   const { productAll } = useSelector(state => state.productAllAdmin)
   console.log('====', productAll)
@@ -47,14 +47,14 @@ const DashboardScreen = () => {
 
   useEffect(() => {
     if (userInfo || userInfo.role === "role_admin") {
-      // dispatch(getAllOrders())
+      dispatch(getAllOrders())
       dispatch(getAllUsersAdmin())
       dispatch(listCategoryAdmin())
       dispatch(getAllProductsAdmin())
     } else {
       navigate('/login')
     }
-  }, [dispatch, navigate, userInfo, productAll])
+  }, [dispatch, navigate, userInfo])
 
 
   return (
@@ -69,7 +69,7 @@ const DashboardScreen = () => {
       </div>
       <Row className='d-flex justify-content-between align-items-center mx-4 flex-wrap'>
         <Col xl={2} className='d-flex justify-content-center align-items-center flex-column px-0 my-4 py-3' style={{ background: 'white' }}>
-          {/* <h6 style={{ fontSize: '14px' }} className='pb-4 pt-4 my-0'>Người dùng: {userAll?.data?.length}</h6> */}
+          <h6 style={{ fontSize: '14px' }} className='pb-4 pt-4 my-0'>Người dùng: {userAll?.data?.length}</h6>
           <Link style={{ textDecoration: 'none' }} to='/admin/userlist'>Chi tiết</Link>
         </Col>
         <Col xl={2} className='d-flex justify-content-center align-items-center flex-column px-0 my-4 py-3' style={{ background: 'white' }}>
