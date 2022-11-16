@@ -12,7 +12,7 @@ const CartPage = () => {
     const productId = useParams().id
     const [amount, setAmount] = useState(1);
 
-    const [total, setTotal] = useState(0);
+    // const [total, setTotal] = useState(0);
     // console.log('==', productId)
     const quantity = location.search ? Number(location.search.split('=')[1]) : 1
     // console.log('==', quantity)
@@ -27,13 +27,6 @@ const CartPage = () => {
     const {carts} = useSelector(state => state.cartList)
     // const { cartItems } = cart
     console.log('-=-=', carts)
-
-    const sum = () =>{
-        carts?.data?.items.reduce(element => {
-            setTotal(element.quantity * element.price)
-        });
-        
-    }
 
     const productDetails = useSelector(state => state.productDetails)
     const { loading, error, product } = productDetails
@@ -70,7 +63,6 @@ const CartPage = () => {
     //   });
     };
 
-    sum();
     const handlerChoose  = (productId) =>{
         console.log("đã chọn id: ", productId);
     }
@@ -149,10 +141,10 @@ const CartPage = () => {
                                                         </div>
                                                     </div>
                                                     <div className = "flex flex-between">
-                                                        <div className='text-pine-green fw-4 fs-15 price'>Giá : {cartProduct.price.toLocaleString('vi', { style: 'currency', currency: 'VND' })}</div>
+                                                        <div className='text-pine-green fw-4 fs-15 price'>Giá : {(cartProduct.price / cartProduct.quantity).toLocaleString('vi', { style: 'currency', currency: 'VND' })}</div>
                                                         <div className='sub-total fw-6 fs-18 text-regal-blue'>
                                                             <span>Tổng: </span>
-                                                            <span className=''>{(cartProduct.price * cartProduct.quantity).toLocaleString('vi', { style: 'currency', currency: 'VND' })}</span>
+                                                            <span className=''>{(cartProduct.price).toLocaleString('vi', { style: 'currency', currency: 'VND' })}</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -191,9 +183,7 @@ const CartPage = () => {
                                     <div className='cart-summary-total flex flex-between fs-18'>
                                         <span className='fw-6'>Tổng cộng: </span>
                                         <span className='fw-6'>
-
-                                           {total}
-
+                                            {carts?.data?.totalPrice.toLocaleString('vi', { style: 'currency', currency: 'VND' })}
                                         </span>
                                     </div>
                                     <div className='cart-summary-btn'>
