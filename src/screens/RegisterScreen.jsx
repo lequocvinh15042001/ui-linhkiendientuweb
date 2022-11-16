@@ -58,7 +58,7 @@ const RegisterScreen = () => {
                 <Form onSubmit={submitHandler}>
                     <Form.Group controlId='username'>
                         <Form.Label>Tên người dùng</Form.Label>
-                        <Form.Control type='name' placeholder='Nhập tên người dùng' value={name} onChange={(e) => setName(e.target.value)}></Form.Control>
+                        <Form.Control  autoComplete="off" type='name' placeholder='Nhập tên người dùng' value={name} onChange={(e) => setName(e.target.value)}></Form.Control>
                     </Form.Group>
                     <Form.Group controlId='email' className='py-3'>
                         <Form.Label>Email</Form.Label>

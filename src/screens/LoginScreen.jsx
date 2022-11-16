@@ -53,7 +53,8 @@ const LoginScreen = () => {
                 <Form onSubmit={submitHandler} >
                     <Form.Group controlId='email'>
                         <Form.Label>Email</Form.Label>
-                        <Form.Control type='email' placeholder='Nhập email' value={email} onChange={(e) => setEmail(e.target.value)}></Form.Control>
+                        <Form.Control autoComplete="off" type='email' placeholder='Nhập email' value={email} onChange={(e) => setEmail(e.target.value)
+                        }></Form.Control>
                     </Form.Group>
                     <Form.Group controlId='password' className='py-3'>
                         <Form.Label>Mật khẩu</Form.Label>
@@ -86,6 +87,7 @@ const LoginScreen = () => {
             </Col>
         </Row>
     )
+
 }
 
 export default LoginScreen
