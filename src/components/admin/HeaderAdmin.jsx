@@ -14,7 +14,7 @@ const HeaderAdmin = () => {
     const dispatch = useDispatch()
 
     const { orderAll } = useSelector(state => state.orderAll)
-    // console.log('==', orderAll)
+    console.log('==', orderAll)
 
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
@@ -37,7 +37,7 @@ const HeaderAdmin = () => {
     // Get new notification
     const arrNotification = []
     const getNotification = () => {
-        orderAll?.data?.forEach(order => {
+        orderAll?.data?.list?.forEach(order => {
             if (order.state === 'process') {
                 arrNotification.push(order.id)
             }

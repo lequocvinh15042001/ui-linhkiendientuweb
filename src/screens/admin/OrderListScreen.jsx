@@ -32,7 +32,7 @@ const ProductListScreen = () => {
   // Check order
   const arrOrderAll = []
   const checkOrderAll = () => {
-    orderAll?.data?.find(item => {
+    orderAll?.data?.list?.find(item => {
       if (item.state !== 'in cart') {
         arrOrderAll.push(item)
       }
