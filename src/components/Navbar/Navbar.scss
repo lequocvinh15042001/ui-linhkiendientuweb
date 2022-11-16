@@ -64,12 +64,19 @@
     &-btns{
         .add-to-cart-btn{
             margin-right: 28px;
-            color: $clr-pine-green;
+            color: darkblue;
+            position: relative;
+            will-change: transform;
+            transition: transform 450ms;
+            :hover{
+                transition: transform 125ms;
+                transform: translateY(-7px);
+            }
             .btn-ico{
                 margin-right: 10px;
             }
             .btn-txt{
-                position: relative;
+
                 .cart-count-value{
                     position: absolute;
                     top: -10px;
@@ -91,12 +98,13 @@
     .navbar1-bottom{
         padding: 10px 0;
         margin-top: 14px;
-
+        text-align: center;
         > .container{
             justify-content: flex-end;
         }
 
         .nav-links{
+
             li{
                 margin: 0 10px;
             }
@@ -106,6 +114,8 @@
 
                 &:hover{
                     opacity: 0.8;
+                    color: yellow !important;
+                    font-size: larger;
                 }
             }
         }

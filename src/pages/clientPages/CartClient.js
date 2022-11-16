@@ -4,6 +4,7 @@ import { Footer, Navbar, Sidebar } from '../../components'
 import Navbar1 from './../../components/Navbar/Navbar'
 import Footerr from "./../../components/Footerr"
 import CartPage from '../../pages/CartPage/CartPage'
+import ContactHelp from '../../components/ContactHelp'
 
 const CartClient = () => {
   return (
@@ -11,6 +12,7 @@ const CartClient = () => {
     <Navbar1/>
     <Sidebar/>
     <CartPage/>
+    <ContactHelp/>
     <Footerr/>
     </Fragment>
   )

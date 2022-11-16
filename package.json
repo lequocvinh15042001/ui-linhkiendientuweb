@@ -21,6 +21,7 @@
     "chokidar": "^3.5.3",
     "fingerpose": "0.0.2",
     "firebase": "^8.2.3",
+    "google-map-react": "^2.2.0",
     "netlify": "^6.0.12",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-preset-env": "^7.8.2",

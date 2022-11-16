@@ -6,6 +6,7 @@ import { listProducts } from '../../actions/productActions';
 import { NavLink } from 'react-router-dom';
 import Error from "./../../components/Error";
 import Loading from "./../../components/Loading";
+import StarsProduct from '../StarsProduct';
 const List = () => {
     const dispatch = useDispatch()
 
@@ -40,12 +41,26 @@ const List = () => {
                                     <div className='product-item-img'>
                                     <NavLink to={`/products/${product.id}`} className="link">
                                         <img src = {product.images[0].url} alt = "" />
+                                        <div className="product-item-cat text-white text-uppercase bg-black">
+                                        <StarsProduct stars={(product.rate)} className="product-item-cat-text"/>
+                                    </div>
                                     </NavLink>
-                                        <div className = "product-item-cat text-white fs-13 text-uppercase bg-gold fw-6">{product.category.name}</div>
+                                    <div style={{
+                                    border:"2px solid black", backgroundColor:"darkgoldenrod",
+                                    padding:"2px",
+                                    textAlign: "center",
+                                    borderRadius: "3px",
+                                    justifyContent:"center",
+                                    alignItems:"center"
+                                    }}>
+                                        <span  className='text-white fw-5'>
+                                            {product.category.name}
+                                        </span>
+                                    </div>
                                     </div>
                                     <div className='product-item-body'>
                                         <h6 className = "product-item-title text-pine-green fw-4 fs-15">{product.name}</h6>
-                                        <div className = "product-item-price text-regal-blue fw-7 fs-18">{formatPrice(product.price)}</div>
+                                        <div className = "product-item-price text-regal-blue fw-7 fs-18">{(product.price)?.toLocaleString('vi', { style: 'currency', currency: 'VND' })}</div>
                                     </div>
                                 </div>
                             ))
@@ -59,8 +74,10 @@ const List = () => {
                 alignContent: "center",
                 margin: "20px 0",
             }}>
-            <NavLink className="btn" to="/products">
-                Xem tất cả
+            <NavLink to="/products">
+                <button className="btn" >
+                    Xem tất cả
+                </button>  
             </NavLink>
             </div>
 

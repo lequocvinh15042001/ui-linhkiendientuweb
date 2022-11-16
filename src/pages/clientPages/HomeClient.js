@@ -10,8 +10,10 @@ const HomeClient = () => {
         {/* <Navbar/> */}
         <Navbar1/>
         {/* <Sidebar/> */}
+        <div className='container'>
         <Home/>
         <Footerr/>
+        </div>
     </Fragment>
   )
 }

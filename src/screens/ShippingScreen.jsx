@@ -4,6 +4,8 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import CheckoutSteps from '../components/CheckoutSteps'
 import { addShippingToCart, getCart, saveShippingAddress } from '../actions/cartActions'
+import ModalComfirm from '../components/ModalConfirm';
+import { useRef } from 'react'
 
 const ShippingScreen = () => {
 
@@ -33,21 +35,52 @@ const ShippingScreen = () => {
         receiveName, receivePhone, receiveAddress,receiveProvince, receiveDistrict, receiveVillage, paymentType
     }
 
-    const submitHandler = (e) => {
-        e.preventDefault()
+    const submitHandler = () => {
+        // e.preventDefault()
         dispatch(addShippingToCart( id, {shipping}))
-        navigate('/payment')
+        navigate('/success')
     }
 
+    //XÁC NHẬN
+    const [dialog, setDialog] = useState({
+        message: "",
+        isLoading: false,
+        //Update
+        nameProduct: ""
+      });
+      const idProductRef = useRef();
+      const handleDialog = (message, isLoading, nameProduct) => {
+        setDialog({
+          message,
+          isLoading,
+          //Update
+          nameProduct
+        });
+      };
+    
+      const handleDelete = () => {
+        //Update
+        handleDialog("Bạn có muốn xác nhận đơn hàng?", true);
+      };
+    
+      const areUSureDelete = (choose) => {
+        if (choose) {
+          handleDialog("", false);
+          submitHandler();
+        } else {
+          handleDialog("", false);
+        }
+      };
+
     return (
-        <Container>
+        <Container style={{marginTop:"7rem"}}>
             <CheckoutSteps step1 step2 />
-            <Row className='pt-3'>
+            <Row className='pb-5'>
                 <h3 className='pb-4 d-flex justify-content-center'>Điền thông tin giao hàng</h3>
             </Row>
             <Row className='d-flex justify-content-center'>
                 <Col xl={5}>
-                    <Form onSubmit={submitHandler}>
+                    <Form>
                         
                         <Form.Group className='mb-3'>
                             <Form.Label>Tên người nhận</Form.Label>
@@ -92,11 +125,21 @@ const ShippingScreen = () => {
                         </Form.Group>
 
                         <Row className='py-3 d-flex justify-content-center align-items-center'>
-                            <Button style={{ width: '200px' }} type='submit' variant='success'>Tiếp tục</Button>
+                            <Button style={{ width: '200px' }} 
+                            onClick={() => handleDelete()}
+                            variant='success'>Xác nhận</Button>
                         </Row>
                     </Form>
                 </Col>
             </Row>
+            {dialog.isLoading && (
+        <ModalComfirm
+          //Update
+          nameProduct={dialog.nameProduct}
+          onDialog={areUSureDelete}
+          message={dialog.message}
+        />
+      )}
         </Container>
     )
 }

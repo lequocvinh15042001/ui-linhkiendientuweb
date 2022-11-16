@@ -47,11 +47,39 @@ const Wrapper = styled.section`
   padding: 5rem 0;
   h3 {
     text-transform: none;
+    animation-duration: 4s;
+    animation-name: slidein;
+  }
+  @keyframes slidein {
+    from {
+      margin-left: 100%;
+      width: 300%;
+    }
+  
+    to {
+      margin-left: 0%;
+      width: 100%;
+    }
   }
   p {
     line-height: 2;
     max-width: 45em;
     color: var(--clr-grey-5);
+    animation-duration: 4s;
+    animation-name: slidein;
+
+
+  }
+  @keyframes slidein {
+    from {
+      margin-left: 100%;
+      width: 300%;
+    }
+  
+    to {
+      margin-left: 0%;
+      width: 100%;
+    }
   }
   .contact-form {
     width: 90vw;

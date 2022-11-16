@@ -34,6 +34,11 @@ const Wrapper = styled.section`
     display: block;
     border-radius: var(--radius);
     object-fit: cover;
+                
+    transition: transform 250ms;
+    :hover{
+      transform: translateY(-20px);
+    }
   }
   .gallery {
     margin-top: 1rem;

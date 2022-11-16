@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 
 import { Filters, ProductList, Sort, PageHero } from "../components";
+import Comment from "../components/Comment";
+import Contact from "../components/Contact";
 import AllProduct from "./../components/AllProduct/AllProduct"
 
 const ProductsPage = () => {
@@ -16,6 +18,9 @@ const ProductsPage = () => {
             {/* <ProductList /> */}
             <AllProduct/>
           </div>
+          <div>
+            <Contact/>
+          </div>
         </div>
       </Wrapper>
     </main>
@@ -26,11 +31,11 @@ const Wrapper = styled.div`
   .products {
     display: grid;
     gap: 3rem 1.5rem;
-    margin: 4rem auto;
+    margin: 3rem auto;
   }
   @media (min-width: 768px) {
     .products {
-      grid-template-columns: 200px 1fr;
+      grid-template-columns: 250px 1fr;
     }
   }
 `;

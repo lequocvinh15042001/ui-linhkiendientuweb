@@ -3,7 +3,7 @@ import { CART_ADD_ITEM, CART_REMOVE_ITEM, CART_SAVE_SHIPPING_ADDRESS, CART_SAVE_
 
 export const addToCart = (productId, quantity) => async(dispatch, getState) => {
 
-    console.log(productId);
+    console.log('ạknfshbdshjda',quantity);
     const {
         userLogin: { userInfo },
     } = getState()
@@ -17,7 +17,7 @@ export const addToCart = (productId, quantity) => async(dispatch, getState) => {
 
     console.log(config);
     const {data} = await axios.post(`http://localhost:8080/api/cart`,{productId,quantity}, config)
-    console.log('==', data);
+    console.log('=--data=', data);
 
     // dispatch({
     //     type: CART_ADD_ITEM,
@@ -94,7 +94,7 @@ export const getCart = () => async (dispatch, getState) => {
     }
   }
   
-  export const deleteProductInCart = (_id) => async (dispatch, getState) => {
+  export const deleteProductInCart = (id, navigate) => async (dispatch, getState) => {
       const {
         userLogin: { userInfo },
       } = getState()
@@ -106,7 +106,8 @@ export const getCart = () => async (dispatch, getState) => {
         }
       }
   
-      await axios.delete(`http://localhost:8080/api/cart/remove/${_id}`, config)
+      await axios.delete(`http://localhost:8080/api/cart/remove/${id}`, config)
+      navigate('/cart')
   }
   
   export const addShippingToCart = (id, {shipping}) => async(dispatch, getState) => {

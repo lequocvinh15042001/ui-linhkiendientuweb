@@ -6,6 +6,7 @@
     margin-top: 15px;
     text-align: center;
     font-size: small;
+    
 }
 .product-items{
     row-gap: 20px;
@@ -22,15 +23,29 @@
 
         &-img{
             position: relative;
-
+            
+            transition: transform 250ms;
+            :hover{
+              transform: translateY(-20px);
+            }
             .product-item-cat{
                 position: absolute;
-                top: 8px;
-                right: 8px;
-                border-radius: 8px;
-                padding-right: 8px;
-                padding-left: 8px;
+                top: -25px;
+                right: -30px;
+                font-size: small;
+                width: 90px;
+                height: 30px;
+                border-radius: 5px;
                 box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+                font-weight: 600;
+                // &-text{
+                //     font-size: medium;
+                // }
+
+                &-cate{
+                    font-weight: 600;
+                    background-color: darkgoldenrod;
+                }
             }
         }
 
@@ -38,6 +53,7 @@
             padding: 8px 0;
             opacity: 0.8;
             display: block;
+            
         }
         &:hover{
             box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;

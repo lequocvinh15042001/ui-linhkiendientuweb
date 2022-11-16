@@ -3,35 +3,64 @@ import styled from "styled-components";
 
 import { formatPrice } from "../utils/helpers";
 
-const HistoryItem = ({ id, image, name, color, price, amount, quantity }) => {
+const HistoryItem = ({ id, items, state, totalPrice, totalProduct, receiveOrder,createdDate}) => {
   const today = new Date();
 
+  console.log("hehe:", id, items, state, totalPrice, totalProduct, receiveOrder,createdDate  );
+
+  if (state !== "in cart")
+  {
   return (
     <Wrapper>
       <div className="title">
-        <img src={image} alt={name} />
+        {
+          items.map(product => {
+            return(
+              <div className="image-item">
+                <img src={product.image[0].url} /> 
+                <h5 className="name">{product.name}</h5>
+              </div>
+              // <h5 className="name">{product.name}</h5>
+            )
+
+          })
+        }
         <div>
-          <h5 className="name">{name}</h5>
-          <p className="color">
-            color: <span style={{ background: color }}></span>
-          </p>
+          <p className="name">
+            Address:<span>
+            {receiveOrder.receiveName},
+            {receiveOrder.receivePhone},
+            {receiveOrder.receiveVillage},
+            {receiveOrder.receiveDistrict},
+            {receiveOrder.receiveProvince},
+            {receiveOrder.receiveAddress},
+            {receiveOrder.paymentType}.
+            </span>
+          </p>  
           <p style={{ marginBottom: "0px" }}>
-            Quantity: <span>{quantity}</span>
+            Quantity: <span>{totalProduct}</span>
           </p>
 
-          <h5 className="price-small">price: ${price * amount}</h5>
+          <h5 className="price-small">price: {totalPrice}</h5>
         </div>
       </div>
-      <h5 className="price">${price * amount}</h5>
+      <h5 className="price">{totalPrice}</h5>
 
-      <h5 className="subtotal">{` ${today.getDate()} ${
+      {/* <h5 className="subtotal">{` ${today.getDate()} ${
         today.getMonth() + 1
-      } ,${today.getFullYear()}`}</h5>
+      } ,${today.getFullYear()}`}</h5> */}
+       <h5 className="subtotal">{createdDate}</h5>
     </Wrapper>
   );
+    }else return null;
 };
 
 const Wrapper = styled.article`
+.image-item{
+    width: 60px;
+    display: flex;
+    position: relative;
+}
   .subtotal {
     display: none;
   }
@@ -66,7 +95,7 @@ const Wrapper = styled.article`
   }
 
   .color {
-    color: var(--clr-grey-5);
+    color: darkblue;
     font-size: 0.75rem;
     letter-spacing: var(--spacing);
     text-transform: capitalize;

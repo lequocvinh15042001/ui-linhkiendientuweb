@@ -5,8 +5,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useFilterContext } from "../context/filter_context";
 import { getUniqueValues, formatPrice } from "../utils/helpers";
 import { listCategory } from "../actions/productActions";
+import { useState } from "react";
+import {useNavigate} from "react-router-dom"
 
 const Filters = () => {
+
+  const [data, setData] = useState([])
+  const [showAll, setShowAll] = useState(true)
+
   const refContainer = useRef(null);
 
   const {
@@ -24,7 +30,11 @@ const Filters = () => {
     clearFilters,
     allProducts,
   } = useFilterContext();
+  const navigate = useNavigate()
   const dispatch = useDispatch()
+
+  const productList = useSelector(state => state.productList)
+  const { loading, error, products } = productList
 
   const { categories } = useSelector(state => state.categoryList)
     // console.log(products);
@@ -38,10 +48,32 @@ const Filters = () => {
     // refContainer.current.focus();
   }, [dispatch]);
 
+  console.log(categories);
+  let arrProductGetCateId = []
+
+  const getProductByCategotyId = (products, id) => {
+    products.forEach(product => {
+      if (product.category.id === id) {
+        arrProductGetCateId.push(product)
+      }
+    });
+  }
+  console.log('==', arrProductGetCateId)
+
+  const getCategoryId = (id) => {
+    arrProductGetCateId.length = 0
+    getProductByCategotyId(products.data?.list, id)
+    setData(arrProductGetCateId)
+    setShowAll(false)
+    navigate(`/products#${id}`)
+    window.location.href = `#${id}`
+    // console.log('==', id)
+  }
+
   return (
     <Wrapper>
       <div className="content">
-        <form className="formm" onSubmit={(e) => e.preventDefault()}>
+        <form className="form" onSubmit={(e) => e.preventDefault()}>
           {/* <div className="form-control">
             <input
               ref={refContainer}
@@ -53,13 +85,14 @@ const Filters = () => {
               // onChange={updateFilters}
             />
           </div> */}
-          <div className="formm-control">
+          <div className="form-control">
             <h5 className="content">Danh mục sản phẩm</h5>
             <div>
               {categories?.data?.map((c, index) => {
                 return (
                   <button
-                    onClick={updateFilters}
+                  onClick={() => getCategoryId(c.id)} 
+                    style={{color:"darkblue", fontSize:"15px"}}
                     name="category"
                     type="button"
                     key={index}
@@ -164,16 +197,20 @@ const Wrapper = styled.section`
     font-size: 1rem;
     font-weight: 600;
   }
-  .formm{
-    min-width: 13rem;
-    border: 1px solid darkblue;
+  .form{
+    min-width: 15rem;
+    // border: 1px solid darkblue;
     padding: 10px;
     border-radius: 5px;
+    padding-top:8rem;
   }
-  .formm-control {
+  .form-control {
     margin-bottom: 1.25rem;
     h5 {
       margin-bottom: 0.5rem;
+    }
+    :hover{
+      width 2s, height 4s
     }
   }
   .search-input {
@@ -198,6 +235,12 @@ const Wrapper = styled.section`
     letter-spacing: var(--spacing);
     color: var(--clr-grey-5);
     cursor: pointer;
+    
+    transition: transform 250ms;
+    :hover{
+      transform: translateY(-10px);
+    }
+    
   }
   .active {
     border-color: var(--clr-grey-5);

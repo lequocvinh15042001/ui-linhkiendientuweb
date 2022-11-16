@@ -40,8 +40,24 @@ const Wrapper = styled.section`
     line-height: 2;
     max-width: 45em;
     margin-bottom: 2rem;
-    color: var(--clr-grey-5);
-    font-size: 1rem;
+    color: darkblue;
+    font-size: 2rem;
+
+    animation-duration: 4s;
+    animation-name: slidein;
+
+
+  }
+  @keyframes slidein {
+    from {
+      margin-left: 100%;
+      width: 300%;
+    }
+  
+    to {
+      margin-left: 0%;
+      width: 100%;
+    }
   }
   @media (min-width: 992px) {
     height: calc(100vh - 5rem);
@@ -58,15 +74,21 @@ const Wrapper = styled.section`
       font-size: 1rem !important;
       color: darkblue;
       font-weight: 700;
+      transition: transform 250ms;
       :hover{
+        transform: translateY(-20px);
         background-color: darkblue;
         color: white;
-
       }
     }
     .img-container {
       display: block;
       position: relative;
+      transition: transform 450ms;
+      :hover{
+          transition: transform 125ms;
+          transform: translateY(-7px);
+      }
     }
     .main-img {
       width: 100%;

@@ -79,6 +79,10 @@ function App() {
           <Route exact path="/cart/:id" element={<CartClient />}>
           </Route>
 
+          <Route exact path="/products#:id" element={<ProductsClient />}>
+
+          </Route>
+
           <Route exact path="/products" element={<ProductsClient />}>
 
           </Route>
@@ -98,7 +102,7 @@ function App() {
 
           <Route path='/shipping/:id' element={<ShippingScreenClient />} />
 
-          <Route path='/payment' element={<PaymentScreenClient />} />
+          <Route path='/success' element={<PaymentScreenClient />} />
 
           <Route path="*" element={<ErrorClient />}></Route>
 

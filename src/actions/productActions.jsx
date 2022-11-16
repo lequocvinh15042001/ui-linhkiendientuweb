@@ -186,11 +186,11 @@ export const createCategoryAdmin = (category) => async (dispatch, getState) => {
 }
 
 //------------------------------------------------------------------------------------// 
-export const listProducts = (page) => async (dispatch) => {
+export const listProducts = (page, size) => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_LIST_REQUEST })
 
-    const { data } = await axios.get(`http://localhost:8080/api/productelec/all?page=${page}`)
+    const { data } = await axios.get(`http://localhost:8080/api/productelec/all?page=${page}&size=${size}`)
 
     dispatch({
       type: PRODUCT_LIST_SUCCESS,

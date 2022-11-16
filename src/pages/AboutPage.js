@@ -2,9 +2,19 @@ import React, { Fragment } from "react";
 import styled from "styled-components";
 
 import { PageHero } from "../components";
-import aboutImg from "../assets/hero-bcg.jpeg";
+import aboutImg from "../assets/elec.jpg";
+import GoogleMapReact from 'google-map-react';
+
+const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
 const AboutPage = () => {
+  const defaultProps = {
+    center: {
+        lat: 10.8504205,
+        lng: 106.7716593
+    },
+    zoom: 12
+};
   return (
     <Fragment>
       <PageHero title="about" />
@@ -12,9 +22,21 @@ const AboutPage = () => {
         <img src={aboutImg} alt="heroimage" className="" />
         <article>
           <div className="title">
-            <h2>our story</h2>
+            <h2>Câu chuyện của chúng tôi</h2>
             <div className="underline"></div>
           </div>
+          <p>
+          {/* <GoogleMapReact
+            bootstrapURLKeys={{ key: "https://maps.googleapis.com/maps/api/js?key=AIzaSyC1qV4AS7bjTPtqF1KkCX7wF0r3vvnJdmQ&callback=initMap" }}
+            defaultCenter={defaultProps.center}
+            defaultZoom={defaultProps.zoom}
+        >
+            <AnyReactComponent
+                lat={41.40338}
+                lng={2.17403}
+                text="My Marker"
+            />
+          </GoogleMapReact> */}
           <p>
             Lorem ipsum dolor, sit amet consectetur adipisicing elit.
             Consequuntur itaque harum nisi cupiditate, modi molestias distinctio
@@ -23,6 +45,10 @@ const AboutPage = () => {
             voluptas asperiores consequuntur, quos iste laudantium libero
             minima? Nulla, impedit. Itaque quae voluptate ad consequatur ea
             maxime unde.
+          </p>
+          </p>
+          <p>
+            Hotline: (+84) 999 99 999
           </p>
         </article>
       </Wrapper>
@@ -39,6 +65,10 @@ const Wrapper = styled.section`
     border-radius: var(--radius);
     height: 500px;
     object-fit: cover;
+    transition: transform 250ms;
+    :hover{
+      transform: translateY(-20px);
+    }
   }
   p {
     line-height: 2;

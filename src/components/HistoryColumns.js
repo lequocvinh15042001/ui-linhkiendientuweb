@@ -2,12 +2,13 @@ import React from "react";
 import styled from "styled-components";
 
 const HistoryColumns = () => {
+  console.log("qua collumn nè");
   return (
     <Wrapper>
       <div className="content">
-        <h5>item (quantity)</h5>
-        <h5>price</h5>
-        <h5>purchase date</h5>
+        <h5>Thông tin</h5>
+        <h5>Thành tiền</h5>
+        <h5>Ngày đặt hàng</h5>
       </div>
       <hr />
     </Wrapper>

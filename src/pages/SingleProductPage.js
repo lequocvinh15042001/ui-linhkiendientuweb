@@ -2,11 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-
-import { useProductsContext } from "../context/products_context";
-import { single_product_url as url } from "../utils/constants";
-import { formatPrice } from "../utils/helpers";
-
 import {
   Loading,
   Error,
@@ -117,7 +112,7 @@ const SingleProductPage = () => {
             <h2 className="mb-3">{(product.data?.name)}</h2>
             {/* <Stars stars={(product.data?.rate)} reviews={reviews} /> */}
             <Stars stars={(product.data?.rate)} />
-            <h5 style={{fontSize: '20px'}} className="price my-4">{formatPrice(product.data?.price)}</h5>
+            <h5 style={{fontSize: '20px'}} className="price my-4">{(product.data?.price)?.toLocaleString('vi', { style: 'currency', currency: 'VND' })}</h5>
             <p style={{fontSize: '14px'}} className="desc">{(product.data?.description)}</p>
             <p className="info">
               <span style={{fontSize: '14px'}}>Tình trạng :</span>

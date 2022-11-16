@@ -63,14 +63,24 @@ export const resetCart = () => (dispatch) => {
     dispatch({ type: RESET_CART })
 }
 
-export const getOrder = () => async (dispatch) => {
+export const getOrder = () => async (dispatch, getState) => {
     try {
         dispatch({
             type: GET_ORDER_REQUEST
         })
 
-        const { data } = await axios.get('http://localhost:5000/api/order')
+        const {
+          userLogin: { userInfo },
+        } = getState()
+    
+        const config = {
+          headers: {
+            Authorization: `Bearer ${userInfo.accessToken}`,
+          },
+        }
 
+        const { data } = await axios.get('http://localhost:8080/api/orders/getallorder', config)
+        console.log("đã lấy được API: ", data);
         dispatch({
             type: GET_ORDER_SUCCESS,
             payload: data,
@@ -98,7 +108,7 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
   
       const config = {
         headers: {
-          Authorization: `Bearer ${userInfo.token}`,
+          Authorization: `Bearer ${userInfo.accessToken}`,
         },
       }
   

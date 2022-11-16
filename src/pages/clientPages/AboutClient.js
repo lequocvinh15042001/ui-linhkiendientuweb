@@ -10,8 +10,10 @@ const AboutClient = () => {
     <Fragment>
     <Navbar1/>
     <Sidebar/>
+    <div className='container'>
     <About/>
     <Footerr/>
+    </div>
     </Fragment>
   )
 }
