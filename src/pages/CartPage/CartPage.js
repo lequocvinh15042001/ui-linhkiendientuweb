@@ -28,12 +28,11 @@ const CartPage = () => {
     // const { cartItems } = cart
     console.log('-=-=', carts)
 
-    const sum = () =>{
-        carts?.data?.items.reduce(element => {
-            setTotal(element.quantity * element.price)
-        });
-        
-    }
+    // const sum = () =>{
+    //     carts?.data?.items.map(element => {
+    //         setTotal(element.quantity * element.price)
+    //     });
+    // }
 
     const productDetails = useSelector(state => state.productDetails)
     const { loading, error, product } = productDetails
@@ -52,7 +51,7 @@ const CartPage = () => {
         if (temp > product?.data?.quantity) temp = product?.data?.quantity;
         setAmount(temp);
         console.log(productId);
-        console.log('giam: ', temp);
+        console.log('tang: ', temp);
         dispatch(addToCart(productId, temp));
         return temp;
     //   });
@@ -64,13 +63,13 @@ const CartPage = () => {
         if (temp < 1) temp = 1;
         setAmount(temp);
         console.log(productId);
-        console.log("tăng",temp);
+        console.log("giam",temp);
         dispatch(addToCart(productId, temp));
         return temp;
     //   });
     };
 
-    sum();
+
     const handlerChoose  = (productId) =>{
         console.log("đã chọn id: ", productId);
     }

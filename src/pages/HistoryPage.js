@@ -117,7 +117,7 @@ const HistoryPage = () => {
     <main>
       <PageHero title="history" />
       <Wrapper className="page">
-        <HistoryContent2 history={orderList} />
+        <HistoryContent2 history={orderList}/>
       </Wrapper>  
     </main>
   );

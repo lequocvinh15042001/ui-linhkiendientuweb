@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
@@ -6,25 +6,71 @@ import { useUserContext } from "../context/user_context";
 
 import HistoryColumns from "./HistoryColumns";
 import HistoryItem from "./HistoryItem";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, Col, Form, Row, Table } from "react-bootstrap";
 import Loader from "./Loader";
 import Message from "./Message";
 import { LinkContainer } from "react-router-bootstrap";
 import ReactTooltip from "react-tooltip";
 import Contact from "./Contact";
+import { addShippingToCart } from "../actions/cartActions";
+import ModalComfirm from '../components/ModalConfirm';
+import { cancelOrder } from "../actions/orderActions";
+
 
 const HistoryContent = ({history}) => {
   // const {
   //   myUser: { name, email },
   // } = useUserContext();
   // let itemCount = 0;
+  const dispatch = useDispatch();
   console.log("Chuyển qua history", history);
   // console.log(history.data.productElecList);
   const userLogin = useSelector((state)=> state.userLogin)
   console.log(userLogin.userInfo);
 
   const {id} = userLogin
+  const submitHandler = () => {
+    // e.preventDefault()
+    // dispatch(addShippingToCart( id, {shipping}))
+    // navigate('/success')
+    console.log("hủy đơn nè");
+}
+
+//XÁC NHẬN
+const [dialog, setDialog] = useState({
+    message: "",
+    isLoading: false,
+    //Update
+    orderId: ""
+  });
+  const idProductRef = useRef();
+  const handleDialog = (message, isLoading, orderId) => {
+    setDialog({
+      message,
+      isLoading,
+      //Update
+      orderId
+    });
+  };
+
+  const handleDelete = (orderId) => {
+    //Update
+    handleDialog("Bạn có muốn hủy đơn hàng?", true, orderId);
+  };
+
+
+  const areUSureDelete = (choose) => {
+    if (choose) {
+      handleDialog("", false);
+      console.log("xoas casi ID: ", dialog.orderId);
+      submitHandler();
+      dispatch(cancelOrder(dialog.orderId));
+      window.location.reload();
+    } else {
+      handleDialog("", false);
+    }
+  };
 
   return (
     <Wrapper className="section-center">
@@ -103,7 +149,7 @@ const HistoryContent = ({history}) => {
                             paddingLeft:"5px",
                             lineHeight:'18px',
                             }}>
-                                {item.name}
+                                {item.quantity} cái {item.name}
                             </span>
                             <br></br>
                         </td>
@@ -156,9 +202,13 @@ const HistoryContent = ({history}) => {
                         <div className='d-flex justify-content-center align-items-center'>
                           <p style={{ background: '#FF0000', color: '#e7fff8', borderRadius: '5px', fontSize: '12px' }} className='my-0 mx-3 py-1 px-2'>Đang xử lý...</p>
                         </div>:
+                        (product.state === 'paid') ?
                         <div className='d-flex justify-content-center align-items-center'>
                         <p style={{ background: '#00FF00', color: '#000000', borderRadius: '5px', fontSize: '12px' }} className='my-0 mx-3 py-1 px-2'>Đã thanh toán ✓</p>
-                        </div>   
+                        </div>:
+                        <div className='d-flex justify-content-center align-items-center'>
+                        <p style={{ background: '#000000', color: '#FFFFFF', borderRadius: '5px', fontSize: '12px' }} className='my-0 mx-3 py-1 px-2'>Đã hủy đơn✓</p>
+                        </div>
                     }
                   </td>
                   <td className='text-center'>
@@ -174,11 +224,19 @@ const HistoryContent = ({history}) => {
                         <p style={{ background: '#e47200', color: '#e7fff8', borderRadius: '5px', fontSize: '12px' }} className='my-0 mx-3 py-1 px-2'>Không thể hủy</p>
                         </div> :
                         (product.state === 'process') ?
-                        <div className='d-flex justify-content-center align-items-center'>
-                        <p style={{ background: '#e47200', color: '#e7fff8', borderRadius: '5px', fontSize: '12px' }} className='my-0 mx-3 p-1'>Có thể hủy</p>
+                        <div className='d-flex justify-content-center align-items-center'
+                        >
+                        {/* <p style={{ background: '#e47200', color: '#e7fff8', borderRadius: '5px', fontSize: '12px' }} className='my-0 mx-3 p-1'>Có thể hủy</p> */}
+                        <Button style={{ width: '90px', fontSize:"10px", backgroundColor:"green"}} 
+                            onClick={() => handleDelete(product.id)}
+                            variant='success'>Hủy đơn</Button>
                         </div>:
+                        (product.state === 'paid') ?
                         <div className='d-flex justify-content-center align-items-center'>
                         <p style={{ background: '#e47200', color: '#e7fff8', borderRadius: '5px', fontSize: '12px' }} className='my-0 mx-3 p-1'>Thành công!</p>
+                        </div>:
+                        <div className='d-flex justify-content-center align-items-center'>
+                        <p style={{ background: '#000000', color: '#FFFFFF', borderRadius: '5px', fontSize: '12px' }} className='my-0 mx-3 p-1'>Đã hủy!</p>
                         </div>
                     }
                   </td>
@@ -189,6 +247,16 @@ const HistoryContent = ({history}) => {
         </div>
         </div>
         <Contact></Contact>
+
+        {dialog.isLoading && (
+        <ModalComfirm
+          //Update
+          orderId={dialog.orderId}
+          onDialog={areUSureDelete}
+          message={dialog.message}
+        />
+      )}
+
     </Wrapper>
   );
 };
