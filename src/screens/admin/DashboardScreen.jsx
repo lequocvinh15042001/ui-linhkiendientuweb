@@ -19,7 +19,7 @@ const DashboardScreen = () => {
   const { userAll } = useSelector((state) => state.userAllAdmin)
   const { categories } = useSelector((state) => state.categoryListAdmin)
   const { productAll } = useSelector(state => state.productAllAdmin)
-  console.log('====', productAll)
+  console.log('====', productAll?.data)
   const { orderAll } = useSelector(state => state.orderAll)
 
   const arrOrderAll = []
@@ -85,7 +85,7 @@ const DashboardScreen = () => {
           <Link style={{ textDecoration: 'none' }} to='/admin/orderlist'>Chi tiết</Link>
         </Col>
       </Row>
-      <Row className="section px-0 mx-3">
+      <Row className="section px-0 mx-3 py-0">
         <h5 className="section-title">Thống kê số lượng sản phẩm</h5>
         <div className="section-content">
           <ResponsiveContainer width="100%" height={500}>
@@ -101,16 +101,42 @@ const DashboardScreen = () => {
           </ResponsiveContainer>
         </div>
       </Row>
-      {/* <Row className='d-flex justify-content-between align-items-center mx-4 flex-wrap'>
+      <Row className='d-flex justify-content-between align-items-center mx-4 flex-wrap'>
         <Col xl={5} className='d-flex justify-content-center align-items-center flex-column px-0 my-4 py-3' style={{ background: 'white' }}>
-          <h6 style={{ fontSize: '14px' }} className='pb-4 pt-4 my-0'>Sản phẩm còn số lượng lớn: </h6>
-          <Link style={{ textDecoration: 'none' }} to='/admin/userlist'>Chi tiết</Link>
+          <p style={{ fontSize: '14px' }} className='pb-4 pt-4 my-0'><h4>Sản phẩm gần hết hàng:</h4>
+            {
+              productAll?.data?.map((item, index) => {
+                if (item.quantity <= 20) {
+                  return (
+                    <div className='d-flex justify-content-between align-items-center'>
+                      <p className='py-0 my-0' key={index}>-{item.name} (còn {item.quantity} cái)</p>
+                      <Link to={`/admin/product/${item.id}/detail`}>chi tiết</Link>
+                    </div>
+                  )
+                }
+              })
+            }
+          </p>
+          <Link style={{ textDecoration: 'none' }} to='/admin/userlist'>Đến trang quản lý sản phẩm</Link>
         </Col>
         <Col xl={5} className='d-flex justify-content-center align-items-center flex-column px-0 my-4 py-3' style={{ background: 'white' }}>
-          <h6 style={{ fontSize: '14px' }} className='pb-4 pt-4 my-0'>Sản phẩm gần hết hàng: {categories?.data?.length}</h6>
-          <Link style={{ textDecoration: 'none' }} to='/admin/categorylist'>Chi tiết</Link>
+          <p style={{ fontSize: '14px' }} className='pb-4 pt-4 my-0'><h4>Sản phẩm còn số lượng lớn:</h4>
+            {
+              productAll?.data?.map((item, index) => {
+                if (item.quantity >= 100) {
+                  return (
+                    <div className='d-flex justify-content-between align-items-center'>
+                      <p className='py-0 my-0' key={index}>-{item.name} (còn {item.quantity} cái)</p>
+                      <Link to={`/admin/product/${item.id}/detail`}>chi tiết</Link>
+                    </div>
+                  )
+                }
+              })
+            }
+          </p>
+          <Link style={{ textDecoration: 'none' }} to='/admin/userlist'>Đến trang quản lý sản phẩm</Link>
         </Col>
-      </Row> */}
+      </Row>
     </div>
   )
 }
