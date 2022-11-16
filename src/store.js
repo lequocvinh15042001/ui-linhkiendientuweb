@@ -12,6 +12,7 @@ import {
   productAllAdminReducer,
   productListAdminReducer,
   productUnlockReducer,
+  getProductByCategotyIdReducer,
 } from './reducers/productReducers'
 import { cartListReducer, cartReducer } from './reducers/cartReducers'
 import {
@@ -58,6 +59,8 @@ const reducer = combineReducers({
   productLock: productLockReducer,
   productCreate: productCreateReducer,
   productUpdate: productUpdateReducer,
+
+  getProductByCategotyId: getProductByCategotyIdReducer,
 
   getReview: getReviewReducer,
   productReviewCreate: productReviewCreateReducer,
