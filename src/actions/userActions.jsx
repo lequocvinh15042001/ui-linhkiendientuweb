@@ -27,7 +27,7 @@ import {
 import axios from 'axios'
 
 // Login
-export const login = (user) => async (dispatch) => {
+export const login = (user) => async (dispatch, navigate) => {
   console.log(user);
   try {
     dispatch({
@@ -45,10 +45,17 @@ export const login = (user) => async (dispatch) => {
     console.log('==', data);
     dispatch({
       type: USER_LOGIN_SUCCESS,
-      payload: data
+      payload: data,
     })
 
     localStorage.setItem('userInfo', JSON.stringify(data.data))
+    console.log(data.data.role);
+
+    if(data.data.role === 'role_admin'){
+      navigate('/admin/userlist')
+    }
+    else {navigate('/')}
+
   } catch (error) {
     dispatch({
       type: USER_LOGIN_FAIL,

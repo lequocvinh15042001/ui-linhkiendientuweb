@@ -28,19 +28,26 @@ const LoginScreen = () => {
     };
 
 
+    console.log(userLogin?.userInfo?.role, 'sjdsifnhsdfnkkjdn');
     useEffect(() => {
-        if (userInfo) {
-            navigate('/')
-            window.location.reload()
+        if(!userLogin)
+        {
+            navigate('/');
+        }else if(userLogin?.userInfo?.role === "role_admin")
+        {
+            navigate("/admin/userlist")
         }
-    }, [navigate, userInfo])
+        else if(userLogin?.userInfo?.role === "role_user") {
+            navigate('/')
+        }
+    }, [userInfo])
 
     const user = { email, password }
 
     const submitHandler = (e) => {
         e.preventDefault()
-        dispatch(login(user))
-        navigate('/')
+        dispatch(login(user, navigate))
+        // navigate('/')
         console.log("==", user);
     }
 

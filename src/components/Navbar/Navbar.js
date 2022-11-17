@@ -144,7 +144,7 @@ const handleSubmit = () => {
                   <span className = "btn-ico">
                     <i className = "fas fa-shopping-cart"></i>
                   </span>
-                  <div className='btn-txt fw-5'>Cart
+                  <div className='btn-txt fw-5'>Giỏ hàng
                     <span className='cart-count-value'>{carts?.data?.totalProduct}</span>
                   </div>
                 </Link>
