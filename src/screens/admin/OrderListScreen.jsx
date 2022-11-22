@@ -158,7 +158,7 @@ const ProductListScreen = () => {
                             <p style={{ background: '#03a9f3', color: '#e7fff8', borderRadius: '5px' }} className='my-0 mx-3 py-1 px-2'>Đang giao hàng</p>
                           </div> : (order.state === 'cancel') ?
                           <div className='d-flex justify-content-center align-items-center'>
-                            <p style={{ background: '#ee5261', color: '#e7fff8', borderRadius: '5px' }} className='my-0 mx-3 py-1 px-2'>Đang giao hàng</p>
+                            <p style={{ background: '#ee5261', color: '#e7fff8', borderRadius: '5px' }} className='my-0 mx-3 py-1 px-2'>Đã hủy đơn hàng</p>
                           </div> :
                           <div className='d-flex justify-content-center align-items-center'>
                             <p style={{ background: '#00c292', color: '#e7fff8', borderRadius: '5px' }} className='my-0 mx-3 py-1 px-2'>Đã nhận và thanh toán</p>

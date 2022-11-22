@@ -48,6 +48,9 @@ import MyOrderClient from "./pages/clientPages/MyOrderClient";
 import UserDetailClient from "./pages/clientPages/UserDetailClient";
 import AdminDashboard from "./pages/adminPages/AdminDashboard";
 import AdminEditProduct from "./pages/adminPages/AdminProductEdit";
+import LoginShipperScreen from "./screens/shipper/LoginShipperScreen";
+import HomeShipperScreen from "./screens/shipper/HomeShipperScreen";
+import RegisterShipperScreen from "./screens/shipper/RegisterShipperScreen";
 
 function App() {
   const { theme } = useThemeContext();
@@ -119,24 +122,25 @@ function App() {
          {/* Admin */}
           {/* Dashboard */}
           <Route exact path="admin/dashboard" element={<AdminDashboard />} />
-
           {/* User */}
           <Route exact path="admin/userlist" element={<AdminUserList />} />
           <Route exact path="admin/user/:id/detail" element={<AdminDetailUser />} />
-
           {/* Category */}
           <Route exact path="admin/categorylist" element={<AdminCategoryList />} />
           <Route exact path="admin/category/:id/detail" element={<AdminCategoryDetail />} />
           <Route exact path="admin/category/:id/edit" element={<AdminEditCategory />} />
-
           {/* Product */}
           <Route exact path="admin/productlist" element={<AdminProductList />} />
           <Route exact path="admin/product/:id/detail" element={<AdminDetailProduct />} />
           <Route exact path="admin/product/:id/edit" element={<AdminEditProduct />} />
-
           {/* Order */}
           <Route exact path="admin/orderlist" element={<AdminOrdertList />} />
           <Route exact path="admin/order/:id/detail" element={<AdminOrderDetail />} />
+
+          {/* Shipper */}
+          <Route exact path="/shipper/login" element={<LoginShipperScreen />} />
+          <Route exact path="/shipper/register" element={<RegisterShipperScreen />} />
+          <Route exact path="/shipper/home" element={<HomeShipperScreen />} />
 
         </Routes>
         {/* <Footer /> */}

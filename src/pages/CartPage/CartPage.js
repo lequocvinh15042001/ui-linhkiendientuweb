@@ -46,7 +46,7 @@ const CartPage = () => {
         setAmount(temp);
         console.log(productId);
         console.log('giam: ', temp);
-        dispatch(addToCart(productId, temp));
+        dispatch(addToCart(productId, 1));
         return temp;
     //   });
         

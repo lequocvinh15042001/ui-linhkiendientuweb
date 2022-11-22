@@ -85,7 +85,7 @@ const OrderDetailScreen = () => {
                                                     <p style={{ background: '#03a9f3', color: '#e7fff8', borderRadius: '5px' }} className='mx-0 my-0 py-1 px-2'>Đang giao hàng</p>
                                                 </Col> : (order?.data?.state === 'cancel') ?
                                                     <Col className='d-flex justify-content-start align-items-center'>
-                                                        <p style={{ background: '#ee5261', color: '#e7fff8', borderRadius: '5px' }} className='mx-0 my-0 py-1 px-2'>Đang giao hàng</p>
+                                                        <p style={{ background: '#ee5261', color: '#e7fff8', borderRadius: '5px' }} className='mx-0 my-0 py-1 px-2'>Đã hủy đơn hàng</p>
                                                     </Col> :
                                                     <Col xl={8} className='d-flex justify-content-start align-items-center'>
                                                         <p style={{ background: '#00c292', color: '#e7fff8', borderRadius: '5px' }} className='mx-0 my-0 py-1 px-2'>Đã nhận và thanh toán</p>
