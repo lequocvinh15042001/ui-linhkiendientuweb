@@ -4,11 +4,12 @@ import { Row, Col, Button, Form, Image } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../../components/Loader'
 import Message from '../../components/Message'
-// import { login } from '../actions/userActions'
+import { login } from '../../actions/userActions'
 
 const LoginShipperScreen = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [message, setMessage] = useState('')
 
     const dispatch = useDispatch()
 
@@ -29,8 +30,8 @@ const LoginShipperScreen = () => {
 
 
     useEffect(() => {
-        if (userInfo) {
-            navigate('/')
+        if (userInfo && userInfo.role === 'role_shipper') {
+            navigate('/shipper/home')
             window.location.reload()
         }
     }, [navigate, userInfo])
@@ -39,20 +40,23 @@ const LoginShipperScreen = () => {
 
     const submitHandler = (e) => {
         e.preventDefault()
-        // dispatch(login(user))    
-        navigate('/shipper/home')
-        console.log("==", user);
+        dispatch(login(user))
+        if (email.trim().length === 0 || password.trim().length === 0) {
+            setMessage("Vui lòng điền đủ thông tin")
+        } else{
+            setMessage("Kiểm tra lại thông tin đăng nhập")
+        } 
     }
 
     return (
-        <Row className='px-3 mx-0 d-flex justify-content-center align-items-center' style={{position: 'relative', height: '100vh', background: '#ffffe0'}}>
+        <Row className='px-3 mx-0 d-flex justify-content-center align-items-center' style={{ position: 'relative', height: '100vh', background: '#ffffe0' }}>
             {/* <Col style={{position: 'absolute', bottom: '0px', left: '0px'}}>
                 <Image src='https://i.ibb.co/1Jm2YM4/pngwing-com.png' style={{width: '30%'}}></Image>
             </Col> */}
             <Col xl={4} md={5} sm={7} style={{ background: '#f5f5f5', margin: '20px', padding: '0 40px', borderRadius: '20px' }} className='shadow rounded'>
                 <h5 className='d-flex justify-content-center pt-4 pb-2'>ĐĂNG NHẬP</h5>
-                <h5 className='d-flex justify-content-center pb-4' style={{ color: '#eeb808' }}> SHIPPER</h5>
-                {error && <Message variant='danger'>Vui lòng kiểm tra lại thông tin đăng nhập</Message>}
+                <h5 className='d-flex justify-content-center pb-4' style={{ color: '#eeb808' }}>ELECTRIC'S STORE SHIPPER</h5>
+                <p className='text-center' style={{color: 'red'}}>{message}</p>
                 {loading && <Loader />}
                 <Form onSubmit={submitHandler} >
                     <Form.Group controlId='email' className='pb-3'>

@@ -31,6 +31,9 @@ import {
   ORDER_SET_PAID_REQUEST,
   ORDER_SET_PAID_SUCCESS,
   ORDER_SET_PAID_FAIL,
+  SHIPPER_ORDER_ALL_PROCESS_REQUEST,
+  SHIPPER_ORDER_ALL_PROCESS_SUCCESS,
+  SHIPPER_ORDER_ALL_PROCESS_FAIL,
 } from "../constants/orderConstants";
 
 export const orderCreateReducer = (state = {}, action) => {
@@ -251,6 +254,28 @@ export const orderSetPaidReducer = (state = {}, action) => {
         success: true,
       }
     case ORDER_SET_PAID_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      }
+    default:
+      return state
+  }
+}
+
+//---------------------------------------------SHIPPER----------------------------------------------//
+export const orderProcessListShipperReducer = (state = { orderProcess: [] }, action) => {
+  switch (action.type) {
+    case SHIPPER_ORDER_ALL_PROCESS_REQUEST:
+      return {
+        loading: true,
+      }
+    case SHIPPER_ORDER_ALL_PROCESS_SUCCESS:
+      return {
+        loading: false,
+        orderProcess: action.payload,
+      }
+    case SHIPPER_ORDER_ALL_PROCESS_FAIL:
       return {
         loading: false,
         error: action.payload,

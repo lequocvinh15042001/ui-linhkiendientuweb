@@ -4,7 +4,7 @@ import { Row, Col, Button, Form, Image } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../../components/Loader'
 import Message from '../../components/Message'
-// import { register } from '../actions/userActions'
+import { register } from '../../actions/userActions'
 
 const RegisterShipperScreen = () => {
     const [name, setName] = useState('')
@@ -32,18 +32,18 @@ const RegisterShipperScreen = () => {
 
     useEffect(() => {
         if (userInfo) {
-            navigate(redirect)
+            navigate('/shipper/home')
             window.location.reload()
         }
-    }, [navigate, userInfo, redirect])
+    }, [navigate, userInfo])
 
     const submitHandler = (e) => {
         e.preventDefault()
+        dispatch(register(name, email, password, phone, address))
         if (password.trim().length === 0 || name.trim().length === 0 || email.trim().length === 0 || phone.trim().length === 0 || address.trim().length === 0) {
             setMessage('Vui lòng điền đủ thông tin')
         } else {
-            // dispatch(register(name, email, password, phone, address))
-            navigate('/login')
+            setMessage("Kiểm tra lại thông tin đăng ký")
         }
     }
 
@@ -54,9 +54,8 @@ const RegisterShipperScreen = () => {
             </Col> */}
             <Col xl={4} md={5} sm={7} style={{ background: '#f5f5f5', margin: '20px', padding: '0 40px', borderRadius: '20px' }} className='shadow rounded'>
                 <h5 className='d-flex justify-content-center pt-4 pb-2'>ĐĂNG KÝ</h5>
-                <h5 className='d-flex justify-content-center pb-4' style={{ color: '#eeb808' }}> SHIPPER</h5>
-                {message && <Message variant='danger'>{message}</Message>}
-                {error && <Message variant='danger'>Tài khoản đã tồn tại</Message>}
+                <h5 className='d-flex justify-content-center pb-4' style={{ color: '#eeb808' }}>ELECTRIC'S STORE SHIPPER</h5>
+                <p className='text-center' style={{color: 'red'}}>{message}</p>
                 {loading && <Loader />}
                 <Form onSubmit={submitHandler}>
                     <Form.Group controlId='username'>
