@@ -33,8 +33,8 @@ const RegisterShipperScreen = () => {
 
     useEffect(() => {
         if (userInfo) {
-            navigate('/shipper/home')
-            window.location.reload()
+            navigate('/shipper/login')
+            // window.location.reload()
             // dispatch(logout())
         }
     }, [navigate, userInfo, redirect])

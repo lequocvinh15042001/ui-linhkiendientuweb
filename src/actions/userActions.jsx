@@ -434,7 +434,7 @@ export const registerShipper = (name, email, password, phone, address) => async 
       payload: data
     })
 
-    localStorage.setItem('userInfo', JSON.stringify(data))
+    // localStorage.setItem('userInfo', JSON.stringify(data))
   } catch (error) {
     dispatch({
       type: SHIPPER_REGISTER_FAIL,

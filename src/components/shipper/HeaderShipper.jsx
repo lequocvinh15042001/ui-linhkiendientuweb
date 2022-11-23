@@ -61,7 +61,6 @@ const HeaderShipper = () => {
     const updateHandler = () => {
         setShowInfo(false);
         dispatch(updateUserProfile(userInfo.id, { name: name, phone: phone, address: address }))
-        localStorage.setItem('userInfo', { name: name, phone: phone, address: address })
     }
 
     return (
