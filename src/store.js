@@ -41,6 +41,7 @@ import {
   chooseOrderByShipperReducer,
   paidOrderByShipperReducer,
   cancelOrderByShipperReducer,
+  detailOrderByShipperReducer,
 } from './reducers/orderReducers'
 
 import {
@@ -104,7 +105,8 @@ const reducer = combineReducers({
   orderListShipper: orderListShipperReducer,
   chooseOrderByShipper: chooseOrderByShipperReducer,
   paidOrderByShipper: paidOrderByShipperReducer,
-  cancelOrderByShipper: cancelOrderByShipperReducer
+  cancelOrderByShipper: cancelOrderByShipperReducer,
+  detailOrderByShipper: detailOrderByShipperReducer
 })
 
 const cartItemsFromStorage = localStorage.getItem('cartItems')

@@ -43,6 +43,9 @@ import {
   SHIPPER_ORDER_CANCEL_REQUEST,
   SHIPPER_ORDER_CANCEL_SUCCESS,
   SHIPPER_ORDER_CANCEL_FAIL,
+  SHIPPER_ORDER_DETAIL_REQUEST,
+  SHIPPER_ORDER_DETAIL_SUCCESS,
+  SHIPPER_ORDER_DETAIL_FAIL,
 } from "../constants/orderConstants";
 import { logout } from './userActions'
 
@@ -669,6 +672,44 @@ export const cancelOrderByShipper = (id) => async (dispatch, getState) => {
     }
     dispatch({
       type: SHIPPER_ORDER_CANCEL_FAIL,
+      payload: message,
+    })
+  }
+}
+
+// Get order detail by Shipper
+export const getOrderDetailByShipper = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: SHIPPER_ORDER_DETAIL_REQUEST,
+    })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.accessToken}`,
+      },
+    }
+
+    const { data } = await axios.get(`http://localhost:8080/api/shipper/orders/${id}`, config)
+
+    dispatch({
+      type: SHIPPER_ORDER_DETAIL_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message
+    if (message === 'Not authorized, token failed') {
+      dispatch(logout())
+    }
+    dispatch({
+      type: SHIPPER_ORDER_DETAIL_FAIL,
       payload: message,
     })
   }

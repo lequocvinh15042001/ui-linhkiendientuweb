@@ -46,6 +46,9 @@ import {
   SHIPPER_ORDER_CANCEL_REQUEST,
   SHIPPER_ORDER_CANCEL_SUCCESS,
   SHIPPER_ORDER_CANCEL_FAIL,
+  SHIPPER_ORDER_DETAIL_REQUEST,
+  SHIPPER_ORDER_DETAIL_SUCCESS,
+  SHIPPER_ORDER_DETAIL_FAIL,
 } from "../constants/orderConstants";
 
 export const orderCreateReducer = (state = {}, action) => {
@@ -342,7 +345,7 @@ export const chooseOrderByShipperReducer = (state = { }, action) => {
   }
 }
 
-// Choose order By shipper
+// Paid order By shipper
 export const paidOrderByShipperReducer = (state = { }, action) => {
   switch (action.type) {
     case SHIPPER_ORDER_PAID_REQUEST:
@@ -364,7 +367,7 @@ export const paidOrderByShipperReducer = (state = { }, action) => {
   }
 }
 
-// Choose order By shipper
+// Cancel order By shipper
 export const cancelOrderByShipperReducer = (state = { }, action) => {
   switch (action.type) {
     case SHIPPER_ORDER_CANCEL_REQUEST:
@@ -377,6 +380,28 @@ export const cancelOrderByShipperReducer = (state = { }, action) => {
         success: action.payload,
       }
     case SHIPPER_ORDER_CANCEL_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      }
+    default:
+      return state
+  }
+}
+
+// Cancel order By shipper
+export const detailOrderByShipperReducer = (state = { orderDetail: {}}, action) => {
+  switch (action.type) {
+    case SHIPPER_ORDER_DETAIL_REQUEST:
+      return {
+        loading: true,
+      }
+    case SHIPPER_ORDER_DETAIL_SUCCESS:
+      return {
+        loading: false,
+        orderDetail: action.payload,
+      }
+    case SHIPPER_ORDER_DETAIL_FAIL:
       return {
         loading: false,
         error: action.payload,

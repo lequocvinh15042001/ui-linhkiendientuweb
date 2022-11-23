@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Accordion, Button, Col, Container, Pagination, Row, Tab, Table, Tabs } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { getAllOrderProcessByShipper, getAllOrderByShipper, chooseOrderByShipper, paidOrderByShipper, cancelOrderByShipper } from '../../actions/orderActions'
+import { getAllOrderProcessByShipper, getAllOrderByShipper, chooseOrderByShipper, paidOrderByShipper, cancelOrderByShipper, getOrderDetailByShipper } from '../../actions/orderActions'
 import HeaderShipper from '../../components/shipper/HeaderShipper'
 
 const HomeShipperScreen = () => {
@@ -16,7 +16,8 @@ const HomeShipperScreen = () => {
   const { success: chooseSucces } = useSelector((state) => state.chooseOrderByShipper)
   const { success: paidSucces } = useSelector((state) => state.paidOrderByShipper)
   const { success: cancelSucces } = useSelector((state) => state.cancelOrderByShipper)
-  // console.log('===', orderAllShipper?.data?.list);
+  const { orderDetail } = useSelector((state) => state.detailOrderByShipper)
+  console.log('===', orderDetail?.data);
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -76,6 +77,11 @@ const HomeShipperScreen = () => {
   // Cancel Order
   const cancelOrrder = (id) => {
     dispatch(cancelOrderByShipper(id))
+  }
+
+  // Get detail order
+  const detailOrrder = (id) => {
+    dispatch(getOrderDetailByShipper(id))
   }
 
 
@@ -161,7 +167,7 @@ const HomeShipperScreen = () => {
               <thead style={{ background: 'white' }}>
                 <tr>
                   <th className='text-center'>ID đơn hàng</th>
-                  <th>Tên tài khoản đặt hàng</th>
+                  <th>Xem chi tiết</th>
                   <th className='text-center'>Trạng thái đơn hàng</th>
                   <th className='text-center'>Hủy giao</th>
                   <th className='text-center'>Giao thành công</th>
@@ -171,7 +177,9 @@ const HomeShipperScreen = () => {
                 {arrDelivery?.map((order) => (
                   <tr style={{ margin: '60px 0' }} key={order.id}>
                     <td className='text-center'>{order.id}</td>
-                    <td>{order.userName}</td>
+                    <td className='text-center'>
+                      <Button onClick={() => detailOrrder(order.id)} className='my-0' style={{ fontSize: '13px' }} variant="outline-secondary">Chi tiết đơn hàng</Button>
+                    </td>
                     <th style={{ color: '#3333ff' }} className='text-center'>Đang giao hàng</th>
                     <td className='text-center'>
                       <Button onClick={() => cancelOrrder(order.id)} className='my-0' style={{ fontSize: '13px', color: 'white' }} variant="warning">Hủy giao</Button>
