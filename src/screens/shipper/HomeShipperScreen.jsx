@@ -166,7 +166,7 @@ const HomeShipperScreen = () => {
               </div>
             )}
           </Tab>
-          <Tab eventKey="chooseList" title="Đơn hàng đã nhận">
+          <Tab eventKey="chooseList" title={`Đơn hàng đã nhận (${arrDelivery.length})`}>
             <Table responsive style={{ fontSize: '13px' }}>
               <thead style={{ background: 'white' }}>
                 <tr>
