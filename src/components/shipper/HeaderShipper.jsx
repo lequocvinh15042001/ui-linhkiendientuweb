@@ -25,8 +25,8 @@ const HeaderShipper = () => {
 
     const logoutHandler = () => {
         dispatch(logout())
-        navigate('/shipper/login')
-        window.location.reload()
+        // navigate('/shipper/login')
+        window.location.href = '/shipper/login'
     }
 
     // load page
