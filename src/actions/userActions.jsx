@@ -22,6 +22,9 @@ import {
   USER_ALL_REQUEST,
   USER_ALL_SUCCESS,
   USER_ALL_FAIL,
+  SHIPPER_REGISTER_REQUEST,
+  SHIPPER_REGISTER_SUCCESS,
+  SHIPPER_REGISTER_FAIL,
 } from "../constants/userConstants";
 
 import axios from 'axios'
@@ -146,6 +149,7 @@ export const updateUserProfile = (id, user) => async (dispatch, getState) => {
     }
 
     const { data } = await axios.put(`http://localhost:8080/api/users/${id}`, user, config)
+    console.log('===', data)
 
     dispatch({
       type: USER_UPDATE_PROFILE_SUCCESS,
@@ -403,6 +407,38 @@ export const updateUser = (user) => async (dispatch, getState) => {
     dispatch({
       type: USER_UPDATE_FAIL,
       payload: message,
+    })
+  }
+}
+
+// Shipper
+// Register
+export const registerShipper = (name, email, password, phone, address) => async (dispatch) => {
+  try {
+    dispatch({
+      type: SHIPPER_REGISTER_REQUEST
+    })
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        "Accept": "application/json"
+      }
+    }
+
+    const { data } = await axios.post('http://localhost:8080/api/auth/register/shipper', { name, email, password, phone, address }, config)
+    // console.log('==register', data)
+
+    dispatch({
+      type: SHIPPER_REGISTER_SUCCESS,
+      payload: data
+    })
+
+    localStorage.setItem('userInfo', JSON.stringify(data))
+  } catch (error) {
+    dispatch({
+      type: SHIPPER_REGISTER_FAIL,
+      payload: error?.response?.data
     })
   }
 }

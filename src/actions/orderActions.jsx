@@ -319,7 +319,7 @@ export const getAllOrders = () => async (dispatch, getState) => {
   }
 }
 
-export const listOrderAdmin = (page, size) => async (dispatch, getState) => {
+export const listOrderAdmin = (page) => async (dispatch, getState) => {
   try {
     dispatch({
       type: ORDER_LIST_REQUEST,
@@ -335,7 +335,7 @@ export const listOrderAdmin = (page, size) => async (dispatch, getState) => {
       },
     }
 
-    const { data } = await axios.get(`http://localhost:8080/api/admin/manage/orders/?page=${page}&size=${size}`, config)
+    const { data } = await axios.get(`http://localhost:8080/api/admin/manage/getpage/orders/?page=${page}`, config)
 
     dispatch({
       type: ORDER_LIST_SUCCESS,

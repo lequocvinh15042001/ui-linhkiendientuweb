@@ -4,7 +4,7 @@ import { Row, Col, Button, Form, Image } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../../components/Loader'
 import Message from '../../components/Message'
-import { register } from '../../actions/userActions'
+import { logout, register, registerShipper } from '../../actions/userActions'
 
 const RegisterShipperScreen = () => {
     const [name, setName] = useState('')
@@ -18,11 +18,12 @@ const RegisterShipperScreen = () => {
 
     const navigate = useNavigate();
 
-    const userRegister = useSelector(state => state.userRegister)
-    const { loading, error, userInfo } = userRegister
+    const shipperRegister = useSelector(state => state.shipperRegister)
+    const { loading, error, userInfo } = shipperRegister
+    // console.log('====', userInfo);
 
     let location = useLocation();
-    const redirect = location.search ? location.search.split('=')[1] : '/'
+    const redirect = location.search ? location.search.split('=')[1] : '/shipper/home'
 
     // Check showpassword
     const [passwordShown, setPasswordShown] = useState(false);
@@ -34,16 +35,17 @@ const RegisterShipperScreen = () => {
         if (userInfo) {
             navigate('/shipper/home')
             window.location.reload()
+            // dispatch(logout())
         }
-    }, [navigate, userInfo])
+    }, [navigate, userInfo, redirect])
 
     const submitHandler = (e) => {
         e.preventDefault()
-        dispatch(register(name, email, password, phone, address))
+        dispatch(registerShipper(name, email, password, phone, address))
         if (password.trim().length === 0 || name.trim().length === 0 || email.trim().length === 0 || phone.trim().length === 0 || address.trim().length === 0) {
             setMessage('Vui lòng điền đủ thông tin')
-        } else {
-            setMessage("Kiểm tra lại thông tin đăng ký")
+        } else if (error) {
+            setMessage('Email đã tồn tại')
         }
     }
 
@@ -55,7 +57,8 @@ const RegisterShipperScreen = () => {
             <Col xl={4} md={5} sm={7} style={{ background: '#f5f5f5', margin: '20px', padding: '0 40px', borderRadius: '20px' }} className='shadow rounded'>
                 <h5 className='d-flex justify-content-center pt-4 pb-2'>ĐĂNG KÝ</h5>
                 <h5 className='d-flex justify-content-center pb-4' style={{ color: '#eeb808' }}>ELECTRIC'S STORE SHIPPER</h5>
-                <p className='text-center' style={{color: 'red'}}>{message}</p>
+                <p className='text-center' style={{ color: 'red' }}>{message}</p>
+                {/* {error && <p className='text-center' style={{color: 'red'}}>{error}</p>} */}
                 {loading && <Loader />}
                 <Form onSubmit={submitHandler}>
                     <Form.Group controlId='username'>

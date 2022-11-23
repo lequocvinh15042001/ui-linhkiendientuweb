@@ -23,6 +23,7 @@ import {
   userDeleteReducer,
   userUnlockReducer,
   userUpdateReducer,
+  shipperRegisterReducer,
 } from './reducers/userReducers'
 import {
   orderCreateReducer, getOrderReducer,
@@ -79,6 +80,7 @@ const reducer = combineReducers({
   userUpdateProfile: userUpdateProfileReducer,
   userChangePassword: userChangePasswordReducer,
   userForgotPassword: userForgotPasswordReducer,
+  shipperRegister: shipperRegisterReducer,
 
   //Admin
   userAllAdmin: userAllAdminReducer,

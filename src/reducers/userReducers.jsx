@@ -23,6 +23,9 @@ import {
   USER_ALL_REQUEST,
   USER_ALL_SUCCESS,
   USER_ALL_FAIL,
+  SHIPPER_REGISTER_REQUEST,
+  SHIPPER_REGISTER_SUCCESS,
+  SHIPPER_REGISTER_FAIL,
 
 } from "../constants/userConstants"
 
@@ -171,6 +174,20 @@ export const userUpdateReducer = (state = { user: {} }, action) => {
       return {
         user: {},
       }
+    default:
+      return state
+  }
+}
+
+// sHIPPER register
+export const shipperRegisterReducer = (state = {}, action) => {
+  switch (action.type) {
+    case SHIPPER_REGISTER_REQUEST:
+      return { loading: true }
+    case SHIPPER_REGISTER_SUCCESS:
+      return { loading: false, userInfo: action.payload }
+    case SHIPPER_REGISTER_FAIL:
+      return { loading: false, error: action.payload.message }
     default:
       return state
   }

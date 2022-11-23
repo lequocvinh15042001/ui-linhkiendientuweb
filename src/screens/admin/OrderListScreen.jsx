@@ -63,7 +63,7 @@ const ProductListScreen = () => {
     return page
   }
 
-  let pages = paginationPage(num, pageSize)
+  let pages = paginationPage(num, 5)
 
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
@@ -71,7 +71,7 @@ const ProductListScreen = () => {
   useEffect(() => {
     if (userInfo || userInfo.role === "role_admin") {
       dispatch(getAllOrders())
-      dispatch(listOrderAdmin(pageNum - 1, pageSize))
+      dispatch(listOrderAdmin(pageNum - 1))
     } else {
       navigate('/login')
     }
