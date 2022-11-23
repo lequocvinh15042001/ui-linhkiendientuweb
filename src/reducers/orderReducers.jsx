@@ -34,6 +34,18 @@ import {
   SHIPPER_ORDER_ALL_PROCESS_REQUEST,
   SHIPPER_ORDER_ALL_PROCESS_SUCCESS,
   SHIPPER_ORDER_ALL_PROCESS_FAIL,
+  SHIPPER_ORDER_ALL_STATE_REQUEST,
+  SHIPPER_ORDER_ALL_STATE_SUCCESS,
+  SHIPPER_ORDER_ALL_STATE_FAIL,
+  SHIPPER_ORDER_CHOOSE_REQUEST,
+  SHIPPER_ORDER_CHOOSE_SUCCESS,
+  SHIPPER_ORDER_CHOOSE_FAIL,
+  SHIPPER_ORDER_PAID_REQUEST,
+  SHIPPER_ORDER_PAID_SUCCESS,
+  SHIPPER_ORDER_PAID_FAIL,
+  SHIPPER_ORDER_CANCEL_REQUEST,
+  SHIPPER_ORDER_CANCEL_SUCCESS,
+  SHIPPER_ORDER_CANCEL_FAIL,
 } from "../constants/orderConstants";
 
 export const orderCreateReducer = (state = {}, action) => {
@@ -264,6 +276,7 @@ export const orderSetPaidReducer = (state = {}, action) => {
 }
 
 //---------------------------------------------SHIPPER----------------------------------------------//
+// Get all order PROCESS
 export const orderProcessListShipperReducer = (state = { orderProcess: [] }, action) => {
   switch (action.type) {
     case SHIPPER_ORDER_ALL_PROCESS_REQUEST:
@@ -276,6 +289,94 @@ export const orderProcessListShipperReducer = (state = { orderProcess: [] }, act
         orderProcess: action.payload,
       }
     case SHIPPER_ORDER_ALL_PROCESS_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      }
+    default:
+      return state
+  }
+}
+
+// Get all order By shipper
+export const orderListShipperReducer = (state = { orderAllShipper: [] }, action) => {
+  switch (action.type) {
+    case SHIPPER_ORDER_ALL_STATE_REQUEST:
+      return {
+        loading: true,
+      }
+    case SHIPPER_ORDER_ALL_STATE_SUCCESS:
+      return {
+        loading: false,
+        orderAllShipper: action.payload,
+      }
+    case SHIPPER_ORDER_ALL_STATE_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      }
+    default:
+      return state
+  }
+}
+
+// Choose order By shipper
+export const chooseOrderByShipperReducer = (state = { }, action) => {
+  switch (action.type) {
+    case SHIPPER_ORDER_CHOOSE_REQUEST:
+      return {
+        loading: true,
+      }
+    case SHIPPER_ORDER_CHOOSE_SUCCESS:
+      return {
+        loading: false,
+        success: action.payload,
+      }
+    case SHIPPER_ORDER_CHOOSE_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      }
+    default:
+      return state
+  }
+}
+
+// Choose order By shipper
+export const paidOrderByShipperReducer = (state = { }, action) => {
+  switch (action.type) {
+    case SHIPPER_ORDER_PAID_REQUEST:
+      return {
+        loading: true,
+      }
+    case SHIPPER_ORDER_PAID_SUCCESS:
+      return {
+        loading: false,
+        success: action.payload,
+      }
+    case SHIPPER_ORDER_PAID_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      }
+    default:
+      return state
+  }
+}
+
+// Choose order By shipper
+export const cancelOrderByShipperReducer = (state = { }, action) => {
+  switch (action.type) {
+    case SHIPPER_ORDER_CANCEL_REQUEST:
+      return {
+        loading: true,
+      }
+    case SHIPPER_ORDER_CANCEL_SUCCESS:
+      return {
+        loading: false,
+        success: action.payload,
+      }
+    case SHIPPER_ORDER_CANCEL_FAIL:
       return {
         loading: false,
         error: action.payload,

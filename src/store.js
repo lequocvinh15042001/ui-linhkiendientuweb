@@ -35,7 +35,12 @@ import {
   orderSetPaidReducer,
   orderSetDeliveryReducer,
 
+  // Shipper
   orderProcessListShipperReducer,
+  orderListShipperReducer,
+  chooseOrderByShipperReducer,
+  paidOrderByShipperReducer,
+  cancelOrderByShipperReducer,
 } from './reducers/orderReducers'
 
 import {
@@ -96,6 +101,10 @@ const reducer = combineReducers({
 
   // Shipper
   orderProcessListShipper: orderProcessListShipperReducer,
+  orderListShipper: orderListShipperReducer,
+  chooseOrderByShipper: chooseOrderByShipperReducer,
+  paidOrderByShipper: paidOrderByShipperReducer,
+  cancelOrderByShipper: cancelOrderByShipperReducer
 })
 
 const cartItemsFromStorage = localStorage.getItem('cartItems')
