@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Accordion, Button, Col, Container, Pagination, Row, Tab, Table, Tabs } from 'react-bootstrap'
+import { Accordion, Button, Col, Container, Image, Modal, Pagination, Row, Tab, Table, Tabs } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { getAllOrderProcessByShipper, getAllOrderByShipper, chooseOrderByShipper, paidOrderByShipper, cancelOrderByShipper, getOrderDetailByShipper } from '../../actions/orderActions'
@@ -79,11 +79,15 @@ const HomeShipperScreen = () => {
     dispatch(cancelOrderByShipper(id))
   }
 
-  // Get detail order
-  const detailOrrder = (id) => {
-    dispatch(getOrderDetailByShipper(id))
-  }
+  // Show Detail Order
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
 
+  const getDetailHandler = (id) => {
+    setShow(true);
+    dispatch(getOrderDetailByShipper(id))
+    // window.location.reload()
+  }
 
   return (
     <Row className='mx-0 px-0 ' style={{ background: '#f5f5f5', height: '100vh', width: '100vw' }}>
@@ -167,7 +171,7 @@ const HomeShipperScreen = () => {
               <thead style={{ background: 'white' }}>
                 <tr>
                   <th className='text-center'>ID đơn hàng</th>
-                  <th>Xem chi tiết</th>
+                  <th className='text-center'>Xem chi tiết</th>
                   <th className='text-center'>Trạng thái đơn hàng</th>
                   <th className='text-center'>Hủy giao</th>
                   <th className='text-center'>Giao thành công</th>
@@ -178,7 +182,7 @@ const HomeShipperScreen = () => {
                   <tr style={{ margin: '60px 0' }} key={order.id}>
                     <td className='text-center'>{order.id}</td>
                     <td className='text-center'>
-                      <Button onClick={() => detailOrrder(order.id)} className='my-0' style={{ fontSize: '13px' }} variant="outline-secondary">Chi tiết đơn hàng</Button>
+                      <Button onClick={() => getDetailHandler(order.id)} className='my-0' style={{ fontSize: '13px' }} variant="outline-secondary">Chi tiết</Button>
                     </td>
                     <th style={{ color: '#3333ff' }} className='text-center'>Đang giao hàng</th>
                     <td className='text-center'>
@@ -197,16 +201,19 @@ const HomeShipperScreen = () => {
               <thead style={{ background: 'white' }}>
                 <tr>
                   <th className='text-center'>ID đơn hàng</th>
-                  <th>Tên tài khoản đặt hàng</th>
+                  <th className='text-center'>Tài khoản đặt hàng</th>
+                  <th className='text-center'>Xem chi tiết</th>
                   <th className='text-center'>Trạng thái đơn hàng</th>
-                  <th className='text-center'>Chọn đơn hàng</th>
                 </tr>
               </thead>
               <tbody>
                 {arrPaid?.map((order) => (
                   <tr style={{ margin: '60px 0' }} key={order.id}>
                     <td className='text-center'>{order.id}</td>
-                    <td>{order.userName}</td>
+                    <td className='text-center'>{order.userName}</td>
+                    <td className='text-center'>
+                      <Button onClick={() => getDetailHandler(order.id)} className='my-0' style={{ fontSize: '13px' }} variant="outline-secondary">Chi tiết</Button>
+                    </td>
                     <th style={{ color: 'green' }} className='text-center'>Giao hàng thành công</th>
                   </tr>
                 ))}
@@ -218,7 +225,7 @@ const HomeShipperScreen = () => {
               <thead style={{ background: 'white' }}>
                 <tr>
                   <th className='text-center'>ID đơn hàng</th>
-                  <th>Tên tài khoản đặt hàng</th>
+                  <th className='text-center'>Xem chi tiết</th>
                   <th className='text-center'>Trạng thái đơn hàng</th>
                 </tr>
               </thead>
@@ -226,7 +233,9 @@ const HomeShipperScreen = () => {
                 {arrCancel?.map((order) => (
                   <tr style={{ margin: '60px 0' }} key={order.id}>
                     <td className='text-center'>{order.id}</td>
-                    <td>{order.userName}</td>
+                    <td className='text-center'>
+                      <Button onClick={() => getDetailHandler(order.id)} className='my-0' style={{ fontSize: '13px' }} variant="outline-secondary">Chi tiết</Button>
+                    </td>
                     <td>{order.state}</td>
                   </tr>
                 ))}
@@ -235,6 +244,45 @@ const HomeShipperScreen = () => {
           </Tab>
         </Tabs>
       </Container>
+      <Modal
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+        size="lg"
+        keyboard={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>CHI TIẾT ĐƠN HÀNG</Modal.Title>
+        </Modal.Header>
+        <Modal.Body style={{ fontSize: '14px', textTransform: 'none', width: 'auto' }}>
+          <strong>Thông tin đơn hàng</strong>
+          <p className='mt-3'>- Ngày đặt hàng: {orderDetail?.data?.createdDate}</p>
+          <p>- Số lượng sản phẩm: {orderDetail?.data?.totalProduct}</p>
+          <p>- Phương thức thanh toán: {orderDetail?.data?.receiveOrder?.paymentType}</p>
+          <p>- Tổng thanh toán: <span style={{ fontWeight: 'bold', color: 'red' }}>{orderDetail?.data?.totalPrice?.toLocaleString('vi', { style: 'currency', currency: 'VND' })}</span></p>
+          <strong>Thông tin người nhận</strong>
+          <p className='mt-3'>- Tên người nhận: {orderDetail?.data?.receiveOrder?.receiveName}</p>
+          <p className='mt-3'>- Số điện thoại: {orderDetail?.data?.receiveOrder?.receivePhone}</p>
+          <p className='mt-3'>- Địa chỉ giao hàng: {orderDetail?.data?.receiveOrder?.receiveAddress + ', ' + orderDetail?.data?.receiveOrder?.receiveDistrict + ', ' + orderDetail?.data?.receiveOrder?.receiveProvince + ', ' + orderDetail?.data?.receiveOrder?.receiveVillage}</p>
+          <strong>Chi tiết đơn hàng</strong>
+          {
+            orderDetail?.data?.items?.map(item => (
+              <Row className='mx-0 my-0 py-0 px-0'>
+                <Col className='mt-3 '>
+                  <Image style={{width: '90px', border: 'solid 2px #f2f2f2'}} src={item?.image[0]?.url}></Image>
+                </Col>
+                <Col className='mt-3 d-flex justify-content-center align-items-center'>{item.name}</Col>
+                <Col className='mt-3 d-flex justify-content-center align-items-center'>{(item.price / item.quantity)?.toLocaleString('vi', { style: 'currency', currency: 'VND' })} x {item.quantity}</Col>
+              </Row>
+            ))
+          }
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose} style={{ fontSize: '14px', textTransform: 'none', width: 'auto' }}>
+            Xong
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Row>
   )
 }
