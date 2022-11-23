@@ -69,16 +69,16 @@ const HeaderShipper = () => {
             <Row className='py-0 px-4 d-flex' style={{ width: 'auto' }}>
                 <p className='my-0' onClick={loadpage} style={{ cursor: 'pointer', fontSize: '18px', color: '#f5f5f5' }}>ELECTRIC SHIPPER</p>
             </Row>
-            <ReactTooltip id="tip5" place="top" effect="solid">
+            {/* <ReactTooltip id="tip5" place="top" effect="solid">
                 Tải lại trang
             </ReactTooltip>
             <ReactTooltip id="tip6" place="top" effect="solid">
                 Có {arrNotification.length} thông báo mới
-            </ReactTooltip>
+            </ReactTooltip> */}
             <Container className="justify-content-end">
                 <Row className='d-flex justify-content-center align-items-center'>
                     <Navbar.Collapse>
-                        <Row onClick={() => setLgShow(true)} className='py-0 d-flex justify-content-center align-items-center' style={{ width: 'auto', marginRight: '20px', position: 'relative' }}>
+                        {/* <Row onClick={() => setLgShow(true)} className='py-0 d-flex justify-content-center align-items-center' style={{ width: 'auto', marginRight: '20px', position: 'relative' }}>
                             <i data-tip data-for="tip6" style={{ cursor: 'pointer', fontSize: '20px', color: '#f2f2f2' }} className="far fa-bell"></i>
                             {
                                 arrNotification.length !== 0 ?
@@ -120,13 +120,13 @@ const HeaderShipper = () => {
                                         <p style={{ textAlign: 'center' }}>Không có thông báo</p>
                                 }
                             </Modal.Body>
-                        </Modal>
+                        </Modal> */}
                         <Nav className='d-flex justify-content-end pe-3' style={{color: 'white'}}>
                             {userInfo ? (
                                 <NavDropdown title={`${userInfo.name}`} id='nav-dropdown-admin' style={{color: 'white'}}>
-                                    <LinkContainer to='/profile'>
+                                    {/* <LinkContainer to='/profile'>
                                         <NavDropdown.Item style={{ color: 'red' }}>Thông tin</NavDropdown.Item>
-                                    </LinkContainer>
+                                    </LinkContainer> */}
                                     <NavDropdown.Item onClick={logoutHandler}>Đăng xuất</NavDropdown.Item>
                                 </NavDropdown>
                             ) : <LinkContainer to='/shipper/login' style={{color: 'white'}}>

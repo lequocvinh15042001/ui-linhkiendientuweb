@@ -107,7 +107,7 @@ const HomeShipperScreen = () => {
               <thead style={{ background: 'white' }}>
                 <tr>
                   <th className='text-center'>ID đơn hàng</th>
-                  <th>Tên tài khoản đặt hàng</th>
+                  <th className='text-center'>Tài khoản đặt hàng</th>
                   <th className='text-center'>Trạng thái đơn hàng</th>
                   <th className='text-center'>Chi tiết đơn hàng</th>
                   <th className='text-center'>Chọn đơn hàng</th>
@@ -117,7 +117,7 @@ const HomeShipperScreen = () => {
                 {orderProcess?.data?.list?.map((order) => (
                   <tr style={{ margin: '60px 0' }} key={order.id}>
                     <td className='text-center'>{order.id}</td>
-                    <td>{order.userName}</td>
+                    <td className='text-center'>{order.userName}</td>
                     <th style={{ color: '#eeb808' }} className='text-center'>Chưa giao</th>
                     <td className='text-start'>
                       <Accordion>
@@ -171,6 +171,7 @@ const HomeShipperScreen = () => {
               <thead style={{ background: 'white' }}>
                 <tr>
                   <th className='text-center'>ID đơn hàng</th>
+                  <th className='text-center'>Tài khoản đặt hàng</th>
                   <th className='text-center'>Xem chi tiết</th>
                   <th className='text-center'>Trạng thái đơn hàng</th>
                   <th className='text-center'>Hủy giao</th>
@@ -181,6 +182,7 @@ const HomeShipperScreen = () => {
                 {arrDelivery?.map((order) => (
                   <tr style={{ margin: '60px 0' }} key={order.id}>
                     <td className='text-center'>{order.id}</td>
+                    <td className='text-center'>{order.userName}</td>
                     <td className='text-center'>
                       <Button onClick={() => getDetailHandler(order.id)} className='my-0' style={{ fontSize: '13px' }} variant="outline-secondary">Chi tiết</Button>
                     </td>
@@ -225,18 +227,18 @@ const HomeShipperScreen = () => {
               <thead style={{ background: 'white' }}>
                 <tr>
                   <th className='text-center'>ID đơn hàng</th>
+                  <th className='text-center'>Tài khoản đặt hàng</th>
                   <th className='text-center'>Xem chi tiết</th>
-                  <th className='text-center'>Trạng thái đơn hàng</th>
                 </tr>
               </thead>
               <tbody>
                 {arrCancel?.map((order) => (
                   <tr style={{ margin: '60px 0' }} key={order.id}>
                     <td className='text-center'>{order.id}</td>
+                    <td className='text-center'>{order.userName}</td>
                     <td className='text-center'>
                       <Button onClick={() => getDetailHandler(order.id)} className='my-0' style={{ fontSize: '13px' }} variant="outline-secondary">Chi tiết</Button>
                     </td>
-                    <td>{order.state}</td>
                   </tr>
                 ))}
               </tbody>
@@ -244,6 +246,8 @@ const HomeShipperScreen = () => {
           </Tab>
         </Tabs>
       </Container>
+
+      {/* Detail Paid, Delivery and Cancel */}
       <Modal
         show={show}
         onHide={handleClose}
