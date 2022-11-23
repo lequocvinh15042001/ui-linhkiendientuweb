@@ -47,7 +47,7 @@ const HeaderShipper = () => {
             }
         }
         //eslint-disable-next-line 
-    }, [dispatch, navigate])
+    }, [dispatch, navigate, successUpdate])
 
 
     // Update Profile Shipper
@@ -61,6 +61,9 @@ const HeaderShipper = () => {
     const updateHandler = () => {
         setShowInfo(false);
         dispatch(updateUserProfile(userInfo.id, { name: name, phone: phone, address: address }))
+        const user = JSON.parse(localStorage.getItem('userInfo'))
+        console.log('===', user);
+        localStorage.setItem('userInfo', JSON.stringify({ ...user, name: name, phone: phone, address: address }))
     }
 
     return (

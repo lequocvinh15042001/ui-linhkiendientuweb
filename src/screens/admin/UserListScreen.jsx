@@ -103,10 +103,10 @@ const UserListScreen = () => {
       </div>
       <Row className='align-items-center mx-4 mt-4 px-4' style={{ background: 'white' }}>
         <Col className='px-0'>
-          <h5 style={{fontSize: '16px'}} className='pb-4 pt-4'>DANH SÁCH NGƯỜI DÙNG</h5>
+          <h5 style={{ fontSize: '16px' }} className='pb-4 pt-4'>DANH SÁCH NGƯỜI DÙNG</h5>
         </Col>
         <Col className='d-flex justify-content-end px-0'>
-          <h6 style={{fontSize: '14px'}} className='pb-4 pt-4'>Tổng số lượng: {userAll?.data?.length} người dùng</h6>
+          <h6 style={{ fontSize: '14px' }} className='pb-4 pt-4'>Tổng số lượng: {userAll?.data?.length} người dùng</h6>
         </Col>
       </Row>
       <Row className='d-flex justify-content-end align-items-center mx-4 mt-0 px-4' style={{ background: 'white' }}>
@@ -148,9 +148,9 @@ const UserListScreen = () => {
                   <td>
                     {user.role === "role_admin" ? (
                       <p className='my-0'>Quản trị viên</p>
-                    ) : (
+                    ) : user.role === "role_user" ? (
                       <p className='my-0'>Người dùng</p>
-                    )}
+                    ) : <p className='my-0'>Shipper</p>}
                   </td>
                   {/* <td className='text-center'>{user.phone}</td> */}
                   <td className='text-center'>

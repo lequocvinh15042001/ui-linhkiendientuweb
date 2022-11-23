@@ -25,8 +25,7 @@ const HeaderAdmin = () => {
 
     const logoutHandler = () => {
         dispatch(logout())
-        navigate('/')
-        window.location.reload()
+        window.location.href = '/admin/login'
     }
 
     // load page

@@ -51,6 +51,7 @@ import AdminEditProduct from "./pages/adminPages/AdminProductEdit";
 import LoginShipperScreen from "./screens/shipper/LoginShipperScreen";
 import HomeShipperScreen from "./screens/shipper/HomeShipperScreen";
 import RegisterShipperScreen from "./screens/shipper/RegisterShipperScreen";
+import LoginAdminScreen from "./screens/admin/LoginAdminScreen";
 
 function App() {
   const { theme } = useThemeContext();
@@ -69,81 +70,82 @@ function App() {
 
   return (
     <AuthWrapper>
-        {/* <Navbar />
+      {/* <Navbar />
         <Sidebar /> */}
-        <Routes>
-          <Route exact path="/" element={<HomeClient />} />
-          <Route exact path="/about" element={<AboutClient />} />
+      <Routes>
+        <Route exact path="/" element={<HomeClient />} />
+        <Route exact path="/about" element={<AboutClient />} />
 
-          <Route path='/login' element={<LoginPage />} />
-          <Route path='/register' element={<RegisterPage />} />
+        <Route path='/login' element={<LoginPage />} />
+        <Route path='/register' element={<RegisterPage />} />
 
-          <Route exact path="/cart" element={<CartClient />}>
-          </Route>
+        <Route exact path="/cart" element={<CartClient />}>
+        </Route>
 
-          <Route exact path="/cart/:id" element={<CartClient />}>
-          </Route>
+        <Route exact path="/cart/:id" element={<CartClient />}>
+        </Route>
 
-          <Route exact path="/products#:id" element={<ProductsClient />}>
+        <Route exact path="/products#:id" element={<ProductsClient />}>
 
-          </Route>
+        </Route>
 
-          <Route exact path="/products" element={<ProductsClient />}>
+        <Route exact path="/products" element={<ProductsClient />}>
 
-          </Route>
+        </Route>
 
-          <Route exact path="/history" element={<History />}>
+        <Route exact path="/history" element={<History />}>
 
-          </Route>
+        </Route>
 
-          <Route exact path="/scan" element={<Scan />}>
+        <Route exact path="/scan" element={<Scan />}>
 
-            {/* <ItemList /> */}
-          </Route>
+          {/* <ItemList /> */}
+        </Route>
 
-          <Route exact path="/products/:id" element={<SingleProductClient />} />
+        <Route exact path="/products/:id" element={<SingleProductClient />} />
 
-          <Route exact path="/checkout" element={<CheckoutClient />} />
+        <Route exact path="/checkout" element={<CheckoutClient />} />
 
-          <Route path='/shipping/:id' element={<ShippingScreenClient />} />
+        <Route path='/shipping/:id' element={<ShippingScreenClient />} />
 
-          <Route path='/success' element={<PaymentScreenClient />} />
+        <Route path='/success' element={<PaymentScreenClient />} />
 
-          <Route path="*" element={<ErrorClient />}></Route>
+        <Route path="*" element={<ErrorClient />}></Route>
 
-          <Route path='/changepassword' element={<ChangePasswordClient />} />
+        <Route path='/changepassword' element={<ChangePasswordClient />} />
 
-          <Route path='/forgotpassword' element={<ForgotPasswordClient />} />
+        <Route path='/forgotpassword' element={<ForgotPasswordClient />} />
 
-          <Route path='/myorder' element={<MyOrderClient />} />
+        <Route path='/myorder' element={<MyOrderClient />} />
 
-          <Route path='/profile' element={<UserDetailClient />} />
+        <Route path='/profile' element={<UserDetailClient />} />
 
-         {/* Admin */}
-          {/* Dashboard */}
-          <Route exact path="admin/dashboard" element={<AdminDashboard />} />
-          {/* User */}
-          <Route exact path="admin/userlist" element={<AdminUserList />} />
-          <Route exact path="admin/user/:id/detail" element={<AdminDetailUser />} />
-          {/* Category */}
-          <Route exact path="admin/categorylist" element={<AdminCategoryList />} />
-          <Route exact path="admin/category/:id/detail" element={<AdminCategoryDetail />} />
-          <Route exact path="admin/category/:id/edit" element={<AdminEditCategory />} />
-          {/* Product */}
-          <Route exact path="admin/productlist" element={<AdminProductList />} />
-          <Route exact path="admin/product/:id/detail" element={<AdminDetailProduct />} />
-          <Route exact path="admin/product/:id/edit" element={<AdminEditProduct />} />
-          {/* Order */}
-          <Route exact path="admin/orderlist" element={<AdminOrdertList />} />
-          <Route exact path="admin/order/:id/detail" element={<AdminOrderDetail />} />
+        {/* Admin */}
+        <Route exact path="/admin/login" element={<LoginAdminScreen />} />
+        {/* Dashboard */}
+        <Route exact path="admin/dashboard" element={<AdminDashboard />} />
+        {/* User */}
+        <Route exact path="admin/userlist" element={<AdminUserList />} />
+        <Route exact path="admin/user/:id/detail" element={<AdminDetailUser />} />
+        {/* Category */}
+        <Route exact path="admin/categorylist" element={<AdminCategoryList />} />
+        <Route exact path="admin/category/:id/detail" element={<AdminCategoryDetail />} />
+        <Route exact path="admin/category/:id/edit" element={<AdminEditCategory />} />
+        {/* Product */}
+        <Route exact path="admin/productlist" element={<AdminProductList />} />
+        <Route exact path="admin/product/:id/detail" element={<AdminDetailProduct />} />
+        <Route exact path="admin/product/:id/edit" element={<AdminEditProduct />} />
+        {/* Order */}
+        <Route exact path="admin/orderlist" element={<AdminOrdertList />} />
+        <Route exact path="admin/order/:id/detail" element={<AdminOrderDetail />} />
 
-          {/* Shipper */}
-          <Route exact path="/shipper/login" element={<LoginShipperScreen />} />
-          <Route exact path="/shipper/register" element={<RegisterShipperScreen />} />
-          <Route exact path="/shipper/home" element={<HomeShipperScreen />} />
+        {/* Shipper */}
+        <Route exact path="/shipper/login" element={<LoginShipperScreen />} />
+        <Route exact path="/shipper/register" element={<RegisterShipperScreen />} />
+        <Route exact path="/shipper/home" element={<HomeShipperScreen />} />
 
-        </Routes>
-        {/* <Footer /> */}
+      </Routes>
+      {/* <Footer /> */}
       {/* </Fragment> */}
     </AuthWrapper>
   );
