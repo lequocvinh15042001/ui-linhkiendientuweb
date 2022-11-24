@@ -50,11 +50,7 @@ const Navbar = () => {
     if (
         userInfo?.role === "role_admin"
     ) {
-        return (
-            <LinkContainer to='/admin/userlist'>
-                <NavDropdown.Item>Trang Admin</NavDropdown.Item>
-            </LinkContainer>
-        );
+        return
     } else {
         return null;
     }
