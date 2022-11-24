@@ -24,6 +24,7 @@ import {
   userUnlockReducer,
   userUpdateReducer,
   shipperRegisterReducer,
+  userListDetailReducer,
 } from './reducers/userReducers'
 import {
   orderCreateReducer, getOrderReducer,
@@ -43,6 +44,7 @@ import {
   paidOrderByShipperReducer,
   cancelOrderByShipperReducer,
   detailOrderByShipperReducer,
+  orderListDetailAdminReducer,
 } from './reducers/orderReducers'
 
 import {
@@ -85,6 +87,7 @@ const reducer = combineReducers({
   //Admin
   userAllAdmin: userAllAdminReducer,
   userList: userListReducer,
+  userListDetail: userListDetailReducer,
   userDelete: userDeleteReducer,
   userUnlock: userUnlockReducer,
   userUpdate: userUpdateReducer,
@@ -98,6 +101,7 @@ const reducer = combineReducers({
   // Admin - Order
   orderAll: orderAllReducer,
   orderListAdmin: orderListAdminReducer,
+  orderListDetailAdmin: orderListDetailAdminReducer,
   orderDetailAdmin: orderDetailAdminReducer,
   orderSetDelivery: orderSetDeliveryReducer,
   orderSetPaid: orderSetPaidReducer,

@@ -11,7 +11,7 @@ import { useState } from 'react'
 
 const UserListScreen = () => {
   const [pageNum, setPageNum] = useState(1);
-  const [pageSize, setPageSize] = useState(5);
+  const [role, setRole] = useState('all');
   // console.log('==', pageSize)
 
   const dispatch = useDispatch()
@@ -20,7 +20,45 @@ const UserListScreen = () => {
   const { loading, error, users, page } = useSelector((state) => state.userList)
   // console.log("user list: ", users);
 
+  const { userDetailRole } = useSelector((state) => state.userListDetail)
+  // console.log('==', productAll?.data?.length);
+
   const { userAll } = useSelector((state) => state.userAllAdmin)
+
+  // GEt order Page with states
+  const arrUserPage = []
+  const checkUserPage = (role) => {
+    if (role === 'all') {
+      users?.data?.list?.find(item => {
+        arrUserPage.push(item)
+      })
+    } else {
+      userDetailRole?.data?.list?.find(item => {
+        arrUserPage.push(item)
+      })
+    }
+  }
+  checkUserPage(role)
+
+  // Get length List order
+  let arrOrderState = []
+  const getLength = (status) => {
+    if (status === 'all') {
+      userAll?.data?.list?.find(item => {
+        if (item.state !== 'in cart') {
+          arrOrderState.push(item)
+        }
+      })
+    } else {
+      userAll?.data?.list?.find(item => {
+        if (item.state !== 'in cart' && item.state === status) {
+          arrOrderState.push(item)
+        }
+      })
+    }
+  }
+
+  getLength(role)
 
   const num = userAll?.data?.length
   const paginationPage = (num, pageSize) => {
@@ -33,7 +71,7 @@ const UserListScreen = () => {
     return page
   }
 
-  let pages = paginationPage(num, pageSize)
+  let pages = paginationPage(num, 5)
 
   const { userInfo } = useSelector((state) => state.userLogin)
 
@@ -45,12 +83,12 @@ const UserListScreen = () => {
   useEffect(() => {
     if (userInfo && userInfo.role === "role_admin") {
       dispatch(getAllUsersAdmin())
-      dispatch(listUsers(pageNum - 1, pageSize))
+      dispatch(listUsers(pageNum - 1))
       // const num = dispatch(listUsers(0, 0))
     } else {
       navigate("/login")
     }
-  }, [dispatch, navigate, successDelete, successUnlock, userInfo, pageNum, pageSize])
+  }, [dispatch, navigate, successDelete, successUnlock, userInfo, pageNum])
 
   // Block user
   const [show, setShow] = useState(false);
@@ -113,10 +151,11 @@ const UserListScreen = () => {
         {/* <div style={{ width: 'auto', fontSize: '20px' }} className='d-flex justify-content-center align-items-center'>
           <i style={{ width: 'auto' }} className="fas fa-sort-amount-down-alt"></i>
         </div> */}
-        <Form.Select onChange={(e) => setPageSize(e.target.value)} style={{ width: 'auto', fontSize: '14px' }} aria-label="Default select example">
-          <option value="5">5</option>
-          <option value="10">10</option>
-          <option value="15">15</option>
+        <Form.Select value={role} onChange={(e) => setRole(e.target.value)} style={{ width: 'auto' }} aria-label="Default select example">
+          <option value="all">Tất cả</option>
+          <option value="role_user">Người dùng</option>
+          <option value="role_admin">Quản trị viên</option>
+          <option value="role_shipper">Shipper</option>
         </Form.Select>
       </Row>
       {loading ? (
@@ -140,7 +179,7 @@ const UserListScreen = () => {
             <tbody>
               {users?.data?.map((user, index) => (
                 <tr style={{ margin: '60px 0' }} key={user.id}>
-                  <td style={{ fontWeight: 'bold' }}>{index + (pageNum - 1) * pageSize + 1}</td>
+                  <td style={{ fontWeight: 'bold' }}>{index + (pageNum - 1) * 5 + 1}</td>
                   <td>{user.name}</td>
                   <td>
                     <a style={{ textDecoration: 'none', color: 'black' }} href={`mailto:${user.email}`}>{user.email}</a>

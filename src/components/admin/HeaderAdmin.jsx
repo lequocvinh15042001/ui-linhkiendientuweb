@@ -3,12 +3,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { LinkContainer } from 'react-router-bootstrap'
 import ReactTooltip from 'react-tooltip'
-import { Container, Navbar, Nav, NavDropdown, Row, Modal, Button } from 'react-bootstrap'
+import { Container, Navbar, Nav, NavDropdown, Row, Modal, Button, Form } from 'react-bootstrap'
 // import { getOrder, updateOrder } from '../actions/orderActions'
-import { logout } from '../../actions/userActions'
+import { getUserDetails, logout, updateUserProfile } from '../../actions/userActions'
 import { getAllOrders, setDeliveryOrder } from '../../actions/orderActions'
 
 const HeaderAdmin = () => {
+    const [name, setName] = useState('')
+    const [phone, setPhone] = useState('')
+    const [address, setAddress] = useState('')
     const [lgShow, setLgShow] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch()
@@ -22,6 +25,9 @@ const HeaderAdmin = () => {
     const orderSetDelivery = useSelector(state => state.orderSetDelivery)
     const { success: deliverySuccess } = orderSetDelivery
     // console.log('==', userInfo)
+
+    const userUpdateProfile = useSelector(state => state.userUpdateProfile)
+    const { success: successUpdate } = userUpdateProfile
 
     const logoutHandler = () => {
         dispatch(logout())
@@ -46,8 +52,19 @@ const HeaderAdmin = () => {
 
     useEffect(() => {
         dispatch(getAllOrders())
+        if (successUpdate) {
+            window.location.reload()
+        } else {
+            if (!userInfo?.name) {
+                dispatch(getUserDetails(userInfo.id))
+            } else {
+                setName(userInfo?.name)
+                setPhone(userInfo?.phone)
+                setAddress(userInfo?.address)
+            }
+        }
         //eslint-disable-next-line 
-    }, [dispatch, deliverySuccess])
+    }, [dispatch, navigate, successUpdate, deliverySuccess])
 
     // confirm All Order
     const confirmAllOrder = () => {
@@ -61,6 +78,22 @@ const HeaderAdmin = () => {
     // Confirm Order
     const confirmOrder = (idOrder) => {
         dispatch(setDeliveryOrder(idOrder))
+    }
+
+    // Update Profile Shipper
+    const [showInfo, setShowInfo] = useState(false);
+    const handleCloseInfo = () => setShowInfo(false);
+    const handleShowInfo = () => {
+        setShowInfo(true);
+    }
+
+    // Update profile Admin
+    const updateHandler = () => {
+        setShowInfo(false);
+        dispatch(updateUserProfile(userInfo.id, { name: name, phone: phone, address: address }))
+        const user = JSON.parse(localStorage.getItem('userInfo'))
+        console.log('===', user);
+        localStorage.setItem('userInfo', JSON.stringify({ ...user, name: name, phone: phone, address: address }))
     }
 
     return (
@@ -120,12 +153,58 @@ const HeaderAdmin = () => {
                                 }
                             </Modal.Body>
                         </Modal>
+                        {/* Update Profile Admin */}
+                        <Modal show={showInfo} onHide={handleCloseInfo}>
+                            <Modal.Header closeButton>
+                                <Modal.Title>Thông tin người dùng</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <Form>
+                                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                                        <Form.Label style={{ fontSize: '14px' }}>Tên người dùng</Form.Label>
+                                        <Form.Control
+                                            style={{ fontSize: '14px' }}
+                                            value={name}
+                                            onChange={(e) => setName(e.target.value)}
+                                            type="text"
+                                            placeholder="Nhập tên danh mục"
+                                            autoFocus
+                                        />
+                                    </Form.Group>
+                                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                                        <Form.Label style={{ fontSize: '14px' }}>Số điện thoại</Form.Label>
+                                        <Form.Control
+                                            style={{ fontSize: '14px' }}
+                                            value={phone}
+                                            onChange={(e) => setPhone(e.target.value)}
+                                            type="text"
+                                            placeholder="Nhập tên danh mục"
+                                            autoFocus
+                                        />
+                                    </Form.Group>
+                                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                                        <Form.Label style={{ fontSize: '14px' }}>Địa chỉ</Form.Label>
+                                        <Form.Control
+                                            style={{ fontSize: '14px' }}
+                                            value={address}
+                                            onChange={(e) => setAddress(e.target.value)}
+                                            type="text"
+                                            placeholder="Nhập tên danh mục"
+                                            autoFocus
+                                        />
+                                    </Form.Group>
+                                </Form>
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button style={{ fontSize: '14px', textTransform: 'none', width: 'auto' }} variant="primary" onClick={updateHandler}>
+                                    Cập nhật
+                                </Button>
+                            </Modal.Footer>
+                        </Modal>
                         <Nav className='d-flex justify-content-end pe-3'>
                             {userInfo ? (
                                 <NavDropdown title={`${userInfo.name}`} id='nav-dropdown-admin'>
-                                    <LinkContainer to='/profile'>
-                                        <NavDropdown.Item style={{ color: 'red' }}>Thông tin</NavDropdown.Item>
-                                    </LinkContainer>
+                                    <NavDropdown.Item onClick={handleShowInfo} style={{ color: '#03a9f3' }}>Thông tin</NavDropdown.Item>
                                     <NavDropdown.Item onClick={logoutHandler}>Đăng xuất</NavDropdown.Item>
                                 </NavDropdown>
                             ) : <LinkContainer to='/login'>
