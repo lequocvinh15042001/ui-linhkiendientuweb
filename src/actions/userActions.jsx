@@ -279,7 +279,7 @@ export const listUsers = (page, size) => async (dispatch, getState) => {
       },
     }
     console.log(page);
-    const { data } = await axios.get(`http://localhost:8080/api/admin/manage/users?page=${page}&size=${size}`, config)
+    const { data } = await axios.get(`http://localhost:8080/api/admin/manage/users?page=${page}`, config)
 
     dispatch({
       type: USER_LIST_SUCCESS,

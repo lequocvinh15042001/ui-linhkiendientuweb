@@ -26,6 +26,9 @@ import {
   SHIPPER_REGISTER_REQUEST,
   SHIPPER_REGISTER_SUCCESS,
   SHIPPER_REGISTER_FAIL,
+  USER_LIST_DETAIL_REQUEST,
+  USER_LIST_DETAIL_SUCCESS,
+  USER_LIST_DETAIL_FAIL,
 
 } from "../constants/userConstants"
 
@@ -131,6 +134,19 @@ export const userListReducer = (state = { users: [] }, action) => {
       return { loading: false, error: action.payload }
     case USER_LIST_RESET:
       return { users: [] }
+    default:
+      return state
+  }
+}
+
+export const userListDetailReducer = (state = { userDetail: [] }, action) => {
+  switch (action.type) {
+    case USER_LIST_DETAIL_REQUEST:
+      return { loading: true }
+    case USER_LIST_DETAIL_SUCCESS:
+      return { loading: false, userDetail: action.payload }
+    case USER_LIST_DETAIL_FAIL:
+      return { loading: false, error: action.payload }
     default:
       return state
   }
