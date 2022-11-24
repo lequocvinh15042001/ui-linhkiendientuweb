@@ -10,34 +10,25 @@ const ProductsPage = () => {
   return (
     <main id="main">
       <PageHero title="Sản phẩm" />
-      <Wrapper className="page">
-        <div className="section-center products">
-          <Filters />
-          <div>
-            <Sort/>
-            {/* <ProductList /> */}
-            <AllProduct/>
-          </div>
-          <div>
-            <Contact/>
-          </div>
+        <div>
+          {/* <Filters /> */}
+          <AllProduct/>
         </div>
-      </Wrapper>
     </main>
   );
 };
 
-const Wrapper = styled.div`
-  .products {
-    display: grid;
-    gap: 3rem 1.5rem;
-    margin: 3rem auto;
-  }
-  @media (min-width: 768px) {
-    .products {
-      grid-template-columns: 250px 1fr;
-    }
-  }
-`;
+// const Wrapper = styled.div`
+//   .products {
+//     display: grid;
+//     gap: 3rem 1.5rem;
+//     margin: 3rem auto;
+//   }
+//   @media (min-width: 768px) {
+//     .products {
+//       grid-template-columns: 250px 1fr;
+//     }
+//   }
+// `;
 
 export default ProductsPage;

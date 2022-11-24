@@ -11,7 +11,7 @@ const UserDetailClient = () => {
     <Navbar1/>
     <Sidebar/>
     <Profile/>
-    <ContactHelp/>
+    {/* <ContactHelp/> */}
     <Footerr/>
     </Fragment>
   )

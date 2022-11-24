@@ -12,7 +12,7 @@ const SingleProductClient = () => {
         <Sidebar/>
         <SingleProduct/>
         <Comment/>
-        <Contact/>
+        {/* <Contact/> */}
         <Footerr/>
     </Fragment>
   )

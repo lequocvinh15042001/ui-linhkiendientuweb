@@ -44,6 +44,7 @@ const ChangePassword = () => {
     }
 
     return (
+        <div className='container' style={{"paddingTop":"10rem"}}>
         <FormContainer>
             <h1 className='d-flex justify-content-center py-3'>Thay đổi mật khẩu</h1>
             {message && <Message variant='danger'>{message}</Message>}
@@ -68,6 +69,7 @@ const ChangePassword = () => {
                 </Form.Group>
             </Form>
         </FormContainer>
+        </div>
     )
 }
 

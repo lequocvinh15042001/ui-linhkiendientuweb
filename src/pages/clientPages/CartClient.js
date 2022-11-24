@@ -12,7 +12,7 @@ const CartClient = () => {
     <Navbar1/>
     <Sidebar/>
     <CartPage/>
-    <ContactHelp/>
+    {/* <ContactHelp/> */}
     <Footerr/>
     </Fragment>
   )

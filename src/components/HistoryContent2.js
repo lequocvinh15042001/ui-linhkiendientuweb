@@ -188,7 +188,7 @@ const HistoryContent = ({history}) => {
           </Table>
         </div>
         </div>
-        <Contact></Contact>
+        {/* <Contact></Contact> */}
     </Wrapper>
   );
 };

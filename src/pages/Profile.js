@@ -33,7 +33,7 @@ const Profile = () => {
     };
 
     return (
-        <div>
+        <div className='container' style={{"paddingTop":"10rem"}}>
             <div className='d-flex align-items-center justify-content-between py-4 px-4' style={{ background: 'white', width: '100%' }}>
                 <div className='d-flex align-items-center justify-content-between'>
                     <div className='d-flex align-items-center'>
