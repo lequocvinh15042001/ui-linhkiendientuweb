@@ -25,6 +25,9 @@ import {
   SHIPPER_REGISTER_REQUEST,
   SHIPPER_REGISTER_SUCCESS,
   SHIPPER_REGISTER_FAIL,
+  USER_LIST_DETAIL_REQUEST,
+  USER_LIST_DETAIL_SUCCESS,
+  USER_LIST_DETAIL_FAIL,
 } from "../constants/userConstants";
 
 import axios from 'axios'
@@ -292,6 +295,44 @@ export const listUsers = (page, size) => async (dispatch, getState) => {
     }
     dispatch({
       type: USER_LIST_FAIL,
+      payload: message,
+    })
+  }
+}
+
+// Get user list state
+export const detailStateUserAdmin = (role, page) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: USER_LIST_DETAIL_REQUEST,
+    })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.accessToken}`,
+      },
+    }
+
+    const { data } = await axios.get(`http://localhost:8080/api/admin/manage/getrole/users?role=${role}&page=${page}`, config)
+
+    dispatch({
+      type: USER_LIST_DETAIL_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message
+    if (message === 'Not authorized, token failed') {
+      dispatch(logout())
+    }
+    dispatch({
+      type: USER_LIST_DETAIL_FAIL,
       payload: message,
     })
   }

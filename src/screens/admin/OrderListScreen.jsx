@@ -5,13 +5,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import ReactTooltip from 'react-tooltip'
 import Message from '../../components/Message'
 import Loader from '../../components/Loader'
-import { getAllOrders, listOrderAdmin, setPaidOrder } from "../../actions/orderActions";
+import { detailStateOrderAdmin, getAllOrders, listOrderAdmin, setPaidOrder } from "../../actions/orderActions";
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 
 const ProductListScreen = () => {
   const [pageNum, setPageNum] = useState(1);
-  const [pageSize, setPageSize] = useState(5);
+  const [status, setStatus] = useState('all');
+  console.log('===', status)
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -19,6 +20,9 @@ const ProductListScreen = () => {
   const { orderAll } = useSelector(state => state.orderAll)
 
   const { loading, error, orders, page } = useSelector((state) => state.orderListAdmin)
+  // console.log('==', productAll?.data?.length);
+
+  const { orderState } = useSelector((state) => state.orderListDetailAdmin)
   // console.log('==', productAll?.data?.length);
 
   const orderSetDelivery = useSelector(state => state.orderSetDelivery)
@@ -29,29 +33,47 @@ const ProductListScreen = () => {
   const { success: paidSuccess } = orderSetPaid
   // console.log('==', userInfo)
 
-  // Check order
-  const arrOrderAll = []
-  const checkOrderAll = () => {
-    orderAll?.data?.list?.find(item => {
-      if (item.state !== 'in cart') {
-        arrOrderAll.push(item)
-      }
-    })
-  }
-  // console.log('item', arrOrderAll)
-  checkOrderAll()
-
+  // GEt order Page with states
   const arrOrderPage = []
-  const checkOrderPage = () => {
-    orders?.data?.list?.find(item => {
-      if (item.state !== 'in cart') {
-        arrOrderPage.push(item)
-      }
-    })
+  const checkOrderPage = (status) => {
+    if (status === 'all') {
+      orders?.data?.list?.find(item => {
+        if (item.state !== 'in cart') {
+          arrOrderPage.push(item)
+        }
+      })
+    } else {
+      orderState?.data?.list?.find(item => {
+        if (item.state !== 'in cart') {
+          arrOrderPage.push(item)
+        }
+      })
+    }
   }
-  checkOrderPage()
+  checkOrderPage(status)
 
-  const num = arrOrderAll?.length
+  // Get length List order
+  let arrOrderState = []
+  const getLength = (status) => {
+    if (status === 'all') {
+      orderAll?.data?.list?.find(item => {
+        if (item.state !== 'in cart') {
+          arrOrderState.push(item)
+        }
+      })
+    } else {
+      orderAll?.data?.list?.find(item => {
+        if (item.state !== 'in cart' && item.state === status) {
+          arrOrderState.push(item)
+        }
+      })
+    }
+  }
+
+  getLength(status)
+  console.log('===', arrOrderState)
+  const num = arrOrderState.length
+
 
   const paginationPage = (num, pageSize) => {
     let page = 0
@@ -72,10 +94,11 @@ const ProductListScreen = () => {
     if (userInfo || userInfo.role === "role_admin") {
       dispatch(getAllOrders())
       dispatch(listOrderAdmin(pageNum - 1))
+      dispatch(detailStateOrderAdmin(status, pageNum - 1))
     } else {
       navigate('/login')
     }
-  }, [dispatch, navigate, userInfo, paidSuccess, pageNum, pageSize])
+  }, [dispatch, navigate, userInfo, paidSuccess, pageNum, status, deliverySuccess])
 
   // Edit state O
   const [show, setShow] = useState(false);
@@ -111,17 +134,19 @@ const ProductListScreen = () => {
           <h5 style={{ fontSize: '16px' }} className='pb-4 pt-4'>DANH SÁCH ĐƠN HÀNG</h5>
         </Col>
         <Col className='d-flex justify-content-end px-0'>
-          <h6 style={{ fontSize: '14px' }} className='pb-4 pt-4'>Tổng số lượng: {arrOrderAll?.length} đơn hàng</h6>
+          <h6 style={{ fontSize: '14px' }} className='pb-4 pt-4'>Tổng số lượng: {num} đơn hàng</h6>
         </Col>
       </Row>
       <Row className='d-flex justify-content-end align-items-center mx-4 mt-0 px-4' style={{ background: 'white' }}>
         {/* <div style={{ width: 'auto', fontSize: '20px' }} className='d-flex justify-content-center align-items-center'>
           <i style={{ width: 'auto' }} className="fas fa-sort-amount-down-alt"></i>
         </div> */}
-        <Form.Select onChange={(e) => setPageSize(e.target.value)} style={{ width: 'auto' }} aria-label="Default select example">
-          <option value="5">5</option>
-          <option value="10">10</option>
-          <option value="15">15</option>
+        <Form.Select value={status} onChange={(e) => setStatus(e.target.value)} style={{ width: 'auto' }} aria-label="Default select example">
+          <option value="all">Tất cả</option>
+          <option value="process">Đang chờ xác nhận</option>
+          <option value="delivery">Đang giao hàng</option>
+          <option value="paid">Giao hàng thành công</option>
+          <option value="cancel">Đã hủy</option>
         </Form.Select>
       </Row>
       {loading ? (
@@ -144,7 +169,7 @@ const ProductListScreen = () => {
             <tbody>
               {arrOrderPage?.map((order, index) => (
                 <tr style={{ margin: '60px 0' }} key={order.id}>
-                  <td style={{ fontWeight: 'bold' }}>{index + (pageNum - 1) * pageSize + 1}</td>
+                  <td style={{ fontWeight: 'bold' }}>{index + (pageNum - 1) * 5 + 1}</td>
                   <td>{order.userName}</td>
                   <td className='text-center'>{order.totalProduct}</td>
                   <td className='text-end'>{order.totalPrice?.toLocaleString('vi', { style: 'currency', currency: 'VND' })}</td>
@@ -157,12 +182,12 @@ const ProductListScreen = () => {
                           <div className='d-flex justify-content-center align-items-center'>
                             <p style={{ background: '#03a9f3', color: '#e7fff8', borderRadius: '5px' }} className='my-0 mx-3 py-1 px-2'>Đang giao hàng</p>
                           </div> : (order.state === 'cancel') ?
-                          <div className='d-flex justify-content-center align-items-center'>
-                            <p style={{ background: '#ee5261', color: '#e7fff8', borderRadius: '5px' }} className='my-0 mx-3 py-1 px-2'>Đã hủy đơn hàng</p>
-                          </div> :
-                          <div className='d-flex justify-content-center align-items-center'>
-                            <p style={{ background: '#00c292', color: '#e7fff8', borderRadius: '5px' }} className='my-0 mx-3 py-1 px-2'>Đã nhận và thanh toán</p>
-                          </div>
+                            <div className='d-flex justify-content-center align-items-center'>
+                              <p style={{ background: '#ee5261', color: '#e7fff8', borderRadius: '5px' }} className='my-0 mx-3 py-1 px-2'>Đã hủy đơn hàng</p>
+                            </div> :
+                            <div className='d-flex justify-content-center align-items-center'>
+                              <p style={{ background: '#00c292', color: '#e7fff8', borderRadius: '5px' }} className='my-0 mx-3 py-1 px-2'>Đã nhận và thanh toán</p>
+                            </div>
                     }
                   </td>
                   <td className='d-flex justify-content-center'>

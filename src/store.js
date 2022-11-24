@@ -43,6 +43,7 @@ import {
   paidOrderByShipperReducer,
   cancelOrderByShipperReducer,
   detailOrderByShipperReducer,
+  orderListDetailAdminReducer,
 } from './reducers/orderReducers'
 
 import {
@@ -98,6 +99,7 @@ const reducer = combineReducers({
   // Admin - Order
   orderAll: orderAllReducer,
   orderListAdmin: orderListAdminReducer,
+  orderListDetailAdmin: orderListDetailAdminReducer,
   orderDetailAdmin: orderDetailAdminReducer,
   orderSetDelivery: orderSetDeliveryReducer,
   orderSetPaid: orderSetPaidReducer,
