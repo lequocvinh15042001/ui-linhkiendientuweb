@@ -9,6 +9,7 @@ import { login } from '../actions/userActions'
 const LoginScreen = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [message, setMessage] = useState('')
 
     const dispatch = useDispatch()
 
@@ -29,7 +30,7 @@ const LoginScreen = () => {
 
 
     useEffect(() => {
-        if (userInfo) {
+        if (userInfo && userInfo.role === 'role_user') {
             navigate('/')
             window.location.reload()
         }
@@ -40,15 +41,18 @@ const LoginScreen = () => {
     const submitHandler = (e) => {
         e.preventDefault()
         dispatch(login(user))
-        navigate('/')
-        console.log("==", user);
+        if (email.trim().length === 0 || password.trim().length === 0) {
+            setMessage("Vui lòng điền đủ thông tin")
+        } else{
+            setMessage("Kiểm tra lại thông tin đăng nhập")
+        } 
     }
 
     return (
         <Row className='px-3 mx-0 d-flex justify-content-center align-items-center'>
             <Col xl={4} md={5} sm={7} style={{ background: '#f5f5f5', margin: '20px', padding: '0 40px', borderRadius: '20px' }} className='shadow rounded'>
                 <h3 className='d-flex justify-content-center py-3'>Đăng nhập</h3>
-                {error && <Message variant='danger'>Vui lòng kiểm tra lại thông tin đăng nhập</Message>}
+                <p className='text-center' style={{color: 'red'}}>{message}</p>
                 {loading && <Loader />}
                 <Form onSubmit={submitHandler} >
                     <Form.Group controlId='email'>
