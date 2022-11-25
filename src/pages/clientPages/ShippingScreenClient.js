@@ -11,7 +11,7 @@ const ShippingScreenClient = () => {
         <Navbar1/>
         <Sidebar/>
         <ShippingScreen />
-        <ContactHelp/>
+        {/* <ContactHelp/> */}
         <Footerr/>
     </Fragment>
   )

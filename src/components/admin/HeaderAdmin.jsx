@@ -153,6 +153,7 @@ const HeaderAdmin = () => {
                                 }
                             </Modal.Body>
                         </Modal>
+                        
                         {/* Update Profile Admin */}
                         <Modal show={showInfo} onHide={handleCloseInfo}>
                             <Modal.Header closeButton>
