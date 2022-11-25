@@ -43,14 +43,14 @@ const Navbar = () => {
       window.location.reload()
     } else {
       if (!userInfo?.name) {
-        dispatch(getUserDetails(userInfo.id))
+        dispatch(getUserDetails(userInfo?.id))
       } else {
         setName(userInfo?.name)
         setPhone(userInfo?.phone)
         setAddress(userInfo?.address)
       }
     }
-  }, [successUpdate])
+  }, [dispatch, navigate, successUpdate])
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -203,7 +203,7 @@ const Navbar = () => {
                         {/* <LinkContainer to='/profile'>
                           <NavDropdown.Item>Thông tin</NavDropdown.Item>
                         </LinkContainer> */}
-                        <NavDropdown.Item onClick={handleShowInfo} style={{ color: '#03a9f3' }}>Thông tin</NavDropdown.Item>
+                        <NavDropdown.Item onClick={handleShowInfo} style={{ color: '#03a9f3' }}>Thông tin người dùng</NavDropdown.Item>
                         <LinkContainer to='/changepassword'>
                           <NavDropdown.Item>Đổi mật khẩu</NavDropdown.Item>
                         </LinkContainer>
