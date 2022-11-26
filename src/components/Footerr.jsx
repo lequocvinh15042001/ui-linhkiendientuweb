@@ -3,33 +3,28 @@ import { BsFacebook, BsInstagram, BsLinkedin, BsTwitter } from "react-icons/bs";
 function Footerr() {
   const data = [
     {
-      type: "Product",
+      type: "Sản phẩm",
       subTypes: [
-        "Landing Page",
-        "Features",
-        "Documentation",
-        "Referral Program",
-        "Pricing",
+        "Mạch, nguồn",
+        "Cảm biến",
+        "Màn hình",
+        "Cáp",
+        "LED",
       ],
     },
     {
-      type: "Services",
+      type: "Dịch vụ",
       subTypes: [
-        "Documentation",
-        "Design",
-        "Themes",
-        "Illustrations",
-        "UI Kit",
+        "Chất lượng",
+        "Giao hàng nhanh chóng",
+        "Đổi hàng quy tính",
+        "An toàn"
       ],
     },
     {
-      type: "Company",
-      subTypes: ["About", "Terms", "Privacy Policy", "Careers"],
-    },
-    {
-      type: "More",
-      subTypes: ["Documentation", "License", "Changelog"],
-    },
+      type: "Liên hệ",
+      subTypes: ["Địa chỉ: Số 1, Võ Văn Ngân", "SĐT: +84 930 131 121", "Email: thegioidientu@gmail.com"],
+    }
   ];
   const socialLinks = [
     <BsFacebook />,
