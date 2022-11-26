@@ -54,6 +54,7 @@ import RegisterShipperScreen from "./screens/shipper/RegisterShipperScreen";
 import LoginAdminScreen from "./screens/admin/LoginAdminScreen";
 import VerifyShipperScreen from "./screens/shipper/VerifyShipperScreen";
 import BlogClient from "./pages/clientPages/BlogClient";
+import ContactClient from "./pages/clientPages/ContactClient";
 
 function App() {
   const { theme } = useThemeContext();
@@ -123,6 +124,8 @@ function App() {
         <Route path='/profile' element={<UserDetailClient />} />
 
         <Route path='/blog' element={<BlogClient />} />
+
+        <Route path='/contact' element={<ContactClient />} />
 
         {/* Admin */}
         <Route exact path="/admin/login" element={<LoginAdminScreen />} />
