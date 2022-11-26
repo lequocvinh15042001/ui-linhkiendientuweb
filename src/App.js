@@ -52,6 +52,8 @@ import LoginShipperScreen from "./screens/shipper/LoginShipperScreen";
 import HomeShipperScreen from "./screens/shipper/HomeShipperScreen";
 import RegisterShipperScreen from "./screens/shipper/RegisterShipperScreen";
 import LoginAdminScreen from "./screens/admin/LoginAdminScreen";
+import VerifyShipperScreen from "./screens/shipper/VerifyShipperScreen";
+import BlogClient from "./pages/clientPages/BlogClient";
 
 function App() {
   const { theme } = useThemeContext();
@@ -120,6 +122,8 @@ function App() {
 
         <Route path='/profile' element={<UserDetailClient />} />
 
+        <Route path='/blog' element={<BlogClient />} />
+
         {/* Admin */}
         <Route exact path="/admin/login" element={<LoginAdminScreen />} />
         {/* Dashboard */}
@@ -141,6 +145,7 @@ function App() {
 
         {/* Shipper */}
         <Route exact path="/shipper/login" element={<LoginShipperScreen />} />
+        <Route exact path="/shipper/verify" element={<VerifyShipperScreen />} />
         <Route exact path="/shipper/register" element={<RegisterShipperScreen />} />
         <Route exact path="/shipper/home" element={<HomeShipperScreen />} />
 
