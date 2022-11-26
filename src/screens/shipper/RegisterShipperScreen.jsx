@@ -1,10 +1,9 @@
 import { React, useState, useEffect } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { Row, Col, Button, Form, Image, Popover, OverlayTrigger } from 'react-bootstrap'
+import { Row, Col, Button, Form, Popover, OverlayTrigger } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../../components/Loader'
-import Message from '../../components/Message'
-import { logout, register, registerShipper } from '../../actions/userActions'
+import { registerShipper } from '../../actions/userActions'
 
 const RegisterShipperScreen = () => {
     const [name, setName] = useState('')
@@ -63,8 +62,6 @@ const RegisterShipperScreen = () => {
         </Popover >
     );
 
-
-
     return (
         <Row className='px-3 mx-0 d-flex justify-content-center align-items-center' style={{ position: 'relative', height: '100vh', background: '#ffffe0' }}>
             {/* <Col style={{ position: 'absolute', bottom: '0px', left: '0px' }}>
@@ -87,9 +84,10 @@ const RegisterShipperScreen = () => {
                     </Form.Group>
                     <Form.Group controlId='password'>
                         <Form.Label>Mật khẩu</Form.Label>
-                        <OverlayTrigger trigger="click" placement="top" overlay={popover}>
+                        <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
                             <Form.Control type={passwordShown ? "text" : "password"} placeholder='Nhập mật khẩu' value={password} onChange={(e) => setPassword(e.target.value)}></Form.Control>
                         </OverlayTrigger>
+                        <p className='pt-3 pb-0 my-0' style={{fontSize: '13px', color: 'red'}} hidden={((password.length < 8 || password.length > 20) || !password.match(/[A-Z]/) || !password.match(/[a-z]/) || !password.match(/[\`~!@#$%\^&*()+=|;:'",.<>\/?\\\-]/) || !password.match(/[\d]/)) ? false : true}>* Vui lòng kiểm tra lại mật khẩu</p>
                     </Form.Group>
                     <Form.Group controlId='confirmPassword' className='py-3'>
                         <Form.Label>Số điện thoại</Form.Label>
@@ -113,7 +111,7 @@ const RegisterShipperScreen = () => {
                         </Form>
                     </Form.Group>
                     <Form.Group className='d-flex justify-content-center py-3'>
-                        <Button type='submit' disabled = {((password.length < 8 || password.length > 20) || !password.match(/[A-Z]/) || !password.match(/[a-z]/) || !password.match(/[\`~!@#$%\^&*()+=|;:'",.<>\/?\\\-]/) || !password.match(/[\d]/)) ? 'true' : ''} style={{ background: '#eeb808', border: 'none' }}>Đăng ký</Button>
+                        <Button type='submit' disabled={((password.length < 8 || password.length > 20) || !password.match(/[A-Z]/) || !password.match(/[a-z]/) || !password.match(/[\`~!@#$%\^&*()+=|;:'",.<>\/?\\\-]/) || !password.match(/[\d]/)) ? 'true' : ''} style={{ background: '#eeb808', border: 'none' }}>Đăng ký</Button>
                     </Form.Group>
                 </Form>
 

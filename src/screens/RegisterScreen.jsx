@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { Row, Col, Button, Form } from 'react-bootstrap'
+import { Row, Col, Button, Form, Popover, OverlayTrigger } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
@@ -48,6 +48,20 @@ const RegisterScreen = () => {
         }
     }
 
+    // Check level password
+    const popover = (
+        <Popover id="popover-basic">
+            <Popover.Header as="h3">Mức độ mật khẩu</Popover.Header>
+            <Popover.Body>
+                <p><i style={{ color: (password.length < 8 || password.length > 20 ? 'red' : 'green'), fontSize: "20px" }} class="fa fa-check-circle" aria-hidden="true"></i> Ít nhất 8 và nhỏ hơn 20 ký tự</p>
+                <p><i style={{ color: (!password.match(/[A-Z]/) ? 'red' : 'green'), fontSize: "20px" }} class="fa fa-check-circle" aria-hidden="true"></i> Ít nhất 1 ký tự viết HOA</p>
+                <p><i style={{ color: (!password.match(/[a-z]/) ? 'red' : 'green'), fontSize: "20px" }} class="fa fa-check-circle" aria-hidden="true"></i> Ít nhất 1 ký tự viết THƯỜNG</p>
+                <p><i style={{ color: (!password.match(/[\`~!@#$%\^&*()+=|;:'",.<>\/?\\\-]/) ? 'red' : 'green'), fontSize: "20px" }} class="fa fa-check-circle" aria-hidden="true"></i> Ít nhất 1 ký tự đặc biệt</p>
+                <p><i style={{ color: (!password.match(/[\d]/) ? 'red' : 'green'), fontSize: "20px" }} class="fa fa-check-circle" aria-hidden="true"></i> Ít nhất 1 ký tự số</p>
+            </Popover.Body>
+        </Popover >
+    );
+
     return (
         <Row className='px-3 mx-0 d-flex justify-content-center align-items-center'>
             <Col xl={4} md={5} sm={7} style={{ background: '#f5f5f5', margin: '20px', padding: '0 40px', borderRadius: '20px' }} className='shadow rounded'>
@@ -58,7 +72,7 @@ const RegisterScreen = () => {
                 <Form onSubmit={submitHandler}>
                     <Form.Group controlId='username'>
                         <Form.Label>Tên người dùng</Form.Label>
-                        <Form.Control  autoComplete="off" type='name' placeholder='Nhập tên người dùng' value={name} onChange={(e) => setName(e.target.value)}></Form.Control>
+                        <Form.Control autoComplete="off" type='name' placeholder='Nhập tên người dùng' value={name} onChange={(e) => setName(e.target.value)}></Form.Control>
                     </Form.Group>
                     <Form.Group controlId='email' className='py-3'>
                         <Form.Label>Email</Form.Label>
@@ -66,7 +80,10 @@ const RegisterScreen = () => {
                     </Form.Group>
                     <Form.Group controlId='password'>
                         <Form.Label>Mật khẩu</Form.Label>
-                        <Form.Control type={passwordShown ? "text" : "password"} placeholder='Nhập mật khẩu' value={password} onChange={(e) => setPassword(e.target.value)}></Form.Control>
+                        <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
+                            <Form.Control type={passwordShown ? "text" : "password"} placeholder='Nhập mật khẩu' value={password} onChange={(e) => setPassword(e.target.value)}></Form.Control>
+                        </OverlayTrigger>
+                        <p className='pt-3 pb-0 my-0' style={{fontSize: '13px', color: 'red'}} hidden={((password.length < 8 || password.length > 20) || !password.match(/[A-Z]/) || !password.match(/[a-z]/) || !password.match(/[\`~!@#$%\^&*()+=|;:'",.<>\/?\\\-]/) || !password.match(/[\d]/)) ? false : true}>* Vui lòng kiểm tra lại mật khẩu</p>
                     </Form.Group>
                     <Form.Group controlId='confirmPassword' className='py-3'>
                         <Form.Label>Số điện thoại</Form.Label>
@@ -89,7 +106,7 @@ const RegisterScreen = () => {
                         </Form>
                     </Form.Group>
                     <Form.Group className='d-flex justify-content-center py-3'>
-                        <Button type='submit' variant='primary'>Đăng ký</Button>
+                        <Button type='submit' disabled={((password.length < 8 || password.length > 20) || !password.match(/[A-Z]/) || !password.match(/[a-z]/) || !password.match(/[\`~!@#$%\^&*()+=|;:'",.<>\/?\\\-]/) || !password.match(/[\d]/)) ? 'true' : ''} style={{ background: '#eeb808', border: 'none' }}>Đăng ký</Button>
                     </Form.Group>
                 </Form>
 
