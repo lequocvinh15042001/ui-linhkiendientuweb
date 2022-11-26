@@ -12,7 +12,7 @@ import { useState } from 'react'
 const ProductListScreen = () => {
   const [pageNum, setPageNum] = useState(1);
   const [status, setStatus] = useState('all');
-  console.log('===', status)
+  // console.log('===', status)
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -71,8 +71,8 @@ const ProductListScreen = () => {
   }
 
   getLength(status)
-  console.log('===', arrOrderState)
-  const num = arrOrderState.length
+  // console.log('===', arrOrderState)
+  const num = arrOrderState?.length
 
 
   const paginationPage = (num, pageSize) => {

@@ -43,7 +43,7 @@ const LoginAdminScreen = () => {
         dispatch(login(user))
         if (email.trim().length === 0 || password.trim().length === 0) {
             setMessage("Vui lòng điền đủ thông tin")
-        } else{
+        } else {
             setMessage("Kiểm tra lại thông tin đăng nhập")
         } 
     }

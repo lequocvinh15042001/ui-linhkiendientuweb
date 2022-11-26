@@ -263,7 +263,7 @@ export const getAllUsersAdmin = () => async (dispatch, getState) => {
 }
 
 // Get User Page
-export const listUsers = (page, size) => async (dispatch, getState) => {
+export const listUsers = (page) => async (dispatch, getState) => {
   try {
     dispatch({
       type: USER_LIST_REQUEST,

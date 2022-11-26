@@ -94,7 +94,7 @@ const CategoryListScreen = () => {
                     </div>
                 </div>
                 <div className='d-flex justify-content-end py-4'>
-                    <Button className='my-0' style={{ background: '#03a9f3', border: 'none', fontSize: '14px', textTransform: 'none' }} onClick={handleShowAdd}>
+                    <Button className='my-0' style={{ background: '#03a9f3', border: 'none', fontSize: '14px', textTransform: 'none', width: 'auto' }} onClick={handleShowAdd}>
                         Thêm danh mục
                     </Button>
                 </div>

@@ -11,12 +11,12 @@ const UserDetailScreen = () => {
     const [isCopied, setIsCopied] = useState(false);
 
     const userId = useParams().id
-    console.log('==', userId)
+    // console.log('==', userId)
 
     const dispatch = useDispatch()
 
     const { loading, error, user } = useSelector(state => state.userDetails)
-    console.log('==', user)
+    // console.log('==', user)
 
 
     useEffect(() => {
@@ -56,14 +56,14 @@ const UserDetailScreen = () => {
                 </Link>
             </Row>
             <Row className='align-items-center mx-4 mt-4 px-4 py-3' style={{ background: 'white' }}>
-                <h5 style={{fontSize: '20px'}} className='d-flex justify-content-center py-3'>Chi tiết thông tin người dùng</h5>
+                <h5 style={{ fontSize: '20px' }} className='d-flex justify-content-center py-3'>Chi tiết thông tin người dùng</h5>
                 {loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> :
                     (
                         <>
                             <Row className='d-flex justify-content-center align-items-center'>
                                 <Row className='py-3'>
                                     <Col xl={3}>
-                                        <h6 style={{fontSize: '14px'}}>ID người dùng</h6>
+                                        <h6 style={{ fontSize: '14px' }}>ID người dùng</h6>
                                     </Col>
                                     <Col xl={8} className='d-flex'>
                                         <p className='mx-0 my-0' style={{ width: 'auto' }}>{user?.data?.id}</p>
@@ -74,22 +74,25 @@ const UserDetailScreen = () => {
                                 </Row>
                                 <Row className='py-3'>
                                     <Col xl={3}>
-                                        <h6 style={{fontSize: '14px'}}>Vai trò</h6>
+                                        <h6 style={{ fontSize: '14px' }}>Vai trò</h6>
                                     </Col>
 
                                     {
                                         (user?.data?.role === 'role_user') ?
                                             <Col xl={8} className='d-flex'>
                                                 <p className='mx-0 my-0' style={{ color: '#03a9f3' }}>Người dùng</p>
-                                            </Col> :
-                                            <Col xl={8} className='d-flex'>
-                                                <p className='mx-0 my-0' style={{ color: '#e46a76' }}>Quản trị viên</p>
-                                            </Col>
+                                            </Col> : (user?.data?.role === 'role_shipper') ?
+                                                <Col xl={8} className='d-flex'>
+                                                    <p className='mx-0 my-0' style={{ color: 'blue' }}>Shipper</p>
+                                                </Col> :
+                                                <Col xl={8} className='d-flex'>
+                                                    <p className='mx-0 my-0' style={{ color: '#e46a76' }}>Quản trị viên</p>
+                                                </Col>
                                     }
                                 </Row>
                                 <Row className='py-3'>
                                     <Col xl={3}>
-                                        <h6 style={{fontSize: '14px'}}>Trạng thái tài khoản</h6>
+                                        <h6 style={{ fontSize: '14px' }}>Trạng thái tài khoản</h6>
                                     </Col>
                                     {
                                         (user?.data?.state === 'active') ?
@@ -103,7 +106,7 @@ const UserDetailScreen = () => {
                                 </Row>
                                 <Row className='py-3'>
                                     <Col xl={3}>
-                                        <h6 style={{fontSize: '14px'}}>Tên người dùng</h6>
+                                        <h6 style={{ fontSize: '14px' }}>Tên người dùng</h6>
                                     </Col>
                                     <Col xl={8} className='d-flex'>
                                         <p className='mx-0 my-0'>{user?.data?.name}</p>
@@ -111,7 +114,7 @@ const UserDetailScreen = () => {
                                 </Row>
                                 <Row className='py-3'>
                                     <Col xl={3}>
-                                        <h6 style={{fontSize: '14px'}}>Email người dùng</h6>
+                                        <h6 style={{ fontSize: '14px' }}>Email người dùng</h6>
                                     </Col>
                                     <Col xl={8} className='d-flex'>
                                         <p className='mx-0 my-0'>{user?.data?.email}</p>
@@ -119,7 +122,7 @@ const UserDetailScreen = () => {
                                 </Row>
                                 <Row className='py-3'>
                                     <Col xl={3}>
-                                        <h6 style={{fontSize: '14px'}}>Số điện thoại</h6>
+                                        <h6 style={{ fontSize: '14px' }}>Số điện thoại</h6>
                                     </Col>
                                     <Col xl={8} className='d-flex'>
                                         {
@@ -129,7 +132,7 @@ const UserDetailScreen = () => {
                                 </Row>
                                 <Row className='py-3'>
                                     <Col xl={3}>
-                                        <h6 style={{fontSize: '14px'}}>Địa chỉ</h6>
+                                        <h6 style={{ fontSize: '14px' }}>Địa chỉ</h6>
                                     </Col>
                                     <Col xl={8} className='d-flex'>
                                         {

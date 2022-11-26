@@ -5,14 +5,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import ReactTooltip from 'react-tooltip'
 import Message from '../../components/Message'
 import Loader from '../../components/Loader'
-import { listUsers, deleteUser, unlockUser, getAllUsersAdmin } from '../../actions/userActions'
+import { listUsers, deleteUser, unlockUser, getAllUsersAdmin, detailStateUserAdmin } from '../../actions/userActions'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 
 const UserListScreen = () => {
   const [pageNum, setPageNum] = useState(1);
   const [role, setRole] = useState('all');
-  // console.log('==', pageSize)
+  // console.log('===', role)
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -20,20 +20,21 @@ const UserListScreen = () => {
   const { loading, error, users, page } = useSelector((state) => state.userList)
   // console.log("user list: ", users);
 
-  const { userDetailRole } = useSelector((state) => state.userListDetail)
-  // console.log('==', productAll?.data?.length);
+  const { userDetail } = useSelector((state) => state.userListDetail)
+  // console.log('===', userDetail?.data);
 
   const { userAll } = useSelector((state) => state.userAllAdmin)
+  // console.log('===', userAll);
 
   // GEt order Page with states
   const arrUserPage = []
   const checkUserPage = (role) => {
     if (role === 'all') {
-      users?.data?.list?.find(item => {
+      users?.data?.find(item => {
         arrUserPage.push(item)
       })
     } else {
-      userDetailRole?.data?.list?.find(item => {
+      userDetail?.data?.find(item => {
         arrUserPage.push(item)
       })
     }
@@ -41,18 +42,16 @@ const UserListScreen = () => {
   checkUserPage(role)
 
   // Get length List order
-  let arrOrderState = []
-  const getLength = (status) => {
-    if (status === 'all') {
-      userAll?.data?.list?.find(item => {
-        if (item.state !== 'in cart') {
-          arrOrderState.push(item)
-        }
+  let arrUserRole = []
+  const getLength = (role) => {
+    if (role === 'all') {
+      userAll?.data?.find(item => {
+        arrUserRole.push(item)
       })
     } else {
-      userAll?.data?.list?.find(item => {
-        if (item.state !== 'in cart' && item.state === status) {
-          arrOrderState.push(item)
+      userAll?.data?.find(item => {
+        if (item.role === role) {
+          arrUserRole.push(item)
         }
       })
     }
@@ -60,7 +59,8 @@ const UserListScreen = () => {
 
   getLength(role)
 
-  const num = userAll?.data?.length
+  const num = arrUserRole?.length
+
   const paginationPage = (num, pageSize) => {
     let page = 0
     if ((num / pageSize) > ((num / pageSize) - (num % pageSize) / pageSize)) {
@@ -71,7 +71,8 @@ const UserListScreen = () => {
     return page
   }
 
-  let pages = paginationPage(num, 5)
+  let pages = paginationPage(num, 10)
+  // console.log('===', pages);
 
   const { userInfo } = useSelector((state) => state.userLogin)
 
@@ -83,12 +84,12 @@ const UserListScreen = () => {
   useEffect(() => {
     if (userInfo && userInfo.role === "role_admin") {
       dispatch(getAllUsersAdmin())
+      dispatch(detailStateUserAdmin(role, pageNum - 1))
       dispatch(listUsers(pageNum - 1))
-      // const num = dispatch(listUsers(0, 0))
     } else {
       navigate("/login")
     }
-  }, [dispatch, navigate, successDelete, successUnlock, userInfo, pageNum])
+  }, [dispatch, navigate, successDelete, successUnlock, userInfo, role, pageNum])
 
   // Block user
   const [show, setShow] = useState(false);
@@ -144,7 +145,7 @@ const UserListScreen = () => {
           <h5 style={{ fontSize: '16px' }} className='pb-4 pt-4'>DANH SÁCH NGƯỜI DÙNG</h5>
         </Col>
         <Col className='d-flex justify-content-end px-0'>
-          <h6 style={{ fontSize: '14px' }} className='pb-4 pt-4'>Tổng số lượng: {userAll?.data?.length} người dùng</h6>
+          <h6 style={{ fontSize: '14px' }} className='pb-4 pt-4'>Tổng số lượng: {arrUserRole?.length} người dùng</h6>
         </Col>
       </Row>
       <Row className='d-flex justify-content-end align-items-center mx-4 mt-0 px-4' style={{ background: 'white' }}>
@@ -177,7 +178,7 @@ const UserListScreen = () => {
               </tr>
             </thead>
             <tbody>
-              {users?.data?.map((user, index) => (
+              {arrUserPage?.map((user, index) => (
                 <tr style={{ margin: '60px 0' }} key={user.id}>
                   <td style={{ fontWeight: 'bold' }}>{index + (pageNum - 1) * 5 + 1}</td>
                   <td>{user.name}</td>
