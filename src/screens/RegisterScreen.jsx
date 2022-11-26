@@ -53,7 +53,7 @@ const RegisterScreen = () => {
         <Popover id="popover-basic">
             <Popover.Header as="h3">Mức độ mật khẩu</Popover.Header>
             <Popover.Body>
-                <p><i style={{ color: (password.length < 8 || password.length > 20 ? 'red' : 'green'), fontSize: "20px" }} class="fa fa-check-circle" aria-hidden="true"></i> Ít nhất 8 và nhỏ hơn 20 ký tự</p>
+                <p><i style={{ color: (password.length < 8 || password.length > 20 ? 'red' : 'green'), fontSize: "20px" }} class="fa fa-check-circle" aria-hidden="true"></i> Lớn hơn 8 và nhỏ hơn 20 ký tự</p>
                 <p><i style={{ color: (!password.match(/[A-Z]/) ? 'red' : 'green'), fontSize: "20px" }} class="fa fa-check-circle" aria-hidden="true"></i> Ít nhất 1 ký tự viết HOA</p>
                 <p><i style={{ color: (!password.match(/[a-z]/) ? 'red' : 'green'), fontSize: "20px" }} class="fa fa-check-circle" aria-hidden="true"></i> Ít nhất 1 ký tự viết THƯỜNG</p>
                 <p><i style={{ color: (!password.match(/[\`~!@#$%\^&*()+=|;:'",.<>\/?\\\-]/) ? 'red' : 'green'), fontSize: "20px" }} class="fa fa-check-circle" aria-hidden="true"></i> Ít nhất 1 ký tự đặc biệt</p>
