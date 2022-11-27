@@ -1,3 +1,5 @@
+import { TextField } from '@material-ui/core'
+import { Autocomplete } from '@material-ui/lab'
 import React, { useEffect, useState } from 'react'
 import { Accordion, Button, Col, Container, Image, Modal, Pagination, Row, Tab, Table, Tabs } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
@@ -89,12 +91,54 @@ const HomeShipperScreen = () => {
     // window.location.reload()
   }
 
+  // Search
+  const [selectedOptions, setSelectedOptions] = useState('');
+
+  const myOptions = [];
+  const getDataSearch = (product) => {
+    product?.forEach(prod => {
+      myOptions.push(prod.id)
+    })
+  }
+
+  getDataSearch(orderAllShipper?.data?.list)
+
+  const search = () => {
+    orderAllShipper?.data?.list?.forEach(prod => {
+      if (prod.id === selectedOptions) {
+        setShow(true);
+        dispatch(getOrderDetailByShipper(prod.id))
+      }
+    })
+  }
+
   return (
     <Row className='mx-0 px-0 ' style={{ background: '#f5f5f5', height: '100vh', width: '100vw' }}>
       <Row className='mx-0 px-0' style={{ background: '#f5f5f5', height: '10vh' }}>
         <HeaderShipper />
       </Row>
-      <Container className='my-1' style={{ background: '#f5f5f5', height: '80vh' }}>
+      <Row  style={{ background: '#f5f5f5', height: '5vh', margin: '0 auto', padding: 'auto', width: '90%' }}>
+        <div className='d-flex align-items-center py-0 px-0 shadow-sm  bg-white' style={{ background: '#ffffff', border: 'solid 1px #eeb808', borderRadius: '0px' }}>
+          <div className='w-100'>
+            <Autocomplete disablePortal options={myOptions.sort()} onChange={(event, value) => setSelectedOptions(value)}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  InputProps={{ ...params.InputProps, disableUnderline: true }}
+                  placeholder='Nhập ID đơn hàng để tìm kiếm'
+                  style={{paddingLeft: '20px'}}
+                />
+              )}
+            />
+          </div>
+          <div>
+            <Button className='my-0 mx-0' onClick={() => search()} style={{ background: '#eeb808', border: 'none', borderRadius: '0px' }}>
+              <i style={{ color: 'white' }} className="fas fa-search py-2"></i>
+            </Button>
+          </div>
+        </div>
+      </Row>
+      <Container className='my-1' style={{ background: '#f5f5f5', height: '70vh' }}>
         <Tabs
           style={{ color: 'black', background: 'white', border: 'none' }}
           defaultActiveKey="processList"
@@ -273,7 +317,7 @@ const HomeShipperScreen = () => {
             orderDetail?.data?.items?.map(item => (
               <Row className='mx-0 my-0 py-0 px-0'>
                 <Col className='mt-3 '>
-                  <Image style={{width: '90px', border: 'solid 2px #f2f2f2'}} src={item?.image[0]?.url}></Image>
+                  <Image style={{ width: '90px', border: 'solid 2px #f2f2f2' }} src={item?.image[0]?.url}></Image>
                 </Col>
                 <Col className='mt-3 d-flex justify-content-center align-items-center'>{item.name}</Col>
                 <Col className='mt-3 d-flex justify-content-center align-items-center'>{(item.price / item.quantity)?.toLocaleString('vi', { style: 'currency', currency: 'VND' })} x {item.quantity}</Col>
