@@ -72,7 +72,7 @@ const HistoryContent = ({history}) => {
               </tr>
             </thead>
             <tbody>
-              {history?.list?.map((product, index) => (
+              {history?.map((product, index) => (
                 <tr style={{ margin: '60px 0' }} key={product.id}>
                 {/*STT */}
                   <td style={{ fontWeight: 'bold' }} >{index + 1}</td>

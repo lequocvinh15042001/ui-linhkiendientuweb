@@ -55,25 +55,25 @@ import HistoryContent2 from "../components/HistoryContent2";
 const HistoryPage = () => {
 
   const dispatch = useDispatch()
-  
+
   const navigate = useNavigate()
 
   // const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true)
   const [myorder, setMyOrder] = useState([])
 
-  const  order  = useSelector(state => state.orderList)
-  
+  const order = useSelector(state => state.orderList)
+
   const history = order.orders
 
   const orderList = history?.data
 
-  console.log("lấy được rồi:" , orderList)
+  console.log("lấy được rồi:", orderList)
 
   useEffect(() => {
-      dispatch(getOrder());
-      // setHistory(carts);
-      setLoading(false);
+    dispatch(getOrder());
+    // setHistory(carts);
+    setLoading(false);
   }, []);
 
 
@@ -84,8 +84,19 @@ const HistoryPage = () => {
   // console.log('order list', carts)
   // console.log("order: ", orderItems);
 
-  console.log("đã order: ", orderList);
+  // console.log("đã order: ", orderList);
 
+  const arrOrder = []
+  const checkOrrder = () => {
+    orderList?.list?.forEach(item => {
+      if (item.state !== 'in cart') {
+        arrOrder.push(item)
+      }
+    });
+  }
+  checkOrrder()
+
+  console.log("đã order: ", arrOrder);
 
   if (loading) {
     return (
@@ -117,8 +128,8 @@ const HistoryPage = () => {
     <main>
       <PageHero title="history" />
       <Wrapper className="page">
-        <HistoryContent2 history={orderList} />
-      </Wrapper>  
+        <HistoryContent2 history={arrOrder} />
+      </Wrapper>
     </main>
   );
 };
