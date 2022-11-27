@@ -59,6 +59,7 @@ import VerifyClient from "./pages/clientPages/VerifyClient";
 import ForgotPasswordShipper from "./screens/shipper/ForgotPasswordShipperScreen";
 import VerifyForgotPasswordScreen from "./screens/shipper/VerifyForgotPasswordScreen";
 import ResetPasswordShipperScreen from "./screens/shipper/ResetPasswordShipperScreen";
+import CommentListScreen from "./screens/admin/CommentListScreen";
 
 function App() {
   const { theme } = useThemeContext();
@@ -150,6 +151,8 @@ function App() {
         {/* Order */}
         <Route exact path="admin/orderlist" element={<AdminOrdertList />} />
         <Route exact path="admin/order/:id/detail" element={<AdminOrderDetail />} />
+        {/* Comment */}
+        <Route exact path="admin/commentlist" element={<CommentListScreen />} />
 
         {/* Shipper */}
         <Route exact path="/shipper/login" element={<LoginShipperScreen />} />

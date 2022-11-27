@@ -8,7 +8,7 @@ import Loader from '../../components/Loader'
 import { listCategoryAdmin, blockCategoryAdmin, unlockCategoryAdmin, createCategoryAdmin } from '../../actions/productActions'
 import { useState } from 'react'
 
-const CategoryListScreen = () => {
+const CommentListScreen = () => {
     const [newName, setNewName] = useState('')
 
     const dispatch = useDispatch()
@@ -272,4 +272,4 @@ const CategoryListScreen = () => {
     )
 }
 
-export default CategoryListScreen
+export default CommentListScreen
