@@ -28,9 +28,16 @@ import {
   USER_LIST_DETAIL_REQUEST,
   USER_LIST_DETAIL_SUCCESS,
   USER_LIST_DETAIL_FAIL,
+  SHIPPER_VERIFY_REGISTER_REQUEST,
+  SHIPPER_VERIFY_REGISTER_FAIL,
+  SHIPPER_VERIFY_REGISTER_SUCCESS,
+  USER_NEW_PASSWORD_REQUEST,
+  USER_NEW_PASSWORD_SUCCESS,
+  USER_NEW_PASSWORD_FAIL,
 } from "../constants/userConstants";
 
 import axios from 'axios'
+import { data } from "@tensorflow/tfjs";
 
 // Login
 export const login = (user) => async (dispatch) => {
@@ -83,7 +90,7 @@ export const register = (name, email, password, phone, address) => async (dispat
       }
     }
 
-    const { data } = await axios.post('http://localhost:8080/api/auth/register', { name, email, password, phone, address }, config)
+    const { data } = await axios.post('http://localhost:8080/api/auth/registermail', { name, email, password, phone, address }, config)
     console.log('==register', data)
 
     dispatch({
@@ -91,7 +98,7 @@ export const register = (name, email, password, phone, address) => async (dispat
       payload: data
     })
 
-    localStorage.setItem('userInfo', JSON.stringify(data))
+    // localStorage.setItem('userInfo', JSON.stringify(data))
   } catch (error) {
     dispatch({
       type: USER_REGISTER_FAIL,
@@ -202,7 +209,7 @@ export const changePassword = (id, newpass, oldpass) => async (dispatch, getStat
 }
 
 // Forgot Password
-export const forgotPassword = (email) => async (dispatch) => {
+export const getOTP = (email) => async (dispatch) => {
   try {
     dispatch({
       type: USER_FORGOTPASSWORD_REQUEST
@@ -210,12 +217,11 @@ export const forgotPassword = (email) => async (dispatch) => {
 
     const config = {
       headers: {
-        'Content-Type': 'application/json',
-        "Accept": "application/json"
+        'Content-Type': 'application/json'
       }
     }
 
-    const { data } = await axios.post('http://localhost:5000/api/forgot-password', { email }, config)
+    const { data } = await axios.post(`http://localhost:8080/api/auth/getotp?email=${email}`, config)
 
     dispatch({
       type: USER_FORGOTPASSWORD_SUCCESS,
@@ -467,7 +473,7 @@ export const registerShipper = (name, email, password, phone, address) => async 
       }
     }
 
-    const { data } = await axios.post('http://localhost:8080/api/auth/register/shipper', { name, email, password, phone, address }, config)
+    const { data } = await axios.post('http://localhost:8080/api/auth/registermail/shipper', { name, email, password, phone, address }, config)
     // console.log('==register', data)
 
     dispatch({
@@ -479,6 +485,85 @@ export const registerShipper = (name, email, password, phone, address) => async 
   } catch (error) {
     dispatch({
       type: SHIPPER_REGISTER_FAIL,
+      payload: error?.response?.data
+    })
+  }
+}
+
+// Register
+export const verifyRegisterShipper = (user) => async (dispatch) => {
+  console.log('===', user.otp, user.email)
+  try {
+    dispatch({
+      type: SHIPPER_VERIFY_REGISTER_REQUEST
+    })
+
+    var data = JSON.stringify({
+      "otp": user.otp,
+      "email": user.email,
+      "type": user.type
+    });
+
+    var config = {
+      method: 'post',
+      url: 'http://localhost:8080/api/auth/verify',
+      headers: { 
+        'Content-Type': 'application/json'
+      },
+      data : data
+    };
+    
+    axios(config)
+    .then(function (response) {
+      dispatch({
+        type: SHIPPER_VERIFY_REGISTER_SUCCESS,
+        payload: response.data
+      })
+    })
+
+  } catch (error) {
+    dispatch({
+      type: SHIPPER_VERIFY_REGISTER_FAIL,
+      payload: error?.response?.data
+    })
+  }
+}
+
+
+// Set new password after forgot password
+export const newPassworsAfterForgot = (resetPass) => async (dispatch) => {
+  console.log('===', resetPass)
+  try {
+    dispatch({
+      type: USER_NEW_PASSWORD_REQUEST
+    })
+
+    var data = JSON.stringify({
+      "resetpass": resetPass.resetpass
+    });
+
+    var config = {
+      method: 'put',
+      url: `http://localhost:8080/api/users/resetpassword/${resetPass?.id}`,
+      headers: { 
+        'Authorization': `Bearer ${resetPass?.token}`, 
+        'Content-Type': 'application/json'
+      },
+      data : data
+    };
+    
+    axios(config)
+    .then(function (response) {
+      dispatch({
+        type: USER_NEW_PASSWORD_SUCCESS,
+        payload: response?.data
+      })
+      console.log('===', response?.data)
+    })
+
+  } catch (error) {
+    dispatch({
+      type: USER_NEW_PASSWORD_FAIL,
       payload: error?.response?.data
     })
   }

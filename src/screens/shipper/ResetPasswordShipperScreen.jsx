@@ -1,50 +1,44 @@
 import { React, useState, useEffect } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { Row, Col, Button, Form, Popover, OverlayTrigger } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import Loader from '../../components/Loader'
-import { registerShipper } from '../../actions/userActions'
+import { newPassworsAfterForgot, verifyRegisterShipper } from '../../actions/userActions'
 
-const RegisterShipperScreen = () => {
-    const [name, setName] = useState('')
-    const [email, setEmail] = useState('')
+const ResetPasswordShipperScreen = () => {
     const [password, setPassword] = useState('')
-    const [phone, setPhone] = useState('')
-    const [address, setAddress] = useState('')
-    const [message, setMessage] = useState(null)
+    const [message, setMessage] = useState('')
 
     const dispatch = useDispatch()
 
     const navigate = useNavigate();
 
-    const shipperRegister = useSelector(state => state.shipperRegister)
-    const { loading, error, userInfo } = shipperRegister
-    // console.log('====', userInfo);
+    const newPassworsAfterForgotPassword = useSelector(state => state.newPassworsAfterForgotPassword)
+    const { error, success } = newPassworsAfterForgotPassword
 
-    let location = useLocation();
-    const redirect = location.search ? location.search.split('=')[1] : '/shipper/home'
+    useEffect(() => {
+        if (success) {
+            navigate('/shipper/login')
+        }
+    }, [success, navigate])
+
+    const userForgotPassword = JSON.parse(localStorage.getItem('userForgotPassword'))
+    const resetPass = {resetpass: password, id: userForgotPassword?.data?.id, token: userForgotPassword?.data?.token}
+
+    const submitHandler = (e) => {
+        e.preventDefault()
+        dispatch(newPassworsAfterForgot(resetPass))
+        if (password.trim().length === 0) {
+            setMessage('Vui lòng điền đủ thông tin')
+        } else if (error) {
+            setMessage('Đã xảy ra lỗi')
+        }
+    }
 
     // Check showpassword
     const [passwordShown, setPasswordShown] = useState(false);
     const togglePasswordVisiblity = () => {
         setPasswordShown(passwordShown ? false : true);
     };
-
-    useEffect(() => {
-        if (userInfo) {
-            navigate(`/shipper/verify/${email}`)
-        }
-    }, [navigate, userInfo, redirect])
-
-    const submitHandler = (e) => {
-        e.preventDefault()
-        dispatch(registerShipper(name, email, password, phone, address))
-        if (password.trim().length === 0 || name.trim().length === 0 || email.trim().length === 0 || phone.trim().length === 0 || address.trim().length === 0) {
-            setMessage('Vui lòng điền đủ thông tin')
-        } else if (error) {
-            setMessage('Email đã tồn tại')
-        }
-    }
 
     // Check level password
     const popover = (
@@ -63,34 +57,15 @@ const RegisterShipperScreen = () => {
     return (
         <Row className='px-3 mx-0 d-flex justify-content-center align-items-center' style={{ position: 'relative', height: '100vh', background: '#ffffe0' }}>
             <Col xl={4} md={5} sm={7} style={{ background: '#f5f5f5', margin: '20px', padding: '0 40px', borderRadius: '20px' }} className='shadow rounded'>
-                <h5 className='d-flex justify-content-center pt-4 pb-2'>ĐĂNG KÝ</h5>
-                <h5 className='d-flex justify-content-center pb-4' style={{ color: '#eeb808' }}>ELECTRIC'S STORE SHIPPER</h5>
+                <h3 className='d-flex justify-content-center py-3'>Quên mật khẩu</h3>
                 <p className='text-center' style={{ color: 'red' }}>{message}</p>
-                {/* {error && <p className='text-center' style={{color: 'red'}}>{error}</p>} */}
-                {loading && <Loader />}
                 <Form onSubmit={submitHandler}>
-                    <Form.Group controlId='username'>
-                        <Form.Label>Tên người dùng</Form.Label>
-                        <Form.Control autoComplete="off" type='name' placeholder='Nhập tên người dùng' value={name} onChange={(e) => setName(e.target.value)}></Form.Control>
-                    </Form.Group>
-                    <Form.Group controlId='email' className='py-3'>
-                        <Form.Label>Email</Form.Label>
-                        <Form.Control type='email' placeholder='Nhập email' value={email} onChange={(e) => setEmail(e.target.value)}></Form.Control>
-                    </Form.Group>
                     <Form.Group controlId='password'>
-                        <Form.Label>Mật khẩu</Form.Label>
+                        <Form.Label>Mật khẩu mới</Form.Label>
                         <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
-                            <Form.Control type={passwordShown ? "text" : "password"} placeholder='Nhập mật khẩu' value={password} onChange={(e) => setPassword(e.target.value)}></Form.Control>
+                            <Form.Control type={passwordShown ? "text" : "password"} placeholder='Nhập mật khẩu mới' value={password} onChange={(e) => setPassword(e.target.value)}></Form.Control>
                         </OverlayTrigger>
                         <p className='pt-3 pb-0 my-0' style={{ fontSize: '13px', color: 'red' }} hidden={((password.length < 8 || password.length > 20) || !password.match(/[A-Z]/) || !password.match(/[a-z]/) || !password.match(/[\`~!@#$%\^&*()+=|;:'",.<>\/?\\\-]/) || !password.match(/[\d]/)) ? false : true}>* Vui lòng kiểm tra lại mật khẩu</p>
-                    </Form.Group>
-                    <Form.Group controlId='confirmPassword' className='py-3'>
-                        <Form.Label>Số điện thoại</Form.Label>
-                        <Form.Control type='number' placeholder='Nhập số điện thoại' value={phone} onChange={(e) => setPhone(e.target.value)}></Form.Control>
-                    </Form.Group>
-                    <Form.Group controlId='confirmPassword' className='pb-3'>
-                        <Form.Label>Địa chỉ</Form.Label>
-                        <Form.Control type='text' placeholder='Nhập địa chỉ' value={address} onChange={(e) => setAddress(e.target.value)}></Form.Control>
                     </Form.Group>
                     <Form.Group>
                         <Form className='d-flex justify-content-between align-items-center'>
@@ -106,19 +81,17 @@ const RegisterShipperScreen = () => {
                         </Form>
                     </Form.Group>
                     <Form.Group className='d-flex justify-content-center py-3'>
-                        <Button type='submit' disabled={((password.length < 8 || password.length > 20) || !password.match(/[A-Z]/) || !password.match(/[a-z]/) || !password.match(/[\`~!@#$%\^&*()+=|;:'",.<>\/?\\\-]/) || !password.match(/[\d]/)) ? 'true' : ''} style={{ background: '#eeb808', border: 'none' }}>Đăng ký</Button>
+                        <Button disabled={((password.length < 8 || password.length > 20) || !password.match(/[A-Z]/) || !password.match(/[a-z]/) || !password.match(/[\`~!@#$%\^&*()+=|;:'",.<>\/?\\\-]/) || !password.match(/[\d]/)) ? 'true' : ''} style={{ background: '#eeb808', border: 'none' }} type='submit'>Lưu</Button>
                     </Form.Group>
                 </Form>
-
                 <Row>
                     <Col className='d-flex justify-content-center py-3'>
-                        Bạn đã có tài khoản?{' '}
-                        <Link style={{ color: '#eeb808' }} className='px-1' to={redirect ? `/shipper/login?redirect=${redirect}` : '/shipper/login'}>Đăng nhập</Link>
+                        <Link style={{ color: '#eeb808' }} className='px-1' to={'/shipper/login'}>Về lại trang đăng nhập</Link>
                     </Col>
                 </Row>
             </Col>
-        </Row >
+        </Row>
     )
 }
 
-export default RegisterShipperScreen
+export default ResetPasswordShipperScreen

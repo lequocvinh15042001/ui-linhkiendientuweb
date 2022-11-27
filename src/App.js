@@ -55,6 +55,10 @@ import LoginAdminScreen from "./screens/admin/LoginAdminScreen";
 import VerifyShipperScreen from "./screens/shipper/VerifyShipperScreen";
 import BlogClient from "./pages/clientPages/BlogClient";
 import ContactClient from "./pages/clientPages/ContactClient";
+import VerifyClient from "./pages/clientPages/VerifyClient";
+import ForgotPasswordShipper from "./screens/shipper/ForgotPasswordShipperScreen";
+import VerifyForgotPasswordScreen from "./screens/shipper/VerifyForgotPasswordScreen";
+import ResetPasswordShipperScreen from "./screens/shipper/ResetPasswordShipperScreen";
 
 function App() {
   const { theme } = useThemeContext();
@@ -80,6 +84,7 @@ function App() {
         <Route exact path="/about" element={<AboutClient />} />
 
         <Route path='/login' element={<LoginPage />} />
+        <Route path='/verify/:email' element={<VerifyClient />} />
         <Route path='/register' element={<RegisterPage />} />
 
         <Route exact path="/cart" element={<CartClient />}>
@@ -148,9 +153,12 @@ function App() {
 
         {/* Shipper */}
         <Route exact path="/shipper/login" element={<LoginShipperScreen />} />
-        <Route exact path="/shipper/verify" element={<VerifyShipperScreen />} />
+        <Route exact path="/shipper/verify/:email" element={<VerifyShipperScreen />} />
         <Route exact path="/shipper/register" element={<RegisterShipperScreen />} />
         <Route exact path="/shipper/home" element={<HomeShipperScreen />} />
+        <Route exact path="/shipper/forgotpassword" element={<ForgotPasswordShipper />} />
+        <Route exact path="/shipper/forgotpassword/verify/:email" element={<VerifyForgotPasswordScreen />} />
+        <Route exact path="/shipper/resetpassword" element={<ResetPasswordShipperScreen />} />
 
       </Routes>
       {/* <Footer /> */}

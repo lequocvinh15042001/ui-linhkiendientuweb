@@ -25,6 +25,8 @@ import {
   userUpdateReducer,
   shipperRegisterReducer,
   userListDetailReducer,
+  verifyShipperRegisterReducer,
+  newPassworsAfterForgotReducer,
 } from './reducers/userReducers'
 import {
   orderCreateReducer, getOrderReducer,
@@ -84,6 +86,8 @@ const reducer = combineReducers({
   userChangePassword: userChangePasswordReducer,
   userForgotPassword: userForgotPasswordReducer,
   shipperRegister: shipperRegisterReducer,
+  verifyShipperRegister: verifyShipperRegisterReducer,
+  newPassworsAfterForgotPassword: newPassworsAfterForgotReducer,
 
   cancelOrder: cancelOrderReducer,
 

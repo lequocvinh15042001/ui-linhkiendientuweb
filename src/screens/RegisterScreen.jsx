@@ -33,18 +33,17 @@ const RegisterScreen = () => {
 
     useEffect(() => {
         if (userInfo) {
-            navigate(redirect)
-            window.location.reload()
+            navigate(`/verify/${email}`)
         }
     }, [navigate, userInfo, redirect])
 
     const submitHandler = (e) => {
         e.preventDefault()
+        dispatch(register(name, email, password, phone, address))
         if (password.trim().length === 0 || name.trim().length === 0 || email.trim().length === 0 || phone.trim().length === 0 || address.trim().length === 0) {
             setMessage('Vui lòng điền đủ thông tin')
-        } else {
-            dispatch(register(name, email, password, phone, address))
-            navigate('/login')
+        } else if (error) {
+            setMessage('Email đã tồn tại')
         }
     }
 
@@ -66,8 +65,7 @@ const RegisterScreen = () => {
         <Row className='px-3 mx-0 d-flex justify-content-center align-items-center'>
             <Col xl={4} md={5} sm={7} style={{ background: '#f5f5f5', margin: '20px', padding: '0 40px', borderRadius: '20px' }} className='shadow rounded'>
                 <h3 className='d-flex justify-content-center py-3'>Đăng ký</h3>
-                {message && <Message variant='danger'>{message}</Message>}
-                {error && <Message variant='danger'>Tài khoản đã tồn tại</Message>}
+                <p className='text-center' style={{ color: 'red' }}>{message}</p>
                 {loading && <Loader />}
                 <Form onSubmit={submitHandler}>
                     <Form.Group controlId='username'>

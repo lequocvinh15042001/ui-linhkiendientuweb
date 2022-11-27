@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
 import FormContainer from '../components/FormContainer'
-import { forgotPassword } from '../actions/userActions'
+import { getOTP } from '../actions/userActions'
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState('')
@@ -27,7 +27,7 @@ const ForgotPassword = () => {
 
     const submitHandler = (e) => {
         e.preventDefault()
-        dispatch(forgotPassword(email))
+        dispatch(getOTP(email))
     }
 
     return (

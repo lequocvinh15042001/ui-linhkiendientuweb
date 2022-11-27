@@ -29,6 +29,12 @@ import {
   USER_LIST_DETAIL_REQUEST,
   USER_LIST_DETAIL_SUCCESS,
   USER_LIST_DETAIL_FAIL,
+  SHIPPER_VERIFY_REGISTER_REQUEST,
+  SHIPPER_VERIFY_REGISTER_SUCCESS,
+  SHIPPER_VERIFY_REGISTER_FAIL,
+  USER_NEW_PASSWORD_REQUEST,
+  USER_NEW_PASSWORD_SUCCESS,
+  USER_NEW_PASSWORD_FAIL,
 
 } from "../constants/userConstants"
 
@@ -204,6 +210,32 @@ export const shipperRegisterReducer = (state = {}, action) => {
       return { loading: false, userInfo: action.payload }
     case SHIPPER_REGISTER_FAIL:
       return { loading: false, error: action.payload.message }
+    default:
+      return state
+  }
+}
+
+export const verifyShipperRegisterReducer = (state = { verify: {} }, action) => {
+  switch (action.type) {
+    case SHIPPER_VERIFY_REGISTER_REQUEST:
+      return { loading: true }
+    case SHIPPER_VERIFY_REGISTER_SUCCESS:
+      return { loading: false, success: true, verify: action.payload }
+    case SHIPPER_VERIFY_REGISTER_FAIL:
+      return { loading: false, error: action.payload }
+    default:
+      return state
+  }
+}
+
+export const newPassworsAfterForgotReducer = (state = {}, action) => {
+  switch (action.type) {
+    case USER_NEW_PASSWORD_REQUEST:
+      return { loading: true }
+    case USER_NEW_PASSWORD_SUCCESS:
+      return { loading: false, success: true }
+    case USER_NEW_PASSWORD_FAIL:
+      return { loading: false, error: action.payload }
     default:
       return state
   }

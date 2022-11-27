@@ -4,7 +4,7 @@ import { Row, Col, Button, Form, Popover, OverlayTrigger } from 'react-bootstrap
 import { useDispatch, useSelector } from 'react-redux'
 import { verifyRegisterShipper } from '../../actions/userActions'
 
-const VerifyShipperScreen = () => {
+const VerifyForgotPasswordScreen = () => {
     const [code, setCode] = useState('')
     const [message, setMessage] = useState('')
 
@@ -15,18 +15,19 @@ const VerifyShipperScreen = () => {
     const navigate = useNavigate();
 
     const verifyShipperRegister = useSelector(state => state.verifyShipperRegister)
-    const { error, success } = verifyShipperRegister
-    // console.log('====', userInfo);
+    const { error, success, verify } = verifyShipperRegister
+    // console.log('====', verify);
 
     useEffect(() => {
         if (success) {
-            navigate('/shipper/login')
+            navigate('/shipper/resetpassword')
+            localStorage.setItem('userForgotPassword', JSON.stringify(verify))
         }
-    }, [success])
+    }, [navigate, success])
 
     const submitHandler = (e) => {
         e.preventDefault()
-        const user = { otp: code, email: email, type: 'register' }
+        const user = { otp: code, email: email, type: 'reset' }
         dispatch(verifyRegisterShipper(user))
         if (code.trim().length === 0) {
             setMessage('Vui lòng điền đủ thông tin')
@@ -38,7 +39,7 @@ const VerifyShipperScreen = () => {
     return (
         <Row className='px-3 mx-0 d-flex justify-content-center align-items-center' style={{ position: 'relative', height: '100vh', background: '#ffffe0' }}>
             <Col xl={4} md={5} sm={7} style={{ background: '#f5f5f5', margin: '20px', padding: '0 40px', borderRadius: '20px' }} className='shadow rounded'>
-                <h3 className='d-flex justify-content-center py-3'>Xác thực tài khoản</h3>
+                <h3 className='d-flex justify-content-center py-3'>Quên mật khẩu</h3>
                 <p className='text-center' style={{ color: 'red' }}>{message}</p>
                 <Form onSubmit={submitHandler}>
                     <Form.Group controlId='username'>
@@ -49,9 +50,14 @@ const VerifyShipperScreen = () => {
                         <Button style={{ background: '#eeb808', border: 'none' }} type='submit'>Xác thực</Button>
                     </Form.Group>
                 </Form>
+                <Row>
+                    <Col className='d-flex justify-content-center py-3'>
+                        <Link style={{ color: '#eeb808' }} className='px-1' to={'/shipper/login'}>Về trang đăng nhập</Link>
+                    </Col>
+                </Row>
             </Col>
         </Row>
     )
 }
 
-export default VerifyShipperScreen
+export default VerifyForgotPasswordScreen
