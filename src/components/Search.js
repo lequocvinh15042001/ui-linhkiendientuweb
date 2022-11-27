@@ -41,7 +41,7 @@ const Search = () => {
                             <TextField
                                 {...params}
                                 InputProps={{ ...params.InputProps, disableUnderline: true }}
-                                placeholder='Nhập tên sản phẩm cần tìm, ví dụ: Cà chua'
+                                placeholder='Nhập tên sản phẩm cần tìm'
                             />
                         )}
                     />

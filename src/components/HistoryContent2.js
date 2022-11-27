@@ -174,7 +174,7 @@ const HistoryContent = ({history}) => {
                           <p style={{ background: 'red', color: '#e7fff8', borderRadius: '5px', fontSize: '12px' }} className='my-0 mx-3 py-1 px-2'>Đã hủy</p>
                         </div>:
                         <div className='d-flex justify-content-center align-items-center'>
-                        <p style={{ background: '#00FF00', color: '#000000', borderRadius: '5px', fontSize: '12px' }} className='my-0 mx-3 py-1 px-2'>Đã thanh toán ✓</p>
+                        <p style={{ background: '#00FF00', color: '#000000', borderRadius: '5px', fontSize: '12px' }} className='my-0 mx-3 py-1 px-2'>Đã nhận hàng ✓</p>
                         </div>   
                     }
                   </td>
