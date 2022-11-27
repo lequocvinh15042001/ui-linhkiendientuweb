@@ -52,6 +52,9 @@ import {
   ORDER_LIST_DETAIL_REQUEST,
   ORDER_LIST_DETAIL_SUCCESS,
   ORDER_LIST_DETAIL_FAIL,
+  CANCEL_ORDER_REQUEST,
+  CANCEL_ORDER_SUCCESS,
+  CANCEL_ORDER_FAIL,
 } from "../constants/orderConstants";
 
 export const orderCreateReducer = (state = {}, action) => {
@@ -74,6 +77,19 @@ export const getOrderReducer = (state = { orders: [] }, action) => {
     case GET_ORDER_SUCCESS:
       return { loading: false, orders: action.payload }
     case GET_ORDER_FAIL:
+      return { loading: false, error: action.payload }
+    default:
+      return state
+  }
+}
+
+export const cancelOrderReducer = (state = { }, action) => {
+  switch (action.type) {
+    case CANCEL_ORDER_REQUEST:
+      return { loading: true }
+    case CANCEL_ORDER_SUCCESS:
+      return { loading: false, success: action.payload }
+    case CANCEL_ORDER_FAIL:
       return { loading: false, error: action.payload }
     default:
       return state

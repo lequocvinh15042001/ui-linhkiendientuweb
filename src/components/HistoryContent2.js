@@ -1,4 +1,4 @@
-import React from "react";
+import React , {useEffect} from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
@@ -6,15 +6,17 @@ import { useUserContext } from "../context/user_context";
 
 import HistoryColumns from "./HistoryColumns";
 import HistoryItem from "./HistoryItem";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, Col, Form, Row, Table } from "react-bootstrap";
 import Loader from "./Loader";
 import Message from "./Message";
 import { LinkContainer } from "react-router-bootstrap";
 import ReactTooltip from "react-tooltip";
 import Contact from "./Contact";
+import { cancelOrderByUser } from "../actions/orderActions";
 
 const HistoryContent = ({history}) => {
+  const dispatch = useDispatch()
   // const {
   //   myUser: { name, email },
   // } = useUserContext();
@@ -25,6 +27,18 @@ const HistoryContent = ({history}) => {
   console.log(userLogin.userInfo);
 
   const {id} = userLogin
+
+  const {success} = useSelector((state)=> state.cancelOrder)
+
+  useEffect(() => {
+  }, [success]);
+
+
+  // cancel Order
+  const cancelOrder = (id) =>{
+    dispatch(cancelOrderByUser(id))
+    window.location.reload()
+  }
 
   return (
     <Wrapper className="section-center">
@@ -154,7 +168,10 @@ const HistoryContent = ({history}) => {
                         </div> :
                         (product.state === 'process') ?
                         <div className='d-flex justify-content-center align-items-center'>
-                          <p style={{ background: '#FF0000', color: '#e7fff8', borderRadius: '5px', fontSize: '12px' }} className='my-0 mx-3 py-1 px-2'>Đang xử lý...</p>
+                          <p style={{ background: 'green', color: '#e7fff8', borderRadius: '5px', fontSize: '12px' }} className='my-0 mx-3 py-1 px-2'>Đang xử lý...</p>
+                        </div>: (product.state === 'cancel') ?
+                        <div className='d-flex justify-content-center align-items-center'>
+                          <p style={{ background: 'red', color: '#e7fff8', borderRadius: '5px', fontSize: '12px' }} className='my-0 mx-3 py-1 px-2'>Đã hủy</p>
                         </div>:
                         <div className='d-flex justify-content-center align-items-center'>
                         <p style={{ background: '#00FF00', color: '#000000', borderRadius: '5px', fontSize: '12px' }} className='my-0 mx-3 py-1 px-2'>Đã thanh toán ✓</p>
@@ -174,8 +191,12 @@ const HistoryContent = ({history}) => {
                         <p style={{ background: '#e47200', color: '#e7fff8', borderRadius: '5px', fontSize: '12px' }} className='my-0 mx-3 py-1 px-2'>Không thể hủy</p>
                         </div> :
                         (product.state === 'process') ?
+                        <div>
+                        <p style={{ background: '#e47200', color: '#e7fff8', borderRadius: '5px', fontSize: '12px' }} className='my-0 mx-3 p-1 text-center'>Có thể hủy</p>
+                        <Button onClick={() => cancelOrder(product.id)} style={{background: 'red', color: 'white', border: 'none', fontSize: '10px', width: 'auto'}}>Hủy đơn hàng</Button>
+                        </div>: (product.state === 'cancel') ?
                         <div className='d-flex justify-content-center align-items-center'>
-                        <p style={{ background: '#e47200', color: '#e7fff8', borderRadius: '5px', fontSize: '12px' }} className='my-0 mx-3 p-1'>Có thể hủy</p>
+                        <p style={{ background: '#e47200', color: '#e7fff8', borderRadius: '5px', fontSize: '12px' }} className='my-0 mx-3 p-1'>Hủy thành công</p>
                         </div>:
                         <div className='d-flex justify-content-center align-items-center'>
                         <p style={{ background: '#e47200', color: '#e7fff8', borderRadius: '5px', fontSize: '12px' }} className='my-0 mx-3 p-1'>Thành công!</p>

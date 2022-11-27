@@ -36,6 +36,7 @@ import {
   orderDetailAdminReducer,
   orderSetPaidReducer,
   orderSetDeliveryReducer,
+  cancelOrderReducer,
 
   // Shipper
   orderProcessListShipperReducer,
@@ -83,6 +84,8 @@ const reducer = combineReducers({
   userChangePassword: userChangePasswordReducer,
   userForgotPassword: userForgotPasswordReducer,
   shipperRegister: shipperRegisterReducer,
+
+  cancelOrder: cancelOrderReducer,
 
   //Admin
   userAllAdmin: userAllAdminReducer,

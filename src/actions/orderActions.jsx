@@ -49,6 +49,9 @@ import {
   ORDER_LIST_DETAIL_REQUEST,
   ORDER_LIST_DETAIL_SUCCESS,
   ORDER_LIST_DETAIL_FAIL,
+  CANCEL_ORDER_REQUEST,
+  CANCEL_ORDER_SUCCESS,
+  CANCEL_ORDER_FAIL,
 } from "../constants/orderConstants";
 import { logout } from './userActions'
 
@@ -122,6 +125,39 @@ export const getOrder = () => async (dispatch, getState) => {
   }
 }
 
+export const cancelOrderByUser = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: CANCEL_ORDER_REQUEST
+    })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    var config = {
+      method: 'put',
+      url: `http://localhost:8080/api/orders/cancel/${id}`,
+      headers: { 
+        'Authorization': `Bearer ${userInfo.accessToken}`
+      }
+    };
+    
+    axios(config)
+    .then(function (response) {
+      dispatch({
+        type: CANCEL_ORDER_SUCCESS,
+        payload: response.data,
+      })
+    })
+
+  } catch (error) {
+    dispatch({
+      type: CANCEL_ORDER_FAIL,
+      payload: error.response && error.response.data.error ? error.response.data.error : error.error,
+    })
+  }
+}
 
 //Vinh
 export const getOrderDetails = (id) => async (dispatch, getState) => {
