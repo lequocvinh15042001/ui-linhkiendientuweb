@@ -12,6 +12,9 @@ import {
   productAllAdminReducer,
   productListAdminReducer,
   productUnlockReducer,
+  reviewAllAdminReducer,
+  reviewLockReducer,
+  reviewUnlockReducer,
 } from './reducers/productReducers'
 import { cartListReducer, cartReducer } from './reducers/cartReducers'
 import {
@@ -91,7 +94,7 @@ const reducer = combineReducers({
 
   cancelOrder: cancelOrderReducer,
 
-  //Admin
+  //Admin - User
   userAllAdmin: userAllAdminReducer,
   userList: userListReducer,
   userListDetail: userListDetailReducer,
@@ -99,6 +102,7 @@ const reducer = combineReducers({
   userUnlock: userUnlockReducer,
   userUpdate: userUpdateReducer,
 
+  // Client - Order
   orderCreate: orderCreateReducer,
   orderList: getOrderReducer,
   orderPay: orderPayReducer,
@@ -112,6 +116,11 @@ const reducer = combineReducers({
   orderDetailAdmin: orderDetailAdminReducer,
   orderSetDelivery: orderSetDeliveryReducer,
   orderSetPaid: orderSetPaidReducer,
+
+  // Admin - Review
+  reviewAllAdmin: reviewAllAdminReducer,
+  reviewLock: reviewLockReducer,
+  reviewUnlock: reviewUnlockReducer,
 
   // Shipper
   orderProcessListShipper: orderProcessListShipperReducer,

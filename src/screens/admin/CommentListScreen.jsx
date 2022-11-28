@@ -1,38 +1,30 @@
 import React, { useEffect } from 'react'
 import { LinkContainer } from 'react-router-bootstrap'
-import { Table, Button, Col, Row, Modal, Pagination, Form } from 'react-bootstrap'
+import { Table, Button, Col, Row, Modal, Pagination, Form, Accordion } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import ReactTooltip from 'react-tooltip'
 import Message from '../../components/Message'
 import Loader from '../../components/Loader'
-import { listCategoryAdmin, blockCategoryAdmin, unlockCategoryAdmin, createCategoryAdmin } from '../../actions/productActions'
+import { blockCategoryAdmin, unlockCategoryAdmin, getAllCommentsAdmin, unlockReviewAdmin, blockReviewAdmin } from '../../actions/productActions'
 import { useState } from 'react'
 
 const CommentListScreen = () => {
-    const [newName, setNewName] = useState('')
-
     const dispatch = useDispatch()
 
-    const { loading, error, categories } = useSelector((state) => state.categoryListAdmin)
-    // console.log("categories: ", categories);
+    const { loading, error, reviews } = useSelector((state) => state.reviewAllAdmin)
+    // console.log("===", reviews);
 
-    const userLogin = useSelector((state) => state.userLogin)
-    const { userInfo } = userLogin
+    const reviewLock = useSelector((state) => state.reviewLock)
+    const { success: reviewLockSuccess } = reviewLock
 
-    const blockCategory = useSelector((state) => state.blockCategory)
-    const { success: successBlock } = blockCategory
-
-    const unlockCategory = useSelector((state) => state.unlockCategory)
-    const { success: successUnlock } = unlockCategory
-
-    const createCategory = useSelector((state) => state.createCategory)
-    const { success: successCreate } = createCategory
+    const reviewUnlock = useSelector((state) => state.reviewUnlock)
+    const { success: successUnlockSuccess } = reviewUnlock
 
     useEffect(() => {
-        dispatch(listCategoryAdmin())
-    }, [dispatch, successBlock, successUnlock, successCreate])
+        dispatch(getAllCommentsAdmin())
+    }, [dispatch, successUnlockSuccess, reviewLockSuccess])
 
-    // Block category
+    // Block comment
     const [show, setShow] = useState(false);
     const handleCloseBlock = () => setShow(false);
     const [idDelete, setIdDelete] = useState('')
@@ -43,41 +35,21 @@ const CommentListScreen = () => {
 
     const blockHandler = (id) => {
         setShow(false);
-        dispatch(blockCategoryAdmin(id))
-        // window.location.reload()
+        dispatch(blockReviewAdmin(id))
     }
 
-    // Unlock category
+    // Unlock comment
     const [showUnlock, setShowUnlock] = useState(false);
     const handleCloseUnlock = () => setShowUnlock(false);
     const [idUnlock, setIdUnlock] = useState('')
-    const [nameUnlock, setNameUnlock] = useState('')
-    const handleShowUnlock = (id, name) => {
+    const handleShowUnlock = (id) => {
         setShowUnlock(true);
         setIdUnlock(id)
-        setNameUnlock(name)
     }
 
-    const unlockHandler = (id, name) => {
+    const unlockHandler = (id) => {
         setShowUnlock(false);
-        dispatch(unlockCategoryAdmin(id, { name: name, state: 'enable' }))
-        // window.location.reload()
-    }
-
-    // Add category
-    const [showAdd, setShowAdd] = useState(false);
-    const handleCloseAdd = () => setShowAdd(false);
-    // const [idDelete, setIdDelete] = useState('')
-    const handleShowAdd = () => {
-        setShowAdd(true);
-        // setIdDelete(id)
-    }
-
-    // console.log('====', newName);
-    const addHandler = () => {
-        setShowAdd(false);
-        dispatch(createCategoryAdmin({ name: newName, state: 'enable' }))
-        // window.location.reload()
+        dispatch(unlockReviewAdmin(id))
     }
 
     return (
@@ -93,18 +65,13 @@ const CommentListScreen = () => {
                         <a href='/admin/categorylist' className='my-0 mx-1' style={{ textDecoration: 'none', color: 'black' }}>Quản lý danh mục</a>
                     </div>
                 </div>
-                <div className='d-flex justify-content-end py-4'>
-                    <Button className='my-0' style={{ background: '#03a9f3', border: 'none', fontSize: '14px', textTransform: 'none', width: 'auto' }} onClick={handleShowAdd}>
-                        Thêm danh mục
-                    </Button>
-                </div>
             </div>
             <Row className='align-items-center mx-4 mt-4 px-4 py-3' style={{ background: 'white' }}>
                 <Col className='px-0'>
-                    <h5 style={{ fontSize: '16px' }} className='pb-4 pt-4'>DANH SÁCH DANH MỤC SẢN PHẨM</h5>
+                    <h5 style={{ fontSize: '16px' }} className='pb-4 pt-4'>DANH SÁCH ĐÁNH GIÁ SẢN PHẨM</h5>
                 </Col>
                 <Col className='d-flex justify-content-end px-0'>
-                    <h6 style={{ fontSize: '14px' }} className='pb-4 pt-4'>Tổng số lượng: {categories?.data?.length} danh mục</h6>
+                    <h6 style={{ fontSize: '14px' }} className='pb-4 pt-4'>Tổng số lượng: {reviews?.data?.length} danh mục</h6>
                 </Col>
             </Row>
             {loading ? (
@@ -112,27 +79,44 @@ const CommentListScreen = () => {
             ) : error ? (
                 <Message variant='danger'>{error}</Message>
             ) : (
-                <div className='mx-4' style={{ height: 'auto' }}>
+                <div className='mx-4 pb-5' style={{ height: 'auto' }}>
                     <Table responsive striped>
                         <thead style={{ background: 'white' }}>
                             <tr>
                                 <th>#</th>
-                                <th>Tên danh mục</th>
+                                <th className='text-center'>Tài khoản đánh giá</th>
+                                <th className='text-center'>Thời gian đánh giá</th>
+                                <th className='text-center'>Số sao đánh giá</th>
+                                <th className='text-center'>Nội dung đánh giá</th>
                                 <th className='text-center'>Trạng thái</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            {categories?.data?.map((category, index) => (
-                                <tr style={{ margin: '60px 0' }} key={category.id}>
+                            {reviews?.data?.map((review, index) => (
+                                <tr style={{ margin: '60px 0' }} key={review.id}>
                                     <td style={{ fontWeight: 'bold' }}>{index + 1}</td>
-                                    <td>{category.name}</td>
-                                    {/* <td className='text-center'>{user.phone}</td> */}
+                                    <td className='text-center'>{review.name}</td>
+                                    <td className='text-center'>{review.createdDate}</td>
+                                    <td className='text-center'>{review.rate}</td>
+                                    <td className='text-center'>
+                                        <Accordion>
+                                            <Accordion.Item eventKey="0">
+                                                <Accordion.Header style={{ fontSize: '13px' }}>Nội dung đánh giá</Accordion.Header>
+                                                <Accordion.Body>
+                                                    <p className='mt-3'>{review.content}</p>
+                                                </Accordion.Body>
+                                            </Accordion.Item>
+                                        </Accordion>
+                                    </td>
                                     <td className='text-center'>
                                         {
-                                            (category.state === 'enable') ?
+                                            (review.state === 'enable') ?
                                                 <div className='d-flex justify-content-center align-items-center'>
                                                     <p style={{ background: '#00c292', color: '#e7fff8', borderRadius: '5px', fontSize: '12px' }} className='my-0 mx-3 py-1 px-2'>Hoạt động</p>
+                                                </div> : (review.state === 'process') ?
+                                                <div className='d-flex justify-content-center align-items-center'>
+                                                    <p style={{ background: '#eeb808', color: '#e7fff8', borderRadius: '5px', fontSize: '12px' }} className='my-0 mx-3 py-1 px-2'>Chờ duyệt</p>
                                                 </div> :
                                                 <div className='d-flex justify-content-center align-items-center'>
                                                     <p style={{ background: '#e46a76', color: '#e7fff8', borderRadius: '5px', fontSize: '12px' }} className='my-0 mx-3 py-1 px-2'>Đã khóa</p>
@@ -140,30 +124,13 @@ const CommentListScreen = () => {
                                         }
                                     </td>
                                     <td className='d-flex justify-content-center'>
-                                        <LinkContainer style={{ width: 'auto', height: 'auto' }} to={`/admin/category/${category.id}/detail`}>
-                                            <Button
-                                                className='my-0 mx-0'
-                                                data-tip data-for="tip1"
-                                                disabled={category.state === 'disable' ? 'true' : ''} variant='secondary'>
-                                                <i className='fas fa-eye'></i>
-                                            </Button>
-                                        </LinkContainer>
-                                        <LinkContainer style={{ width: 'auto', height: 'auto' }} to={`/admin/category/${category.id}/edit`}>
-                                            <Button
-                                                data-tip data-for="tip2"
-                                                disabled={category.state === 'disable' ? 'true' : ''}
-                                                style={{ background: '#03a9f3' }}
-                                                className='my-0 mx-2'>
-                                                <i className='fas fa-edit'></i>
-                                            </Button>
-                                        </LinkContainer>
                                         {/* Block user */}
                                         {
-                                            category.state === 'enable' ?
+                                            review.state === 'enable' ?
                                                 <Button data-tip data-for="tip3"
                                                     style={{ background: '#ee5261', border: '2px solid #ee5261', width: 'auto', height: 'auto' }}
                                                     className='my-0 mx-0'
-                                                    onClick={() => handleShowBlock(category.id)}
+                                                    onClick={() => handleShowBlock(review.id)}
                                                 >
                                                     <i className="fas fa-lock"></i>
                                                 </Button>
@@ -171,7 +138,7 @@ const CommentListScreen = () => {
                                                 <Button data-tip data-for="tip4"
                                                     style={{ background: '#00c292', border: '2px solid #00c292', width: 'auto', height: 'auto' }}
                                                     className='my-0 mx-0'
-                                                    onClick={() => handleShowUnlock(category.id, category.name)}
+                                                    onClick={() => handleShowUnlock(review.id)}
                                                 >
                                                     <i className="fas fa-unlock"></i>
                                                 </Button>
@@ -216,7 +183,7 @@ const CommentListScreen = () => {
                         Đồng ý
                     </Button>
                 </Modal.Footer>
-            </Modal>
+            </Modal>\
             {/* Modal Unlock User */}
             <Modal
                 show={showUnlock}
@@ -234,37 +201,8 @@ const CommentListScreen = () => {
                     <Button variant="secondary" onClick={handleCloseUnlock} style={{ fontSize: '14px', textTransform: 'none', width: 'auto' }}>
                         Hủy
                     </Button>
-                    <Button variant="success" onClick={() => unlockHandler(idUnlock, nameUnlock)} style={{ fontSize: '14px', textTransform: 'none', width: 'auto' }}>
+                    <Button variant="success" onClick={() => unlockHandler(idUnlock)} style={{ fontSize: '14px', textTransform: 'none', width: 'auto' }}>
                         Đồng ý
-                    </Button>
-                </Modal.Footer>
-            </Modal>
-
-            {/* Form Add Category */}
-            <Modal show={showAdd} onHide={handleCloseAdd}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Thêm danh mục mới</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Form>
-                        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                            <Form.Label style={{ fontSize: '14px' }}>Tên danh mục</Form.Label>
-                            <Form.Control
-                                style={{ fontSize: '14px' }}
-                                onChange={(e) => setNewName(e.target.value)}
-                                type="text"
-                                placeholder="Nhập tên danh mục"
-                                autoFocus
-                            />
-                        </Form.Group>
-                    </Form>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button style={{ fontSize: '14px', textTransform: 'none', width: 'auto' }} variant="danger" onClick={handleCloseAdd}>
-                        Hủy
-                    </Button>
-                    <Button style={{ fontSize: '14px', textTransform: 'none', width: 'auto' }} variant="primary" onClick={addHandler}>
-                        Lưu danh mục
                     </Button>
                 </Modal.Footer>
             </Modal>

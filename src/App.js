@@ -21,8 +21,6 @@ import {
   History,
   ItemList,
 } from "./pages";
-import ShippingScreen from "./screens/ShippingScreen";
-import PaymentScreen from "./screens/PaymentScreen";
 import AdminUserList from "./pages/adminPages/AdminUserList";
 import AdminDetailUser from "./pages/adminPages/AdminUserDetail";
 import AdminCategoryList from "./pages/adminPages/AdminCategoryList";
@@ -59,7 +57,7 @@ import VerifyClient from "./pages/clientPages/VerifyClient";
 import ForgotPasswordShipper from "./screens/shipper/ForgotPasswordShipperScreen";
 import VerifyForgotPasswordScreen from "./screens/shipper/VerifyForgotPasswordScreen";
 import ResetPasswordShipperScreen from "./screens/shipper/ResetPasswordShipperScreen";
-import CommentListScreen from "./screens/admin/CommentListScreen";
+import AdminCommentList from "./pages/adminPages/AdminCommentList";
 
 function App() {
   const { theme } = useThemeContext();
@@ -152,7 +150,7 @@ function App() {
         <Route exact path="admin/orderlist" element={<AdminOrdertList />} />
         <Route exact path="admin/order/:id/detail" element={<AdminOrderDetail />} />
         {/* Comment */}
-        <Route exact path="admin/commentlist" element={<CommentListScreen />} />
+        <Route exact path="admin/commentlist" element={<AdminCommentList />} />
 
         {/* Shipper */}
         <Route exact path="/shipper/login" element={<LoginShipperScreen />} />

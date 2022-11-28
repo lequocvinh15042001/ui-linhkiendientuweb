@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { PRODUCT_CATEGORY_REQUEST, PRODUCT_CATEGORY_SUCCESS, PRODUCT_CATEGORY_FAIL, PRODUCT_GET_REVIEW_REQUEST, PRODUCT_GET_REVIEW_SUCCESS, PRODUCT_GET_REVIEW_FAIL, PRODUCT_CATEGORY_ADMIN_REQUEST, PRODUCT_CATEGORY_ADMIN_SUCCESS, PRODUCT_CATEGORY_ADMIN_FAIL, PRODUCT_CATEGORY_DETAIL_ADMIN_REQUEST, PRODUCT_CATEGORY_DETAIL_ADMIN_SUCCESS, PRODUCT_CATEGORY_DETAIL_ADMIN_FAIL, BLOCK_CATEGORY_ADMIN_REQUEST, BLOCK_CATEGORY_ADMIN_SUCCESS, BLOCK_CATEGORY_ADMIN_FAIL, UNLOCK_CATEGORY_ADMIN_REQUEST, UNLOCK_CATEGORY_ADMIN_SUCCESS, UNLOCK_CATEGORY_ADMIN_FAIL, CREATE_CATEGORY_ADMIN_REQUEST, CREATE_CATEGORY_ADMIN_FAIL, CREATE_CATEGORY_ADMIN_SUCCESS, PRODUCT_LOCK_REQUEST, PRODUCT_LOCK_SUCCESS, PRODUCT_LOCK_FAIL, PRODUCT_LIST_ADMIN_REQUEST, PRODUCT_LIST_ADMIN_SUCCESS, PRODUCT_LIST_ADMIN_FAIL, PRODUCT_ALL_REQUEST, PRODUCT_ALL_SUCCESS, PRODUCT_ALL_FAIL, PRODUCT_ADD_IMAGE_SUCCESS, PRODUCT_ADD_IMAGE_REQUEST, PRODUCT_DELETE_IMAGE_SUCCESS, PRODUCT_DELETE_IMAGE_REQUEST, PRODUCT_DELETE_IMAGE_FAIL, PRODUCT_ADD_IMAGE_FAIL, PRODUCT_UNLOCK_SUCCESS, PRODUCT_UNLOCK_FAIL, PRODUCT_UNLOCK_REQUEST } from '../constants/productConstants'
+import { PRODUCT_CATEGORY_REQUEST, PRODUCT_CATEGORY_SUCCESS, PRODUCT_CATEGORY_FAIL, PRODUCT_GET_REVIEW_REQUEST, PRODUCT_GET_REVIEW_SUCCESS, PRODUCT_GET_REVIEW_FAIL, PRODUCT_CATEGORY_ADMIN_REQUEST, PRODUCT_CATEGORY_ADMIN_SUCCESS, PRODUCT_CATEGORY_ADMIN_FAIL, PRODUCT_CATEGORY_DETAIL_ADMIN_REQUEST, PRODUCT_CATEGORY_DETAIL_ADMIN_SUCCESS, PRODUCT_CATEGORY_DETAIL_ADMIN_FAIL, BLOCK_CATEGORY_ADMIN_REQUEST, BLOCK_CATEGORY_ADMIN_SUCCESS, BLOCK_CATEGORY_ADMIN_FAIL, UNLOCK_CATEGORY_ADMIN_REQUEST, UNLOCK_CATEGORY_ADMIN_SUCCESS, UNLOCK_CATEGORY_ADMIN_FAIL, CREATE_CATEGORY_ADMIN_REQUEST, CREATE_CATEGORY_ADMIN_FAIL, CREATE_CATEGORY_ADMIN_SUCCESS, PRODUCT_LOCK_REQUEST, PRODUCT_LOCK_SUCCESS, PRODUCT_LOCK_FAIL, PRODUCT_LIST_ADMIN_REQUEST, PRODUCT_LIST_ADMIN_SUCCESS, PRODUCT_LIST_ADMIN_FAIL, PRODUCT_ALL_REQUEST, PRODUCT_ALL_SUCCESS, PRODUCT_ALL_FAIL, PRODUCT_ADD_IMAGE_SUCCESS, PRODUCT_ADD_IMAGE_REQUEST, PRODUCT_DELETE_IMAGE_SUCCESS, PRODUCT_DELETE_IMAGE_REQUEST, PRODUCT_DELETE_IMAGE_FAIL, PRODUCT_ADD_IMAGE_FAIL, PRODUCT_UNLOCK_SUCCESS, PRODUCT_UNLOCK_FAIL, PRODUCT_UNLOCK_REQUEST, ADMIN_GET_ALL_REVIEW_REQUEST, ADMIN_GET_ALL_REVIEW_SUCCESS, ADMIN_GET_ALL_REVIEW_FAIL, REVIEW_LOCK_REQUEST, REVIEW_LOCK_SUCCESS, REVIEW_LOCK_FAIL, REVIEW_UNLOCK_REQUEST, REVIEW_UNLOCK_SUCCESS, REVIEW_UNLOCK_FAIL } from '../constants/productConstants'
 import {
   PRODUCT_LIST_REQUEST, PRODUCT_LIST_SUCCESS, PRODUCT_LIST_FAIL,
   PRODUCT_DETAILS_REQUEST,
@@ -605,6 +605,98 @@ export const listTopProducts = () => async (dispatch) => {
         error.response && error.response.data.message
           ? error.response.data.message
           : error.message,
+    })
+  }
+}
+
+// Admin Review
+export const getAllCommentsAdmin = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: ADMIN_GET_ALL_REVIEW_REQUEST })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.accessToken}`,
+      },
+    }
+
+    const { data } = await axios.get('http://localhost:8080/api/admin/manage/comment/findall', config)
+    // console.log('===', data)
+
+    dispatch({
+      type: ADMIN_GET_ALL_REVIEW_SUCCESS,
+      payload: data
+    })
+
+  } catch (error) {
+    dispatch({
+      type: ADMIN_GET_ALL_REVIEW_FAIL,
+      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+    })
+  }
+}
+
+
+export const blockReviewAdmin = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: REVIEW_LOCK_REQUEST })
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.accessToken}`,
+      },
+    }
+
+    const { data } = await axios.delete(`http://localhost:8080/api/admin/manage/comment/block/${id}`, config)
+
+    dispatch({
+      type: REVIEW_LOCK_SUCCESS,
+      payload: data
+    })
+  } catch (error) {
+    dispatch({
+      type: REVIEW_LOCK_FAIL,
+      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+    })
+  }
+}
+
+export const unlockReviewAdmin = (id) => async (dispatch, getState) => {
+  console.log('===', id)
+  try {
+    dispatch({ type: REVIEW_UNLOCK_REQUEST })
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    var config = {
+      method: 'put',
+      url: `http://localhost:8080/api/admin/manage/comment/setenable/${id}`,
+      headers: { 
+        'Authorization': `Bearer ${userInfo.accessToken}`
+      }
+    };
+    
+    axios(config)
+    .then(function (response) {
+      dispatch({
+        type: REVIEW_UNLOCK_SUCCESS,
+        payload: response.data
+      })
+    })
+
+  } catch (error) {
+    dispatch({
+      type: REVIEW_UNLOCK_FAIL,
+      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
     })
   }
 }

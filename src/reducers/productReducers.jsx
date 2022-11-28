@@ -29,7 +29,16 @@ import {
   PRODUCT_LOCK_FAIL,
   PRODUCT_UNLOCK_REQUEST,
   PRODUCT_UNLOCK_SUCCESS,
-  PRODUCT_UNLOCK_FAIL
+  PRODUCT_UNLOCK_FAIL,
+  ADMIN_GET_ALL_REVIEW_REQUEST,
+  ADMIN_GET_ALL_REVIEW_SUCCESS,
+  ADMIN_GET_ALL_REVIEW_FAIL,
+  REVIEW_LOCK_REQUEST,
+  REVIEW_LOCK_FAIL,
+  REVIEW_UNLOCK_REQUEST,
+  REVIEW_UNLOCK_SUCCESS,
+  REVIEW_UNLOCK_FAIL,
+  REVIEW_LOCK_SUCCESS
 } from '../constants/productConstants'
 import { PRODUCT_DETAILS_REQUEST, PRODUCT_DETAILS_SUCCESS, PRODUCT_DETAILS_FAIL } from '../constants/productConstants'
 import { PRODUCT_CATEGORY_REQUEST, PRODUCT_CATEGORY_SUCCESS, PRODUCT_CATEGORY_FAIL } from '../constants/productConstants'
@@ -198,6 +207,46 @@ export const productTopRatedReducer = (state = { products: [] }, action) => {
     case PRODUCT_TOP_SUCCESS:
       return { loading: false, products: action.payload }
     case PRODUCT_TOP_FAIL:
+      return { loading: false, error: action.payload }
+    default:
+      return state
+  }
+}
+
+//Admin review
+export const reviewAllAdminReducer = (state = { reviews: [] }, action) => {
+  switch (action.type) {
+    case ADMIN_GET_ALL_REVIEW_REQUEST:
+      return { loading: true, reviews: [] }
+    case ADMIN_GET_ALL_REVIEW_SUCCESS:
+      return { loading: false, reviews: action.payload }
+    case ADMIN_GET_ALL_REVIEW_FAIL:
+      return { loading: false, error: action.payload }
+    default:
+      return state
+  }
+}
+
+export const reviewLockReducer = (state = {}, action) => {
+  switch (action.type) {
+    case REVIEW_LOCK_REQUEST:
+      return { loading: true }
+    case REVIEW_LOCK_SUCCESS:
+      return { loading: false, success: true }
+    case REVIEW_LOCK_FAIL:
+      return { loading: false, error: action.payload }
+    default:
+      return state
+  }
+}
+
+export const reviewUnlockReducer = (state = {}, action) => {
+  switch (action.type) {
+    case REVIEW_UNLOCK_REQUEST:
+      return { loading: true }
+    case REVIEW_UNLOCK_SUCCESS:
+      return { loading: false, success: true }
+    case REVIEW_UNLOCK_FAIL:
       return { loading: false, error: action.payload }
     default:
       return state
