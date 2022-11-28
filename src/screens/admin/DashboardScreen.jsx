@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Table, Button, Row, Col, Pagination, Modal, Form, Image } from 'react-bootstrap'
 import { ResponsiveContainer, LineChart, Line, BarChart, Bar, CartesianGrid, XAxis, YAxis, Tooltip, Legend } from 'recharts';
@@ -6,20 +6,22 @@ import { useDispatch, useSelector } from 'react-redux'
 import ReactTooltip from 'react-tooltip'
 import Message from '../../components/Message'
 import Loader from '../../components/Loader'
-import { getAllOrders, listOrderAdmin } from "../../actions/orderActions";
+import { getAllOrders, getProfitOrder, listOrderAdmin } from "../../actions/orderActions";
 import { Link, useNavigate } from 'react-router-dom'
-import { useState } from 'react'
 import { getAllUsersAdmin } from '../../actions/userActions'
 import { getAllProductsAdmin, listCategoryAdmin } from '../../actions/productActions'
 
 const DashboardScreen = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const [type, setType] = useState('month')
+  console.log('===', type)
 
   const { userAll } = useSelector((state) => state.userAllAdmin)
   const { categories } = useSelector((state) => state.categoryListAdmin)
   const { productAll } = useSelector(state => state.productAllAdmin)
   const { orderAll } = useSelector(state => state.orderAll)
+  const { profit, succes } = useSelector(state => state.orderProfit)
   // console.log('====', orderAll?.data)
 
   const arrOrderAll = []
@@ -32,16 +34,6 @@ const DashboardScreen = () => {
   }
   checkOrderAll()
 
-  // Find product max quantity
-  // const arrProduct = []
-  // productAll?.data?.forEach(x => {
-  //   arrProduct.push(x.quantity)
-  // })
-  // console.log('===qu', arrProduct);
-  // let maxQuantity = arrProduct.reduce(function (accumulator, element) {
-  //   return (accumulator > element) ? accumulator : element
-  // });
-
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 
@@ -51,6 +43,7 @@ const DashboardScreen = () => {
       dispatch(getAllUsersAdmin())
       dispatch(listCategoryAdmin())
       dispatch(getAllProductsAdmin())
+      dispatch(getProfitOrder('01-11-2020', '28-11-2025', type))
     } else {
       navigate('/login')
     }
@@ -137,6 +130,28 @@ const DashboardScreen = () => {
           <Link style={{ textDecoration: 'none' }} to='/admin/userlist'>Đến trang quản lý sản phẩm</Link>
         </Col>
       </Row>
+
+      {/* Profit */}
+      <Row className="section px-0 mx-3 py-0">
+        <h5 className="section-title">Thống kê doanh thu theo tháng</h5>
+        <div className="section-content">
+          <ResponsiveContainer width="100%" height={500}>
+            <BarChart data={profit?.data} margin={{ top: 15, right: 0, bottom: 15, left: 0 }}>
+              <XAxis dataKey="date" />
+              <YAxis />
+              <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+              <Tooltip />
+              <Legend />
+              {/* <Bar dataKey="totalAvenue" fill="#FB8833" /> */}
+              <Bar dataKey="amount" fill="green" name='Tổng doanh thu tháng' />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      </Row>
+      {/* <Row className='d-flex justify-content-between align-items-center px-0 my-4 py-3 mx-0'>
+        <Button style={{width: 'auto', background: '#17A8F5', border: 'none'}} onClick={() => setType('month')}>Tháng</Button>
+        <Button style={{width: 'auto', background: '#17A8F5', border: 'none'}} onClick={() => setType('all')}>Năm</Button>
+      </Row> */}
     </div>
   )
 }

@@ -51,6 +51,7 @@ import {
   cancelOrderByShipperReducer,
   detailOrderByShipperReducer,
   orderListDetailAdminReducer,
+  orderProfitReducer,
 } from './reducers/orderReducers'
 
 import {
@@ -116,6 +117,7 @@ const reducer = combineReducers({
   orderDetailAdmin: orderDetailAdminReducer,
   orderSetDelivery: orderSetDeliveryReducer,
   orderSetPaid: orderSetPaidReducer,
+  orderProfit: orderProfitReducer,
 
   // Admin - Review
   reviewAllAdmin: reviewAllAdminReducer,

@@ -55,6 +55,9 @@ import {
   CANCEL_ORDER_REQUEST,
   CANCEL_ORDER_SUCCESS,
   CANCEL_ORDER_FAIL,
+  ORDER_PROFIT_REQUEST,
+  ORDER_PROFIT_SUCCESS,
+  ORDER_PROFIT_FAIL,
 } from "../constants/orderConstants";
 
 export const orderCreateReducer = (state = {}, action) => {
@@ -309,6 +312,28 @@ export const orderSetPaidReducer = (state = {}, action) => {
         success: true,
       }
     case ORDER_SET_PAID_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      }
+    default:
+      return state
+  }
+}
+
+export const orderProfitReducer = (state = { profit: [] }, action) => {
+  switch (action.type) {
+    case ORDER_PROFIT_REQUEST:
+      return {
+        loading: true,
+      }
+    case ORDER_PROFIT_SUCCESS:
+      return {
+        loading: false,
+        profit: action.payload,
+        success: true
+      }
+    case ORDER_PROFIT_FAIL:
       return {
         loading: false,
         error: action.payload,

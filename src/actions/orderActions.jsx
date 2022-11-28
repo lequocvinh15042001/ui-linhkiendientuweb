@@ -52,6 +52,9 @@ import {
   CANCEL_ORDER_REQUEST,
   CANCEL_ORDER_SUCCESS,
   CANCEL_ORDER_FAIL,
+  ORDER_PROFIT_REQUEST,
+  ORDER_PROFIT_SUCCESS,
+  ORDER_PROFIT_FAIL,
 } from "../constants/orderConstants";
 import { logout } from './userActions'
 
@@ -545,6 +548,43 @@ export const setPaidOrder = (id) => async (dispatch, getState) => {
     }
     dispatch({
       type: ORDER_SET_PAID_FAIL,
+      payload: message,
+    })
+  }
+}
+
+export const getProfitOrder = (from, to, type) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: ORDER_PROFIT_REQUEST,
+    })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.accessToken}`,
+      },
+    }
+
+    const { data } = await axios.get(`http://localhost:8080/api/admin/manage/orders/stats?from=${from}&to=${to}&type=${type}`, config)
+
+    dispatch({
+      type: ORDER_PROFIT_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message
+    if (message === 'Not authorized, token failed') {
+      dispatch(logout())
+    }
+    dispatch({
+      type: ORDER_PROFIT_FAIL,
       payload: message,
     })
   }
