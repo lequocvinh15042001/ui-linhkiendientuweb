@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { LinkContainer } from 'react-router-bootstrap'
 import ReactTooltip from 'react-tooltip'
-import { Container, Navbar, Nav, NavDropdown, Row, Modal, Button, Form } from 'react-bootstrap'
+import { Container, Navbar, Nav, NavDropdown, Row, Modal, Button, Form, Col, Accordion } from 'react-bootstrap'
 // import { getOrder, updateOrder } from '../actions/orderActions'
 import { getUserDetails, logout, updateUserProfile } from '../../actions/userActions'
 import { getAllOrders, setDeliveryOrder } from '../../actions/orderActions'
@@ -13,11 +13,12 @@ const HeaderAdmin = () => {
     const [phone, setPhone] = useState('')
     const [address, setAddress] = useState('')
     const [lgShow, setLgShow] = useState(false);
+    const [message, setMessage] = useState('')
     const navigate = useNavigate();
     const dispatch = useDispatch()
 
     const { orderAll } = useSelector(state => state.orderAll)
-    console.log('==', orderAll)
+    // console.log('==', orderAll)
 
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
@@ -44,7 +45,7 @@ const HeaderAdmin = () => {
     const getNotification = () => {
         orderAll?.data?.list?.forEach(order => {
             if (order.state === 'process') {
-                arrNotification.push(order.id)
+                arrNotification.push(order)
             }
         })
     }
@@ -89,11 +90,14 @@ const HeaderAdmin = () => {
 
     // Update profile Admin
     const updateHandler = () => {
-        setShowInfo(false);
-        dispatch(updateUserProfile(userInfo.id, { name: name, phone: phone, address: address }))
-        const user = JSON.parse(localStorage.getItem('userInfo'))
-        console.log('===', user);
-        localStorage.setItem('userInfo', JSON.stringify({ ...user, name: name, phone: phone, address: address }))
+        if (name.trim().length === 0 || phone.trim().length === 0 || address.trim().length === 0) {
+            setMessage("Vui lòng điền đủ thông tin")
+        } else {
+            setShowInfo(false);
+            dispatch(updateUserProfile(userInfo.id, { name: name, phone: phone, address: address }))
+            const user = JSON.parse(localStorage.getItem('userInfo'))
+            localStorage.setItem('userInfo', JSON.stringify({ ...user, name: name, phone: phone, address: address }))
+        }
     }
 
     return (
@@ -119,7 +123,7 @@ const HeaderAdmin = () => {
                             }
                         </Row>
                         <Modal
-                            size="lg"
+                            size="xl"
                             show={lgShow}
                             onHide={() => setLgShow(false)}
                             aria-labelledby="example-modal-sizes-title-lg"
@@ -139,27 +143,55 @@ const HeaderAdmin = () => {
                                 </Row>
                                 {
                                     arrNotification.length !== 0 ?
-                                        arrNotification.map(order => (
+                                        arrNotification.map((order, index) => (
                                             <Row className='d-flex justify-content-between align-items-center px-2 mb-3'>
-                                                <h6 style={{ fontSize: '14px', width: 'auto' }} className='mx-0'>Đơn hàng: ID
-                                                    <Link to={`/admin/order/${order}/detail`}>
-                                                        {' '}{order}{' '}
-                                                    </Link>
-                                                    yêu cầu xác nhận</h6>
-                                                <Button variant="outline-primary" onClick={() => confirmOrder(order)} style={{ width: 'auto' }}>Xác nhận</Button>
+                                                <Col xl={3}>
+                                                    {index + 1}. Đơn hàng của {order.userName}
+                                                </Col>
+                                                <Col xl={7}>
+                                                    <Accordion>
+                                                        <Accordion.Item eventKey="0">
+                                                            <Accordion.Header style={{ fontSize: '13px' }}>Xem chi tiết</Accordion.Header>
+                                                            <Accordion.Body>
+                                                                <strong>Thông tin đơn hàng</strong>
+                                                                <p className='mt-3'>- Ngày đặt hàng: {order.createdDate}</p>
+                                                                <p>- Số lượng sản phẩm: {order.totalProduct}</p>
+                                                                <p>- Phương thức thanh toán: {order?.receiveOrder?.paymentType}</p>
+                                                                <p>- Tổng thanh toán: <span style={{ fontWeight: 'bold', color: 'red' }}>{order.totalPrice?.toLocaleString('vi', { style: 'currency', currency: 'VND' })}</span></p>
+                                                                <strong>Thông tin người nhận</strong>
+                                                                <p className='mt-3'>- Tên người nhận: {order?.receiveOrder?.receiveName}</p>
+                                                                <p className='mt-3'>- Số điện thoại: {order?.receiveOrder?.receivePhone}</p>
+                                                                <p className='mt-3'>- Địa chỉ giao hàng: {order?.receiveOrder?.receiveAddress + ', ' + order?.receiveOrder?.receiveDistrict + ', ' + order?.receiveOrder?.receiveProvince + ', ' + order?.receiveOrder?.receiveVillage}</p>
+                                                                <strong>Chi tiết đơn hàng</strong>
+                                                                {
+                                                                    order?.items?.map(item => (
+                                                                        <Row>
+                                                                            <Col className='mt-3'>{item.name}</Col>
+                                                                            <Col className='mt-3'>{(item.price / item.quantity)?.toLocaleString('vi', { style: 'currency', currency: 'VND' })} x {item.quantity}</Col>
+                                                                        </Row>
+                                                                    ))
+                                                                }
+                                                            </Accordion.Body>
+                                                        </Accordion.Item>
+                                                    </Accordion>
+                                                </Col>
+                                                <Col xl={2}>
+                                                    <Button variant="outline-primary" onClick={() => confirmOrder(order)} style={{ width: 'auto' }}>Xác nhận</Button>
+                                                </Col>
                                             </Row>
                                         )) :
                                         <p style={{ textAlign: 'center' }}>Không có thông báo</p>
                                 }
                             </Modal.Body>
                         </Modal>
-                        
+
                         {/* Update Profile Admin */}
                         <Modal show={showInfo} onHide={handleCloseInfo}>
                             <Modal.Header closeButton>
                                 <Modal.Title>Thông tin người dùng</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
+                                <p className='text-center' style={{ color: 'red' }}>{message}</p>
                                 <Form>
                                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                                         <Form.Label style={{ fontSize: '14px' }}>Tên người dùng</Form.Label>
@@ -168,7 +200,7 @@ const HeaderAdmin = () => {
                                             value={name}
                                             onChange={(e) => setName(e.target.value)}
                                             type="text"
-                                            placeholder="Nhập tên danh mục"
+                                            placeholder="Nhập tên nguời dùng"
                                             autoFocus
                                         />
                                     </Form.Group>
@@ -179,7 +211,7 @@ const HeaderAdmin = () => {
                                             value={phone}
                                             onChange={(e) => setPhone(e.target.value)}
                                             type="text"
-                                            placeholder="Nhập tên danh mục"
+                                            placeholder="Nhập số điện thoại"
                                             autoFocus
                                         />
                                     </Form.Group>
@@ -190,7 +222,7 @@ const HeaderAdmin = () => {
                                             value={address}
                                             onChange={(e) => setAddress(e.target.value)}
                                             type="text"
-                                            placeholder="Nhập tên danh mục"
+                                            placeholder="Nhập địa chỉ"
                                             autoFocus
                                         />
                                     </Form.Group>

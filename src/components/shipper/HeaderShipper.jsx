@@ -12,6 +12,7 @@ const HeaderShipper = () => {
     const [name, setName] = useState('')
     const [phone, setPhone] = useState('')
     const [address, setAddress] = useState('')
+    const [message, setMessage] = useState('')
     const navigate = useNavigate();
     const dispatch = useDispatch()
 
@@ -59,11 +60,14 @@ const HeaderShipper = () => {
 
     // console.log('====', images.name);
     const updateHandler = () => {
-        setShowInfo(false);
-        dispatch(updateUserProfile(userInfo.id, { name: name, phone: phone, address: address }))
-        const user = JSON.parse(localStorage.getItem('userInfo'))
-        console.log('===', user);
-        localStorage.setItem('userInfo', JSON.stringify({ ...user, name: name, phone: phone, address: address }))
+        if (name.trim().length === 0 || phone.trim().length === 0 || address.trim().length === 0) {
+            setMessage("Vui lòng điền đủ thông tin")
+        } else {
+            setShowInfo(false);
+            dispatch(updateUserProfile(userInfo.id, { name: name, phone: phone, address: address }))
+            const user = JSON.parse(localStorage.getItem('userInfo'))
+            localStorage.setItem('userInfo', JSON.stringify({ ...user, name: name, phone: phone, address: address }))
+        }
     }
 
     return (
@@ -96,6 +100,7 @@ const HeaderShipper = () => {
                     <Modal.Title>Thông tin người dùng</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
+                    <p className='text-center' style={{ color: 'red' }}>{message}</p>
                     <Form>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                             <Form.Label style={{ fontSize: '14px' }}>Tên người dùng</Form.Label>
@@ -104,7 +109,7 @@ const HeaderShipper = () => {
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
                                 type="text"
-                                placeholder="Nhập tên danh mục"
+                                placeholder="Nhập tên người dùng"
                                 autoFocus
                             />
                         </Form.Group>
@@ -115,7 +120,7 @@ const HeaderShipper = () => {
                                 value={phone}
                                 onChange={(e) => setPhone(e.target.value)}
                                 type="text"
-                                placeholder="Nhập tên danh mục"
+                                placeholder="Nhập số điện thoại"
                                 autoFocus
                             />
                         </Form.Group>
@@ -126,7 +131,7 @@ const HeaderShipper = () => {
                                 value={address}
                                 onChange={(e) => setAddress(e.target.value)}
                                 type="text"
-                                placeholder="Nhập tên danh mục"
+                                placeholder="Nhập địa chỉ"
                                 autoFocus
                             />
                         </Form.Group>

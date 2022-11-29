@@ -19,7 +19,7 @@ const HomeShipperScreen = () => {
   const { success: paidSucces } = useSelector((state) => state.paidOrderByShipper)
   const { success: cancelSucces } = useSelector((state) => state.cancelOrderByShipper)
   const { orderDetail } = useSelector((state) => state.detailOrderByShipper)
-  console.log('===', orderDetail?.data);
+  // console.log('===', orderDetail?.data);
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
