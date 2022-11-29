@@ -57,7 +57,7 @@ const HistoryContent = ({history}) => {
           <h5 style={{ fontSize: '20px', fontWeight:'700' }} className='pb-4 pt-4'>ĐƠN HÀNG</h5>
         </Col>
         <Col className='d-flex justify-content-end px-0'>
-          <h6 style={{ fontSize: '14px', background:"black", color:"white", borderRadius:"5px"} } className='p-2'>Tổng số lượng: {history?.list?.length} đơn hàng đã đặt</h6>
+          <h6 style={{ fontSize: '14px', background:"black", color:"white", borderRadius:"5px"} } className='p-2'>Tổng số lượng: {history?.length} đơn hàng đã đặt</h6>
         </Col>
       </Row>
       <Row className='d-flex justify-content-end align-items-center mx-4 mt-0 px-4' style={{ background: 'white' }}>

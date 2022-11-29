@@ -13,6 +13,7 @@ import {
 import { Products } from ".";
 import { createProductReview, listProductDetails, listReviews } from "../actions/productActions";
 import { useDispatch, useSelector } from "react-redux";
+import { getOrder } from "../actions/orderActions";
 
 const SingleProductPage = () => {
   // const {
@@ -51,7 +52,7 @@ const SingleProductPage = () => {
 
   const userLogin = useSelector(state => state.userLogin)
   const { userInfo } = userLogin
-  // console.log('==', userInfo);
+  // console.log('===', userInfo);
 
   const { reviews, error: errorGetComment } = useSelector(state => state.getReview)
   // console.log('==', reviews.data?.list);
@@ -99,6 +100,7 @@ const SingleProductPage = () => {
   const viewComment = () => {
     window.location.href = '#comment'
   }
+
   return (
     <Wrapper>
       <PageHero title={(product.data?.name)} product />

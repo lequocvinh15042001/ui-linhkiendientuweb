@@ -118,9 +118,9 @@ const ShippingScreen = () => {
                                 <option value="Tiền mặt">
                                     Tiền mặt
                                 </option>
-                                <option>
+                                {/* <option>
                                     Payl pal
-                                </option>
+                                </option> */}
                             </Form.Select>
                         </Form.Group>
 
