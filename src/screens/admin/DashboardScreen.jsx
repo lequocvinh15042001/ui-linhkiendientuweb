@@ -9,7 +9,7 @@ import Loader from '../../components/Loader'
 import { getAllOrders, getProfitOrder, listOrderAdmin } from "../../actions/orderActions";
 import { Link, useNavigate } from 'react-router-dom'
 import { getAllUsersAdmin } from '../../actions/userActions'
-import { getAllProductsAdmin, listCategoryAdmin } from '../../actions/productActions'
+import { getAllCommentsAdmin, getAllProductsAdmin, listCategoryAdmin } from '../../actions/productActions'
 
 const DashboardScreen = () => {
   const dispatch = useDispatch()
@@ -21,7 +21,8 @@ const DashboardScreen = () => {
   const { categories } = useSelector((state) => state.categoryListAdmin)
   const { productAll } = useSelector(state => state.productAllAdmin)
   const { orderAll } = useSelector(state => state.orderAll)
-  const { profit, succes } = useSelector(state => state.orderProfit)
+  const { profit } = useSelector(state => state.orderProfit)
+  const { reviews } = useSelector((state) => state.reviewAllAdmin)
   // console.log('====', orderAll?.data)
 
   const arrOrderAll = []
@@ -43,6 +44,7 @@ const DashboardScreen = () => {
       dispatch(getAllUsersAdmin())
       dispatch(listCategoryAdmin())
       dispatch(getAllProductsAdmin())
+      dispatch(getAllCommentsAdmin())
       dispatch(getProfitOrder('01-11-2020', '28-11-2025', type))
     } else {
       navigate('/login')
@@ -76,6 +78,10 @@ const DashboardScreen = () => {
         <Col xl={2} className='d-flex justify-content-center align-items-center flex-column px-0 my-4 py-3' style={{ background: 'white' }}>
           <h6 style={{ fontSize: '14px' }} className='pb-4 pt-4 my-0'>Đơn hàng: {arrOrderAll?.length}</h6>
           <Link style={{ textDecoration: 'none' }} to='/admin/orderlist'>Chi tiết</Link>
+        </Col>
+        <Col xl={2} className='d-flex justify-content-center align-items-center flex-column px-0 my-4 py-3' style={{ background: 'white' }}>
+          <h6 style={{ fontSize: '14px' }} className='pb-4 pt-4 my-0'>Đánh giá: {reviews?.data?.length}</h6>
+          <Link style={{ textDecoration: 'none' }} to='/admin/commentlist'>Chi tiết</Link>
         </Col>
       </Row>
       <Row className="section px-0 mx-3 py-0">

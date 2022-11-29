@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react'
-import { LinkContainer } from 'react-router-bootstrap'
 import { Table, Button, Col, Row, Modal, Pagination, Form, Accordion } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import ReactTooltip from 'react-tooltip'
 import Message from '../../components/Message'
 import Loader from '../../components/Loader'
-import { blockCategoryAdmin, unlockCategoryAdmin, getAllCommentsAdmin, unlockReviewAdmin, blockReviewAdmin } from '../../actions/productActions'
+import { getAllCommentsAdmin, unlockReviewAdmin, blockReviewAdmin } from '../../actions/productActions'
 import { useState } from 'react'
 
 const CommentListScreen = () => {
@@ -62,7 +61,7 @@ const CommentListScreen = () => {
                     </div>
                     <div className='d-flex align-items-center'>
                         <i className="fas fa-chevron-right mx-2"></i>
-                        <a href='/admin/categorylist' className='my-0 mx-1' style={{ textDecoration: 'none', color: 'black' }}>Quản lý danh mục</a>
+                        <a href='/admin/commentlist' className='my-0 mx-1' style={{ textDecoration: 'none', color: 'black' }}>Quản lý bình luận</a>
                     </div>
                 </div>
             </div>
@@ -85,6 +84,7 @@ const CommentListScreen = () => {
                             <tr>
                                 <th>#</th>
                                 <th className='text-center'>Tài khoản đánh giá</th>
+                                <th className='text-center'>Sản phẩm</th>
                                 <th className='text-center'>Thời gian đánh giá</th>
                                 <th className='text-center'>Số sao đánh giá</th>
                                 <th className='text-center'>Nội dung đánh giá</th>
@@ -96,7 +96,8 @@ const CommentListScreen = () => {
                             {reviews?.data?.map((review, index) => (
                                 <tr style={{ margin: '60px 0' }} key={review.id}>
                                     <td style={{ fontWeight: 'bold' }}>{index + 1}</td>
-                                    <td className='text-center'>{review.name}</td>
+                                    <td className='text-center'>{review.reviewedBy}</td>
+                                    <td className='text-center'>{review.productname}</td>
                                     <td className='text-center'>{review.createdDate}</td>
                                     <td className='text-center'>{review.rate}</td>
                                     <td className='text-center'>
