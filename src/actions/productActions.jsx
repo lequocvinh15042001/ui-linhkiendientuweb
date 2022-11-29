@@ -120,7 +120,6 @@ export const blockCategoryAdmin = (id) => async (dispatch, getState) => {
 }
 
 export const unlockCategoryAdmin = (id, category) => async (dispatch, getState) => {
-  console.log('==fff', id, category)
   try {
     dispatch({ type: UNLOCK_CATEGORY_ADMIN_REQUEST })
     const {

@@ -9,6 +9,7 @@ import { USER_UPDATE_RESET } from '../../constants/userConstants'
 
 const CategoryEditScreen = () => {
     const [name, setName] = useState('')
+    const [message, setMessage] = useState('')
 
     const categoryId = useParams().id
     // console.log('==', userId)
@@ -39,7 +40,12 @@ const CategoryEditScreen = () => {
 
     const submitHandler = (e) => {
         e.preventDefault()
-        dispatch(unlockCategoryAdmin(categoryId, { name: name, state: 'enable' }))
+        if (name.trim().length === 0) {
+            setMessage("Vui lòng điền đủ thông tin")
+        } else {
+            dispatch(unlockCategoryAdmin(categoryId, { name: name, state: 'enable' }))
+        }
+
     }
 
     return (
@@ -67,13 +73,14 @@ const CategoryEditScreen = () => {
                 </Link>
             </Row>
             <Row className='align-items-center mx-4 mt-4 px-4' style={{ background: 'white' }}>
-                <h5 style={{fontSize: '20px'}} className='d-flex justify-content-center py-3'>Chỉnh sửa thông tin danh mục</h5>
+                <h5 style={{ fontSize: '20px' }} className='d-flex justify-content-center py-3'>Chỉnh sửa thông tin danh mục</h5>
                 {loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> :
                     (
                         <>
                             <Row className='d-flex justify-content-center align-items-center'>
                                 <Row className='py-1'>
                                     <div>
+                                        <p className='text-center' style={{ color: 'red' }}>{message}</p>
                                         <Form onSubmit={submitHandler}>
                                             <Form.Group controlId='username' className='py-2'>
                                                 <Form.Label>

@@ -55,9 +55,12 @@ import BlogClient from "./pages/clientPages/BlogClient";
 import ContactClient from "./pages/clientPages/ContactClient";
 import VerifyClient from "./pages/clientPages/VerifyClient";
 import ForgotPasswordShipper from "./screens/shipper/ForgotPasswordShipperScreen";
-import VerifyForgotPasswordScreen from "./screens/shipper/VerifyForgotPasswordScreen";
 import ResetPasswordShipperScreen from "./screens/shipper/ResetPasswordShipperScreen";
 import AdminCommentList from "./pages/adminPages/AdminCommentList";
+import VerifyForgotPasswordShipperScreen from "./screens/shipper/VerifyForgotPasswordShipperScreen";
+import ForgotPassword from "./screens/ForgotPassword";
+import VerifyForgotPasswordScreen from "./screens/VerifyForgotPasswordScreen";
+import ResetPasswordScreen from "./screens/ResetPasswordScreen";
 
 function App() {
   const { theme } = useThemeContext();
@@ -121,7 +124,9 @@ function App() {
 
         <Route path='/changepassword' element={<ChangePasswordClient />} />
 
-        <Route path='/forgotpassword' element={<ForgotPasswordClient />} />
+        <Route path='/forgotpassword' element={<ForgotPassword />} />
+        <Route exact path="/forgotpassword/verify/:email" element={<VerifyForgotPasswordScreen />} />
+        <Route exact path="/resetpassword" element={<ResetPasswordScreen />} />
 
         <Route path='/myorder' element={<MyOrderClient />} />
 
@@ -158,7 +163,7 @@ function App() {
         <Route exact path="/shipper/register" element={<RegisterShipperScreen />} />
         <Route exact path="/shipper/home" element={<HomeShipperScreen />} />
         <Route exact path="/shipper/forgotpassword" element={<ForgotPasswordShipper />} />
-        <Route exact path="/shipper/forgotpassword/verify/:email" element={<VerifyForgotPasswordScreen />} />
+        <Route exact path="/shipper/forgotpassword/verify/:email" element={<VerifyForgotPasswordShipperScreen />} />
         <Route exact path="/shipper/resetpassword" element={<ResetPasswordShipperScreen />} />
 
       </Routes>

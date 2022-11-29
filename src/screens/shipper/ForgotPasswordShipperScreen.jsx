@@ -27,11 +27,10 @@ const ForgotPasswordShipper = () => {
 
     const submitHandler = (e) => {
         e.preventDefault()
-        dispatch(getOTP(email))
         if (email.trim().length === 0) {
-            setMessage('Vui lòng điền đủ thông tin')
-        } else if (error) {
-            setMessage('Kiểm tra lại email')
+            setMessage('Vui lòng nhập Email')
+        } else {
+            dispatch(getOTP(email))
         }
     }
 

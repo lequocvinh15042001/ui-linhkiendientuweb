@@ -2,9 +2,9 @@ import { React, useState, useEffect } from 'react'
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { Row, Col, Button, Form, Popover, OverlayTrigger } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import { newPassworsAfterForgot, verifyRegisterShipper } from '../../actions/userActions'
+import { newPassworsAfterForgot, verifyRegisterShipper } from '../actions/userActions'
 
-const ResetPasswordShipperScreen = () => {
+const ResetPasswordScreen = () => {
     const [password, setPassword] = useState('')
     const [message, setMessage] = useState('')
 
@@ -17,7 +17,7 @@ const ResetPasswordShipperScreen = () => {
 
     useEffect(() => {
         if (success) {
-            navigate('/shipper/login')
+            navigate('/login')
         }
     }, [success, navigate])
 
@@ -27,7 +27,7 @@ const ResetPasswordShipperScreen = () => {
     const submitHandler = (e) => {
         e.preventDefault()
         if (password.trim().length === 0) {
-            setMessage('Vui lòng điền đủ thông tin')
+            setMessage('Vui lòng nhập email')
         } else {
             dispatch(newPassworsAfterForgot(resetPass))
         }
@@ -85,7 +85,7 @@ const ResetPasswordShipperScreen = () => {
                 </Form>
                 <Row>
                     <Col className='d-flex justify-content-center py-3'>
-                        <Link style={{ color: '#eeb808' }} className='px-1' to={'/shipper/login'}>Về lại trang đăng nhập</Link>
+                        <Link style={{ color: '#eeb808' }} className='px-1' to={'login'}>Về lại trang đăng nhập</Link>
                     </Col>
                 </Row>
             </Col>
@@ -93,4 +93,4 @@ const ResetPasswordShipperScreen = () => {
     )
 }
 
-export default ResetPasswordShipperScreen
+export default ResetPasswordScreen
