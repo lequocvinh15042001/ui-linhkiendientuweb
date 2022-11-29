@@ -19,7 +19,7 @@ const Comment = () => {
     const navigate = useNavigate();
 
     const productId = useParams().id
-    console.log('===', productId);
+
     const dispatch = useDispatch()
 
     console.log("ID p bình luận", productId);
@@ -58,7 +58,11 @@ const Comment = () => {
     const getOrderById = () => {
         order?.orders?.data?.list?.forEach(item => {
             if (item.state === 'paid') {
-                arrOrder.push(item)
+                item?.items?.forEach(product => {
+                    if (product?.productid === productId) {
+                        arrOrder.push(item)
+                    }
+                })
             }
         });
     }
@@ -103,29 +107,28 @@ const Comment = () => {
 
             <Row id="comment">
                 <h4 className='pt-5 pb-3'>Đánh giá sản phẩm</h4>
-                {userInfo && <Form>
-                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                        <Form.Label>Đánh giá</Form.Label>
-                        <Form.Select value={rate} onChange={(e) => setRate(e.target.value)} aria-label="Default select example">
-                            <option value={5}>5 Sao</option>
-                            <option value={4}>4 Sao</option>
-                            <option value={3}>3 Sao</option>
-                            <option value={2}>2 Sao</option>
-                            <option value={1}>1 Sao</option>
-                        </Form.Select>
-                    </Form.Group>
-                    {/* <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                <p style={{color: 'red'}}>*Vui lòng viết bình luận của bạn</p>
-            </Form.Group> */}
-                    <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                        <Form.Label>Bình luận của bạn về sản phẩm</Form.Label>
-                        <Form.Control placeholder='Viết bình luận của bạn' value={content} onChange={(e) => setContent(e.target.value)} as="textarea" rows={3} />
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                        <Button onClick={() => submitComment()}>Đăng bình luận</Button>
-                    </Form.Group>
-                </Form>}
-
+                {(userInfo && arrOrder.length > 0) ?
+                    <Form>
+                        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                            <Form.Label>Đánh giá</Form.Label>
+                            <Form.Select value={rate} onChange={(e) => setRate(e.target.value)} aria-label="Default select example">
+                                <option value={5}>5 Sao</option>
+                                <option value={4}>4 Sao</option>
+                                <option value={3}>3 Sao</option>
+                                <option value={2}>2 Sao</option>
+                                <option value={1}>1 Sao</option>
+                            </Form.Select>
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                            <Form.Label>Bình luận của bạn về sản phẩm</Form.Label>
+                            <Form.Control placeholder='Viết bình luận của bạn' value={content} onChange={(e) => setContent(e.target.value)} as="textarea" rows={3} />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                            <Button onClick={() => submitComment()}>Đăng bình luận</Button>
+                        </Form.Group>
+                    </Form> :
+                    <p>Vui lòng mua hàng để được mở khóa đánh giá</p>
+                }
             </Row>
         </div>
     )
