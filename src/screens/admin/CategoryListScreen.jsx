@@ -10,6 +10,7 @@ import { useState } from 'react'
 
 const CategoryListScreen = () => {
     const [newName, setNewName] = useState('')
+    const [message, setMessage] = useState('')
 
     const dispatch = useDispatch()
 
@@ -75,9 +76,12 @@ const CategoryListScreen = () => {
 
     // console.log('====', newName);
     const addHandler = () => {
-        setShowAdd(false);
-        dispatch(createCategoryAdmin({ name: newName, state: 'enable' }))
-        // window.location.reload()
+        if (newName.trim().length === 0) {
+            setMessage("Vui lòng điền đủ thông tin")
+        } else {
+            setShowAdd(false);
+            dispatch(createCategoryAdmin({ name: newName, state: 'enable' }))
+        }
     }
 
     return (
@@ -246,6 +250,7 @@ const CategoryListScreen = () => {
                     <Modal.Title>Thêm danh mục mới</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
+                    <p className='text-center' style={{ color: 'red' }}>{message}</p>
                     <Form>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                             <Form.Label style={{ fontSize: '14px' }}>Tên danh mục</Form.Label>

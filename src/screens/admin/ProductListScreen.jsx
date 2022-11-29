@@ -21,6 +21,7 @@ import { NavLink } from 'react-router-dom'
 const ProductListScreen = () => {
   const [pageNum, setPageNum] = useState(1);
   const [pageSize, setPageSize] = useState(5);
+  const [message, setMessage] = useState('')
 
   // Add product
   const [name, setName] = useState('');
@@ -119,34 +120,31 @@ const ProductListScreen = () => {
   const unlockHandler = (id) => {
     setShowUnlock(false);
     dispatch(unlockProduct(id))
-    // window.location.reload()
   }
 
-  // Add category
+  // Add product
   const [showAdd, setShowAdd] = useState(false);
   const handleCloseAdd = () => setShowAdd(false);
-  // const [idDelete, setIdDelete] = useState('')
   const handleShowAdd = () => {
     setIdCategory(categories?.data?.[0].id)
     setShowAdd(true);
-    // setIdDelete(id)
   }
 
-  // console.log('====', images.name);
   const addHandler = () => {
-    setShowAdd(false);
-    const formData = new FormData();
-    formData.append('name', name);
-    formData.append('description', description);
-    formData.append('price', price);
-    formData.append('category', idCategory);
-    formData.append('quantity', quantity);
-    formData.append('images', images);
-    // for(var pair of formData.entries()) {
-    //   console.log(`${pair[0]}: ${pair[1]}`);
-    // }
-    dispatch(createProduct(formData))
-    // window.location.reload()
+    if (name.trim().length === 0 || description.trim().length === 0 || price.trim().length === 0 
+    || quantity.trim().length === 0) {
+      setMessage("Vui lòng điền đủ thông tin")
+    } else {
+      setShowAdd(false);
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('description', description);
+      formData.append('price', price);
+      formData.append('category', idCategory);
+      formData.append('quantity', quantity);
+      formData.append('images', images);
+      dispatch(createProduct(formData))
+    }
   }
 
 
@@ -345,6 +343,7 @@ const ProductListScreen = () => {
           <Modal.Title>Thêm sản phẩm mới</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          <p className='text-center' style={{ color: 'red' }}>{message}</p>
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label style={{ fontSize: '14px' }}>Tên sản phẩm</Form.Label>
@@ -352,7 +351,7 @@ const ProductListScreen = () => {
                 style={{ fontSize: '14px' }}
                 onChange={(e) => setName(e.target.value)}
                 type="text"
-                placeholder="Nhập tên danh mục"
+                placeholder="Nhập tên sản phẩm"
                 autoFocus
               />
             </Form.Group>

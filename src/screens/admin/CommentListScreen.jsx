@@ -125,7 +125,7 @@ const CommentListScreen = () => {
                                         }
                                     </td>
                                     <td className='d-flex justify-content-center'>
-                                        {/* Block user */}
+                                        {/* Block comment */}
                                         {
                                             review.state === 'enable' ?
                                                 <Button data-tip data-for="tip3"

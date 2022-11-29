@@ -36,12 +36,9 @@ const Sidebar = () => {
                         <NavLink exact to="/admin/commentlist" activeClassName="activeClicked">
                             <CDBSidebarMenuItem className='mx-0 px-3' id='sidebaritem' icon="comment">Quản lý bình luận</CDBSidebarMenuItem>
                         </NavLink>
-                        {/* <NavLink exact to="/admin/statistic" activeClassName="activeClicked">
-              <CDBSidebarMenuItem className='mx-0 px-3' id='sidebaritem' icon="chart-line">Thống kê</CDBSidebarMenuItem>
-            </NavLink> */}
-                        <NavLink exact to="/" activeClassName="activeClicked">
+                        {/* <NavLink exact to="/" activeClassName="activeClicked">
                             <CDBSidebarMenuItem className='mx-0 px-3' id='sidebaritem' icon="arrow-left">Thoát</CDBSidebarMenuItem>
-                        </NavLink>
+                        </NavLink> */}
                     </CDBSidebarMenu>
                 </CDBSidebarContent>
 
