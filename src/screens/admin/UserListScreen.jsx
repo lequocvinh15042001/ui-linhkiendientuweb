@@ -180,7 +180,7 @@ const UserListScreen = () => {
             <tbody>
               {arrUserPage?.map((user, index) => (
                 <tr style={{ margin: '60px 0' }} key={user.id}>
-                  <td style={{ fontWeight: 'bold' }}>{index + (pageNum - 1) * 5 + 1}</td>
+                  <td style={{ fontWeight: 'bold' }}>{index + (pageNum - 1) * 10 + 1}</td>
                   <td>{user.name}</td>
                   <td>
                     <a style={{ textDecoration: 'none', color: 'black' }} href={`mailto:${user.email}`}>{user.email}</a>

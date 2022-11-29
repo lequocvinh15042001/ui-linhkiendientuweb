@@ -151,7 +151,7 @@ const HeaderAdmin = () => {
                                                 <Col xl={7}>
                                                     <Accordion>
                                                         <Accordion.Item eventKey="0">
-                                                            <Accordion.Header style={{ fontSize: '13px' }}>Xem chi tiết</Accordion.Header>
+                                                            <Accordion.Header style={{ fontSize: '13px' }}>ID: {order.id}</Accordion.Header>
                                                             <Accordion.Body>
                                                                 <strong>Thông tin đơn hàng</strong>
                                                                 <p className='mt-3'>- Ngày đặt hàng: {order.createdDate}</p>
@@ -176,7 +176,7 @@ const HeaderAdmin = () => {
                                                     </Accordion>
                                                 </Col>
                                                 <Col xl={2}>
-                                                    <Button variant="outline-primary" onClick={() => confirmOrder(order)} style={{ width: 'auto' }}>Xác nhận</Button>
+                                                    <Button variant="outline-primary" onClick={() => confirmOrder(order?.id)} style={{ width: 'auto' }}>Xác nhận</Button>
                                                 </Col>
                                             </Row>
                                         )) :

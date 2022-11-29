@@ -204,7 +204,7 @@ const ProductListScreen = () => {
 
                     <Button
                       data-tip data-for="tip2"
-                      disabled={order.state === 'process' || order.state === 'paid' ? 'true' : ''}
+                      disabled={order.state === 'process' || order.state === 'paid' || order.state === 'cancel' ? 'true' : ''}
                       style={{ background: '#03a9f3', width: 'auto', height: 'auto' }}
                       onClick={() => handleEditStateOrder(order.id)}
                       className='my-0 mx-2'>

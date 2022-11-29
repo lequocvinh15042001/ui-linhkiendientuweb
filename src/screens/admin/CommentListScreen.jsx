@@ -71,7 +71,7 @@ const CommentListScreen = () => {
                     <h5 style={{ fontSize: '16px' }} className='pb-4 pt-4'>DANH SÁCH ĐÁNH GIÁ SẢN PHẨM</h5>
                 </Col>
                 <Col className='d-flex justify-content-end px-0'>
-                    <h6 style={{ fontSize: '14px' }} className='pb-4 pt-4'>Tổng số lượng: {reviews?.data?.length} danh mục</h6>
+                    <h6 style={{ fontSize: '14px' }} className='pb-4 pt-4'>Tổng số lượng: {reviews?.data?.length} đánh giá</h6>
                 </Col>
             </Row>
             {loading ? (
