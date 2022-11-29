@@ -124,7 +124,7 @@ const Comment = () => {
                             <Form.Control placeholder='Viết bình luận của bạn' value={content} onChange={(e) => setContent(e.target.value)} as="textarea" rows={3} />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                            <Button onClick={() => submitComment()}>Đăng bình luận</Button>
+                            <Button style={{width: 'auto'}} onClick={() => submitComment()}>Đăng bình luận</Button>
                         </Form.Group>
                     </Form> :
                     <p>Vui lòng mua hàng để được mở khóa đánh giá</p>
