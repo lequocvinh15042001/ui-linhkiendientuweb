@@ -93,7 +93,7 @@ const CommentListScreen = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {reviews?.data?.map((review, index) => (
+                            {reviews?.data?.reverse()?.map((review, index) => (
                                 <tr style={{ margin: '60px 0' }} key={review.id}>
                                     <td style={{ fontWeight: 'bold' }}>{index + 1}</td>
                                     <td className='text-center'>{review.reviewedBy}</td>
