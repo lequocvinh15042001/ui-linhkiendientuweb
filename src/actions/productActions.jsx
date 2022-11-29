@@ -534,7 +534,7 @@ export const createProductReview = (content, productId, rate) => async (
   dispatch,
   getState
 ) => {
-  // console.log('==', content, productId, rate)
+  console.log('===', content, productId, rate)
   try {
     dispatch({
       type: PRODUCT_CREATE_REVIEW_REQUEST,
@@ -544,19 +544,28 @@ export const createProductReview = (content, productId, rate) => async (
       userLogin: { userInfo },
     } = getState()
 
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${userInfo.accessToken}`,
+    var data = JSON.stringify({
+      "content": content,
+      "productId": productId,
+      "rate": rate
+    });
+    
+    var config = {
+      method: 'post',
+      url: 'http://localhost:8080/api/comment',
+      headers: { 
+        'Authorization': `Bearer ${userInfo.accessToken}`, 
+        'Content-Type': 'application/json'
       },
-    }
-
-    const { data } = await axios.post(`http://localhost:8080/api/comment`, { content, productId, rate }, config)
-    // console.log('==', data)
-
-    dispatch({
-      type: PRODUCT_CREATE_REVIEW_SUCCESS,
-      payload: data
+      data : data
+    };
+    
+    axios(config)
+    .then(function (response) {
+      dispatch({
+        type: PRODUCT_CREATE_REVIEW_SUCCESS,
+        payload: response.data
+      })
     })
 
   } catch (error) {

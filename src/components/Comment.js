@@ -67,7 +67,7 @@ const Comment = () => {
         });
     }
     getOrderById()
-    console.log('===', arrOrder)
+    // console.log('===', arrOrder)
 
     return (
         <div className='container'>
