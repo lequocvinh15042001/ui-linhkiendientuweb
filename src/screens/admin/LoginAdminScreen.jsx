@@ -80,7 +80,7 @@ const LoginAdminScreen = () => {
                                 <label className='mx-2'>Hiển thị mật khẩu</label>
                             </div>
                         </Form>
-                        <Link className='d-flex justify-content-between align-items-center my-0' style={{ textDecoration: 'none', color: '#03a9f3' }} to='/forgotpassword'>Quên mật khẩu?</Link>
+                        {/* <Link className='d-flex justify-content-between align-items-center my-0' style={{ textDecoration: 'none', color: '#03a9f3' }} to='/forgotpassword'>Quên mật khẩu?</Link> */}
                     </Form.Group>
                     <Form.Group className='d-flex justify-content-center py-3'>
                         <Button type='submit' style={{ background: '#03a9f3', border: 'none' }}>Đăng nhập</Button>
