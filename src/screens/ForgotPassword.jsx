@@ -52,7 +52,7 @@ const ForgotPassword = () => {
 
                 <Row>
                     <Col className='d-flex justify-content-center py-3'>
-                        <Link style={{ color: '#eeb808' }} className='px-1' to={redirect ? `/shipper/login?redirect=${redirect}` : '/shipper/login'}>Quay lại</Link>
+                        <Link style={{ color: '#eeb808' }} className='px-1' to={redirect ? `/login?redirect=${redirect}` : '/login'}>Quay lại</Link>
                     </Col>
                 </Row>
             </Col>

@@ -18,6 +18,7 @@ const Navbar = () => {
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
   const [address, setAddress] = useState('')
+  const [message, setMessage] = useState('')
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -109,11 +110,14 @@ const Navbar = () => {
 
   // Update profile Admin
   const updateHandler = () => {
-    setShowInfo(false);
-    dispatch(updateUserProfile(userInfo.id, { name: name, phone: phone, address: address }))
-    const user = JSON.parse(localStorage.getItem('userInfo'))
-    console.log('===', user);
-    localStorage.setItem('userInfo', JSON.stringify({ ...user, name: name, phone: phone, address: address }))
+    if (name.trim().length === 0 || phone.trim().length === 0 || address.trim().length === 0) {
+      setMessage("Vui lòng điền đủ thông tin")
+    } else {
+      setShowInfo(false);
+      dispatch(updateUserProfile(userInfo.id, { name: name, phone: phone, address: address }))
+      const user = JSON.parse(localStorage.getItem('userInfo'))
+      localStorage.setItem('userInfo', JSON.stringify({ ...user, name: name, phone: phone, address: address }))
+    }
   }
 
   return (
@@ -236,6 +240,7 @@ const Navbar = () => {
           <Modal.Title>Thông tin người dùng</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          <p className='text-center' style={{ color: 'red' }}>{message}</p>
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label style={{ fontSize: '14px' }}>Tên người dùng</Form.Label>

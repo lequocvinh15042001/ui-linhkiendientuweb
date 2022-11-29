@@ -78,7 +78,7 @@ const LoginScreen = () => {
                         <Link style={{ textDecoration: 'none', color: 'blue' }} to='/forgotpassword'>Quên mật khẩu?</Link>
                     </Form.Group>
                     <Form.Group className='d-flex justify-content-center py-3'>
-                        <Button type='submit' variant='primary'>Đăng nhập</Button>
+                        <Button style={{ background: '#eeb808', border: 'none', width: 'auto' }} type='submit' variant='primary'>Đăng nhập</Button>
                     </Form.Group>
                 </Form>
                 <Row>
