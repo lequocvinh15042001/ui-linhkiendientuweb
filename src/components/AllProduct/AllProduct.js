@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useFilterContext } from "../../context/filter_context";
 import "./AllProduct.scss";
 import { formatPrice } from '../../utils/helpers';
@@ -14,7 +14,7 @@ import { Table, Button, Row, Col, Pagination, Modal, Form, Image } from 'react-b
 import { useParams, useNavigate } from 'react-router-dom';
 const List = () => {
 
-    const [data, setData] = useState([])
+  const [data, setData] = useState([])
   const [showAll, setShowAll] = useState(true)
 
   const refContainer = useRef(null);
@@ -38,7 +38,7 @@ const List = () => {
   const dispatch = useDispatch()
 
   const { categories } = useSelector(state => state.categoryList)
-    // console.log(products);
+  // console.log(products);
 
   // const categories = getUniqueValues(allProducts, "category");
   // const companies = getUniqueValues(allProducts, "company");
@@ -63,9 +63,8 @@ const List = () => {
   console.log('==', arrProductGetCateId)
 
   const getCategoryId = (id) => {
-    if(!id)
-    {
-        return setData(products?.data?.list)
+    if (!id) {
+      return setData(products?.data?.list)
     }
     console.log("Loc cate -----");
     arrProductGetCateId.length = 0
@@ -79,47 +78,47 @@ const List = () => {
   }
 
 
-    const cateId = useParams();
-    console.log("kdasbjđjsn",cateId);
+  const cateId = useParams();
+  console.log("kdasbjđjsn", cateId);
 
-    const [pageNum, setPageNum] = useState(1);
-    const [pageSize, setPageSize] = useState(5);
-    const [idCate, setIdCate]=useState("");
-    console.log("id Cate: ", idCate);
+  const [pageNum, setPageNum] = useState(1);
+  const [pageSize, setPageSize] = useState(5);
+  const [idCate, setIdCate] = useState("");
+  console.log("id Cate: ", idCate);
 
-    const productList = useSelector(state => state.productList)
-    const { loading, error, products, page } = productList
+  const productList = useSelector(state => state.productList)
+  const { loading, error, products, page } = productList
 
-    console.log(products);
+  console.log(products);
 
-    const num = products?.data?.totalQuantity
-    // console.log(num);
+  const num = products?.data?.totalQuantity
+  // console.log(num);
 
-    const paginationPage = (num, pageSize) => {
-        let page = 0
-        if ((num / pageSize) > ((num / pageSize) - (num % pageSize) / pageSize)) {
-          page = ((num / pageSize) - (num % pageSize) / pageSize + 1)
-        } else if ((num % pageSize) === 0) {
-          page = (num / pageSize)
-        }
-        return page
-      }
-    
-      let pages = paginationPage(num, pageSize)
+  const paginationPage = (num, pageSize) => {
+    let page = 0
+    if ((num / pageSize) > ((num / pageSize) - (num % pageSize) / pageSize)) {
+      page = ((num / pageSize) - (num % pageSize) / pageSize + 1)
+    } else if ((num % pageSize) === 0) {
+      page = (num / pageSize)
+    }
+    return page
+  }
 
-    useEffect(() => {
-        dispatch(listProducts(pageNum - 1, 20))
-        // dispatch(listCategory())
-    }, [pageNum, pageSize])
+  let pages = paginationPage(num, pageSize)
 
-    return (
-      <Wrapperr className="page">
+  useEffect(() => {
+    dispatch(listProducts(pageNum - 1, 20))
+    // dispatch(listCategory())
+  }, [pageNum, pageSize])
 
-        <div className="section-center products">
- <Wrapper>
-      <div className="content">
-        <form className="form" onSubmit={(e) => e.preventDefault()}>
-          {/* <div className="form-control">
+  return (
+    <Wrapperr className="page">
+
+      <div className="section-center products">
+        <Wrapper>
+          <div className="content">
+            <form className="form" onSubmit={(e) => e.preventDefault()}>
+              {/* <div className="form-control">
             <input
               ref={refContainer}
               type="text"
@@ -130,38 +129,37 @@ const List = () => {
               // onChange={updateFilters}
             />
           </div> */}
-          <div className="form-control">
-            <h5 className="content">Danh mục sản phẩm</h5>
+              <div className="form-control">
+                <h5 className="content">Danh mục sản phẩm</h5>
 
-            <div>
-            <button
-                style={{color:"darkblue", fontSize:"15px"}}
-                name="category"
-                type="button"
-                key="all"
-                onClick={()=> getCategoryId()}
-            >
-                Tất cả
-            </button>
-              {categories?.data?.map((c, index) => {
-                return (
+                <div>
                   <button
-                  onClick={() => getCategoryId(c.id)} 
-                    style={{color:"darkblue", fontSize:"15px"}}
+                    style={{ color: "darkblue", fontSize: "15px" }}
                     name="category"
                     type="button"
-                    key={index}
-                    className={`${
-                      category === c?.name.toLowerCase() ? "active" : null
-                    }`}
+                    key="all"
+                    onClick={() => getCategoryId()}
                   >
-                    {c.name}
+                    Tất cả
                   </button>
-                );
-              })}
-            </div>
-          </div>
-          {/* <div className="form-control">
+                  {categories?.data?.map((c, index) => {
+                    return (
+                      <button
+                        onClick={() => getCategoryId(c.id)}
+                        style={{ color: "darkblue", fontSize: "15px" }}
+                        name="category"
+                        type="button"
+                        key={index}
+                        className={`${category === c?.name.toLowerCase() ? "active" : null
+                          }`}
+                      >
+                        {c.name}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+              {/* <div className="form-control">
             <h5>company</h5>
             <select
               name="company"
@@ -228,7 +226,7 @@ const List = () => {
               value={price}
             />
           </div> */}
-          {/* <div className="form-control">
+              {/* <div className="form-control">
             <label htmlFor="shipping">Free Shipping </label>
             <input
               type="checkbox"
@@ -238,67 +236,67 @@ const List = () => {
               onChange={updateFilters}
             />
           </div> */}
-        </form>
-        {/* <button type="button" className="clear-btn" onClick={clearFilters}>
+            </form>
+            {/* <button type="button" className="clear-btn" onClick={clearFilters}>
           clear filters
         </button> */}
-      </div>
-    </Wrapper>
-        
+          </div>
+        </Wrapper>
+
         <section className='product py-5 bg-ghost-white' id="products">
-            <div className= "container flex" style={{paddingBottom:"2rem"}}>
-                {/* <h6>Chọn số lượng hiển thị</h6> */}
-                {/* <Row className='d-flex justify-content-end align-items-center' style={{ background: 'white' }}> */}
-                    {/* <Form.Select onChange={(e) => setPageSize(e.target.value)} style={{ width: 'auto', marginLeft:"1rem" }} aria-label="Default select example">
+          <div className="container flex" style={{ paddingBottom: "2rem" }}>
+            {/* <h6>Chọn số lượng hiển thị</h6> */}
+            {/* <Row className='d-flex justify-content-end align-items-center' style={{ background: 'white' }}> */}
+            {/* <Form.Select onChange={(e) => setPageSize(e.target.value)} style={{ width: 'auto', marginLeft:"1rem" }} aria-label="Default select example">
                     <option value="5">5</option>
                     <option value="10">10</option>
                     <option value="15">15</option>
                     <option value="20">Tất cả</option>
                     </Form.Select> */}
-                {/* </Row> */}
-            </div>
-            <div className='container'>
-                <div className='product-content'>
+            {/* </Row> */}
+          </div>
+          <div className='container'>
+            <div className='product-content'>
 
-                    <div className='product-items grid'>
-                        {
-                            data?.map(product => (
-                                <div className='product-item bg-white' key={product.id}>
-                                    <div className='product-item-img'>
-                                    <NavLink to={`/products/${product.id}`} className="link">
-                                        <img src={product.images[0].url} alt="" />
-                                    </NavLink>
-                                    <div className="product-item-cat text-white text-uppercase bg-black">
-                                        <StarsProduct stars={(product.rate)} className="product-item-cat-text"/>
-                                    </div>
-                                    </div>
-                                    <div style={{
-                                    border:"2px solid black", backgroundColor:"darkgoldenrod",
-                                    padding:"2px",
-                                    textAlign: "center",
-                                    borderRadius: "3px",
-                                    justifyContent:"center",
-                                    alignItems:"center"
-                                    }}>
-                                        <span  className='text-white fw-5'>
-                                            {product.category.name}
-                                        </span>
-                                    </div>
-                                    <div className='product-item-body'>
-                                        <h6 className="product-item-title text-pine-green fw-4 fs-15">{product.name}</h6>
-                                        <div className="product-item-price text-regal-blue fw-7 fs-18">{(product.price).toLocaleString('vi', { style: 'currency', currency: 'VND' })}</div>
-                                    </div>
-                                </div>
-                            ))
-                        }
+              <div className='product-items grid'>
+                {
+                  data?.map(product => (
+                    <div className='product-item bg-white' key={product.id}>
+                      <div className='product-item-img'>
+                        <NavLink to={`/products/${product.id}`} className="link">
+                          <img src={product.images[0].url} alt="" />
+                        </NavLink>
+                        <div className="product-item-cat text-white text-uppercase bg-black">
+                          <StarsProduct stars={(product.rate)} className="product-item-cat-text" />
+                        </div>
+                      </div>
+                      <div style={{
+                        border: "2px solid black", backgroundColor: "darkgoldenrod",
+                        padding: "2px",
+                        textAlign: "center",
+                        borderRadius: "3px",
+                        justifyContent: "center",
+                        alignItems: "center"
+                      }}>
+                        <span className='text-white fw-5'>
+                          {product.category.name}
+                        </span>
+                      </div>
+                      <div className='product-item-body'>
+                        <h6 className="product-item-title text-pine-green fw-4 fs-15">{product.name}</h6>
+                        <div className="product-item-price text-regal-blue fw-7 fs-18">{(product.price).toLocaleString('vi', { style: 'currency', currency: 'VND' })}</div>
+                      </div>
                     </div>
-                </div>
+                  ))
+                }
+              </div>
             </div>
+          </div>
         </section>
-        </div>
-      </Wrapperr>
+      </div>
+    </Wrapperr>
 
-    )
+  )
 }
 
 const Wrapperr = styled.div`
