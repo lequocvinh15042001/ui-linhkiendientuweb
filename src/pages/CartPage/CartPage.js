@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import "./CartPage.scss";
 import { useSelector, useDispatch } from 'react-redux';
-import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { addShippingToCart, addToCart, deleteProductInCart, getCart } from '../../actions/cartActions';
 import AmountButtons from '../../components/AmountButtons';
 import { listProductDetails } from '../../actions/productActions';
@@ -20,14 +20,14 @@ const CartPage = () => {
     const quantity = location.search ? Number(location.search.split('=')[1]) : 1
     // console.log('==', quantity)
 
-    const userLogin = useSelector((state)=> state.userLogin)
+    const userLogin = useSelector((state) => state.userLogin)
     console.log(userLogin.userInfo);
 
     const dispatch = useDispatch()
-  
+
     const navigate = useNavigate()
-  
-    const {carts} = useSelector(state => state.cartList)
+
+    const { carts } = useSelector(state => state.cartList)
     const productDetails = useSelector(state => state.productDetails)
     const { loading, error, product } = productDetails
     console.log(product);
@@ -35,7 +35,7 @@ const CartPage = () => {
     useEffect(() => {
         dispatch(getCart())
         dispatch(listProductDetails(productId))
-    }, [error,productId])
+    }, [error, productId])
     // const { cartItems } = cart
     console.log('-=-=', carts)
 
@@ -47,15 +47,15 @@ const CartPage = () => {
     console.log(total);
     // console.log(tien?.data?.totalPrice);
 
-    const funcTinh = (x)=> {
+    const funcTinh = (x) => {
         console.log("truyền ngược: ", x);
         setTotal(total + x)
         // setTien(total)
         // console.log(tien);
     }
 
-  
-    
+
+
 
     // //nút cộng trừ
     // const increase = (quantity, productId) => {
@@ -68,7 +68,7 @@ const CartPage = () => {
     //     dispatch(addToCart(productId, 1));
     //     return temp;
     // //   });
-        
+
     // };
     // const decrease = (quantity, productId) => {
     // //   setAmount((old) => {
@@ -77,7 +77,7 @@ const CartPage = () => {
     //     setAmount(temp);
     //     console.log(productId);
     //     console.log("tăng",temp);
-        // dispatch(addToCart(productId, temp));
+    // dispatch(addToCart(productId, temp));
     //     return temp;
     // //   });
     // };
@@ -94,8 +94,8 @@ const CartPage = () => {
     //     decrementCounter = () => setCounter(1);
     // }
 
-    
-    const handlerChoose  = (productId) =>{
+
+    const handlerChoose = (productId) => {
         console.log("đã chọn id: ", productId);
     }
 
@@ -106,42 +106,47 @@ const CartPage = () => {
     const emptyCartMsg = <h4 className='text-red fw-6'>Không có sản phẩm được chọn!</h4>;
 
     return (
-      <div className = "cart-page">
-        <div className = "container">
-          <div className = "breadcrumb">
-            <ul className = "breadcrumb-items flex">
-              <li className = "breadcrumb-item">
-                <Link to = "/">
-                  <i className = "fas fa-home"></i>
-                  <span className = "breadcrumb-separator">
-                    <i className = "fas fa-chevron-right"></i>
-                  </span>
-                </Link>
-              </li>
-              <li>Cart</li>
-            </ul>
-          </div>
-        </div>
-        <div className='bg-ghost-white py-5'>
-            <div className='container'>
-                <div className='section-title bg-ghost-white'>
-                    <h3 className = "text-uppercase fw-7 text-regal-blue ls-1">Giỏ hàng</h3>
+        <div className="cart-page">
+            <div className="container">
+                <div className="breadcrumb">
+                    <ul className="breadcrumb-items flex">
+                        <li className="breadcrumb-item">
+                            <Link to="/">
+                                <i className="fas fa-home"></i>
+                                <span className="breadcrumb-separator">
+                                    <i className="fas fa-chevron-right"></i>
+                                </span>
+                            </Link>
+                        </li>
+                        <li>Cart</li>
+                    </ul>
                 </div>
-                {loading && <Loader />}
-                
-                {carts?.data?.totalProduct === undefined || carts?.data?.totalProduct === 0 ? emptyCartMsg : (
-                        <div className = "cart-content grid">
+            </div>
+            <div className='bg-ghost-white py-5'>
+                <div className='container'>
+                    <div style={{ margin: '20px 0' }}>
+                        <Link to="/products" className="py-3 px-5" style={{ textTransform: 'none', fontSize: '14px', border: '2px solid #cccccc', color: 'gray', textDecoration: 'none', borderRadius: '5px' }}>
+                            <i style={{ fontSize: '16px', color: 'gray' }} className="fas fa-long-arrow-alt-left me-3"></i> Tiếp tục mua hàng
+                        </Link>
+                    </div>
+                    <div className='section-title bg-ghost-white'>
+                        <h3 className="text-uppercase fw-7 text-regal-blue ls-1">Giỏ hàng</h3>
+                    </div>
+                    {loading && <Loader />}
+
+                    {carts?.data?.totalProduct === undefined || carts?.data?.totalProduct === 0 ? emptyCartMsg : (
+                        <div className="cart-content grid">
                             <div className='cart-left'>
-                                <div className = "cart-items grid">
+                                <div className="cart-items grid">
                                     {
                                         carts.data?.items?.map(cartProduct => (
-                                            <Item cartProduct={cartProduct} func={funcTinh}  key = {cartProduct?.id} loading={loading}/>   
+                                            <Item cartProduct={cartProduct} func={funcTinh} key={cartProduct?.id} loading={loading} />
                                         ))
                                     }
                                 </div>
                             </div>
                             <div className='cart-right bg-white'>
-                                <div className = 'cart-summary text-light-blue'>
+                                <div className='cart-summary text-light-blue'>
                                     {/* <div className='cart-summary-title'>
                                         <h6 className='fs-20 fw-5'>Thông tin đơn hàng</h6>
                                     </div> */}
@@ -172,27 +177,27 @@ const CartPage = () => {
                                         </span>
                                     </div>
                                     <div className='cart-summary-btn'>
-                                    {userLogin.userInfo ? (
-                                    <Link to={`/shipping/${carts?.data?.id}`}>
-                                        <button  className="btn-secondary">
-                                        Thanh toán
-                                        </button>
-                                    </Link>
-                                    ) : (
-                                    <button type="button" onClick={null} className="btn-secondary">
-                                        Đăng nhập để thanh toán
-                                    </button>
-                                    )}
+                                        {userLogin.userInfo ? (
+                                            <Link to={`/shipping/${carts?.data?.id}`}>
+                                                <button className="btn-secondary">
+                                                    Thanh toán
+                                                </button>
+                                            </Link>
+                                        ) : (
+                                            <button type="button" onClick={null} className="btn-secondary">
+                                                Đăng nhập để thanh toán
+                                            </button>
+                                        )}
                                     </div>
-                                        {/* <button type = "button" className='btn-secondary'>Proceed to Checkout</button> */}
+                                    {/* <button type = "button" className='btn-secondary'>Proceed to Checkout</button> */}
                                 </div>
                             </div>
                         </div>
                     )
-                }
+                    }
+                </div>
             </div>
         </div>
-      </div>
     )
 }
 
