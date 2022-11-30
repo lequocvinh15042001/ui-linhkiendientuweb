@@ -15,14 +15,16 @@ const VerifyShipperScreen = () => {
     const navigate = useNavigate();
 
     const verifyShipperRegister = useSelector(state => state.verifyShipperRegister)
-    const { error, success } = verifyShipperRegister
-    // console.log('====', userInfo);
+    const { error, success, verify } = verifyShipperRegister
+    console.log('====', success, verify, error);
 
     useEffect(() => {
         if (success) {
             navigate('/shipper/login')
+        } else {
+            setMessage('Kiểm tra lại mã xác nhận')
         }
-    }, [success])
+    }, [success, error])
 
     const submitHandler = (e) => {
         e.preventDefault()
@@ -30,9 +32,7 @@ const VerifyShipperScreen = () => {
         dispatch(verifyRegisterShipper(user))
         if (code.trim().length === 0) {
             setMessage('Vui lòng điền đủ thông tin')
-        } else if (error) {
-            setMessage('Kiểm tra lại mã xác nhận')
-        }
+        } 
     }
 
     return (

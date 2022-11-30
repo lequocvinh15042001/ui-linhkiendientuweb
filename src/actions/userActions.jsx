@@ -524,7 +524,7 @@ export const verifyRegisterShipper = (user) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: SHIPPER_VERIFY_REGISTER_FAIL,
-      payload: error?.response?.data
+      payload: error
     })
   }
 }
