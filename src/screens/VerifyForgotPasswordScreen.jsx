@@ -28,10 +28,11 @@ const VerifyForgotPasswordScreen = () => {
     const submitHandler = (e) => {
         e.preventDefault()
         const user = { otp: code, email: email, type: 'reset' }
+        dispatch(verifyRegisterShipper(user))
         if (code.trim().length === 0) {
             setMessage('Vui lòng nhập mã xác nhận')
         } else {
-            dispatch(verifyRegisterShipper(user))
+            setMessage('Kiểm tra lại mã xác nhận')
         }
     }
 

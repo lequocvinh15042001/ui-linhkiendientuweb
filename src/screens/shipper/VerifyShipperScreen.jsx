@@ -21,18 +21,18 @@ const VerifyShipperScreen = () => {
     useEffect(() => {
         if (success) {
             navigate('/shipper/login')
-        } else {
-            setMessage('Kiểm tra lại mã xác nhận')
-        }
-    }, [success, error])
+        } 
+    }, [success])
 
-    const submitHandler = (e) => {
+    const submitHandler = (e) => {  
         e.preventDefault()
         const user = { otp: code, email: email, type: 'register' }
         dispatch(verifyRegisterShipper(user))
         if (code.trim().length === 0) {
             setMessage('Vui lòng điền đủ thông tin')
-        } 
+        } else {
+            setMessage('Kiểm tra lại mã xác nhận')
+        }
     }
 
     return (
