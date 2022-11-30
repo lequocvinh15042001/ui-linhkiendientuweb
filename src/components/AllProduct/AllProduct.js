@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useFilterContext } from "../../context/filter_context";
 import "./AllProduct.scss";
 import { formatPrice } from '../../utils/helpers';
@@ -83,28 +83,28 @@ const List = () => {
     const [pageNum, setPageNum] = useState(1);
     const [pageSize, setPageSize] = useState(5);
 
-    const num = products?.data?.totalQuantity
-    // console.log(num);
+  const num = products?.data?.totalQuantity
+  // console.log(num);
 
-    const paginationPage = (num, pageSize) => {
-        let page = 0
-        if ((num / pageSize) > ((num / pageSize) - (num % pageSize) / pageSize)) {
-          page = ((num / pageSize) - (num % pageSize) / pageSize + 1)
-        } else if ((num % pageSize) === 0) {
-          page = (num / pageSize)
-        }
-        return page
-      }
-    
-      let pages = paginationPage(num, pageSize)
+  const paginationPage = (num, pageSize) => {
+    let page = 0
+    if ((num / pageSize) > ((num / pageSize) - (num % pageSize) / pageSize)) {
+      page = ((num / pageSize) - (num % pageSize) / pageSize + 1)
+    } else if ((num % pageSize) === 0) {
+      page = (num / pageSize)
+    }
+    return page
+  }
 
-    useEffect(() => {
-        dispatch(listProducts(pageNum - 1, 20))
-        // dispatch(listCategory())
-    }, [pageNum, pageSize])
+  let pages = paginationPage(num, pageSize)
 
-    return (
-      <Wrapperr className="page">
+  useEffect(() => {
+    dispatch(listProducts(pageNum - 1, 20))
+    // dispatch(listCategory())
+  }, [pageNum, pageSize])
+
+  return (
+    <Wrapperr className="page">
 
         <div className="section-center products">
  <Wrapper>
@@ -113,35 +113,34 @@ const List = () => {
           <div className="form-control">
             <h5 className="content">Danh mục sản phẩm</h5>
 
-            <div>
-            <button
-                style={{color:"darkblue", fontSize:"15px"}}
-                name="category"
-                type="button"
-                key="all"
-                onClick={()=> getCategoryId()}
-            >
-                Tất cả
-            </button>
-              {categories?.data?.map((c, index) => {
-                return (
+                <div>
                   <button
-                  onClick={() => getCategoryId(c.id)} 
-                    style={{color:"darkblue", fontSize:"15px"}}
+                    style={{ color: "darkblue", fontSize: "15px" }}
                     name="category"
                     type="button"
-                    key={index}
-                    className={`${
-                      category === c?.name.toLowerCase() ? "active" : null
-                    }`}
+                    key="all"
+                    onClick={() => getCategoryId()}
                   >
-                    {c.name}
+                    Tất cả
                   </button>
-                );
-              })}
-            </div>
-          </div>
-          {/* <div className="form-control">
+                  {categories?.data?.map((c, index) => {
+                    return (
+                      <button
+                        onClick={() => getCategoryId(c.id)}
+                        style={{ color: "darkblue", fontSize: "15px" }}
+                        name="category"
+                        type="button"
+                        key={index}
+                        className={`${category === c?.name.toLowerCase() ? "active" : null
+                          }`}
+                      >
+                        {c.name}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+              {/* <div className="form-control">
             <h5>company</h5>
             <select
               name="company"
@@ -208,7 +207,7 @@ const List = () => {
               value={price}
             />
           </div> */}
-          {/* <div className="form-control">
+              {/* <div className="form-control">
             <label htmlFor="shipping">Free Shipping </label>
             <input
               type="checkbox"
@@ -218,25 +217,25 @@ const List = () => {
               onChange={updateFilters}
             />
           </div> */}
-        </form>
-        {/* <button type="button" className="clear-btn" onClick={clearFilters}>
+            </form>
+            {/* <button type="button" className="clear-btn" onClick={clearFilters}>
           clear filters
         </button> */}
-      </div>
-    </Wrapper>
-        
+          </div>
+        </Wrapper>
+
         <section className='product py-5 bg-ghost-white' id="products">
-            <div className= "container flex" style={{paddingBottom:"2rem"}}>
-                {/* <h6>Chọn số lượng hiển thị</h6> */}
-                {/* <Row className='d-flex justify-content-end align-items-center' style={{ background: 'white' }}> */}
-                    {/* <Form.Select onChange={(e) => setPageSize(e.target.value)} style={{ width: 'auto', marginLeft:"1rem" }} aria-label="Default select example">
+          <div className="container flex" style={{ paddingBottom: "2rem" }}>
+            {/* <h6>Chọn số lượng hiển thị</h6> */}
+            {/* <Row className='d-flex justify-content-end align-items-center' style={{ background: 'white' }}> */}
+            {/* <Form.Select onChange={(e) => setPageSize(e.target.value)} style={{ width: 'auto', marginLeft:"1rem" }} aria-label="Default select example">
                     <option value="5">5</option>
                     <option value="10">10</option>
                     <option value="15">15</option>
                     <option value="20">Tất cả</option>
                     </Form.Select> */}
                 {/* </Row> */}
-            </div>
+            {/* </div> */}
             <div className='container'>
                 <div className='product-content'>
                 {loading && <Loader />}
@@ -272,13 +271,16 @@ const List = () => {
                             ))
                         }
                     </div>
-                </div>
+                  {/* )) */}
+                {/* } */}
+              </div>
             </div>
+          </div>
         </section>
-        </div>
-      </Wrapperr>
+      </div>
+    </Wrapperr>
 
-    )
+  )
 }
 
 const Wrapperr = styled.div`

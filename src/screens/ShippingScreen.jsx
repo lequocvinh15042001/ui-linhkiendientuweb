@@ -8,8 +8,8 @@ import ModalComfirm from '../components/ModalConfirm';
 import { useRef } from 'react'
 
 const ShippingScreen = () => {
-
-    const {carts} = useSelector(state => state.cartList)
+    const [message, setMessage] = useState('')
+    const { carts } = useSelector(state => state.cartList)
     // const { cartItems } = cart
     console.log('shipping', carts)
 
@@ -32,12 +32,12 @@ const ShippingScreen = () => {
 
 
     const shipping = {
-        receiveName, receivePhone, receiveAddress,receiveProvince, receiveDistrict, receiveVillage, paymentType
+        receiveName, receivePhone, receiveAddress, receiveProvince, receiveDistrict, receiveVillage, paymentType
     }
 
     const submitHandler = () => {
         // e.preventDefault()
-        dispatch(addShippingToCart( id, {shipping}))
+        dispatch(addShippingToCart(id, { shipping }))
         navigate('/success')
     }
 
@@ -47,33 +47,38 @@ const ShippingScreen = () => {
         isLoading: false,
         //Update
         nameProduct: ""
-      });
-      const idProductRef = useRef();
-      const handleDialog = (message, isLoading, nameProduct) => {
+    });
+    const idProductRef = useRef();
+    const handleDialog = (message, isLoading, nameProduct) => {
         setDialog({
-          message,
-          isLoading,
-          //Update
-          nameProduct
+            message,
+            isLoading,
+            //Update
+            nameProduct
         });
-      };
-    
-      const handleDelete = () => {
+    };
+
+    const handleDelete = () => {
         //Update
-        handleDialog("Bạn có muốn xác nhận đơn hàng?", true);
-      };
-    
-      const areUSureDelete = (choose) => {
-        if (choose) {
-          handleDialog("", false);
-          submitHandler();
+        if (receiveName.trim().length === 0 || receiveAddress.trim().length === 0 || receiveProvince.trim().length === 0
+            || receiveDistrict.trim().length === 0 || receiveVillage.trim().length === 0 || receivePhone.trim().length === 0) {
+            setMessage("Vui lòng điền đủ thông tin")
         } else {
-          handleDialog("", false);
+            handleDialog("Bạn có muốn xác nhận đơn hàng?", true);
         }
-      };
+    };
+
+    const areUSureDelete = (choose) => {
+        if (choose) {
+            handleDialog("", false);
+            submitHandler();
+        } else {
+            handleDialog("", false);
+        }
+    };
 
     return (
-        <Container style={{marginTop:"7rem"}}>
+        <Container style={{ marginTop: "7rem" }}>
             <CheckoutSteps step1 step2 />
             <Row className='pb-5'>
                 <h3 className='pb-4 d-flex justify-content-center'>Điền thông tin giao hàng</h3>
@@ -81,7 +86,7 @@ const ShippingScreen = () => {
             <Row className='d-flex justify-content-center'>
                 <Col xl={5}>
                     <Form>
-                        
+                        <p className='text-center' style={{ color: 'red' }}>{message}</p>
                         <Form.Group className='mb-3'>
                             <Form.Label>Tên người nhận</Form.Label>
                             <Form.Control type='text' placeholder='Nhập tên người nhận' value={receiveName} onChange={(e) => setReceiveName(e.target.value)}></Form.Control>
@@ -125,21 +130,21 @@ const ShippingScreen = () => {
                         </Form.Group>
 
                         <Row className='py-3 d-flex justify-content-center align-items-center'>
-                            <Button style={{ width: '200px' }} 
-                            onClick={() => handleDelete()}
-                            variant='success'>Xác nhận</Button>
+                            <Button style={{ width: '200px' }}
+                                onClick={() => handleDelete()}
+                                variant='success'>Xác nhận</Button>
                         </Row>
                     </Form>
                 </Col>
             </Row>
             {dialog.isLoading && (
-        <ModalComfirm
-          //Update
-          nameProduct={dialog.nameProduct}
-          onDialog={areUSureDelete}
-          message={dialog.message}
-        />
-      )}
+                <ModalComfirm
+                    //Update
+                    nameProduct={dialog.nameProduct}
+                    onDialog={areUSureDelete}
+                    message={dialog.message}
+                />
+            )}
         </Container>
     )
 }

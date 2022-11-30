@@ -30,7 +30,7 @@ const VerifyClient = () => {
         dispatch(verifyRegisterShipper(user))
         if (code.trim().length === 0) {
             setMessage('Vui lòng điền đủ thông tin')
-        } else if (error) {
+        } else {
             setMessage('Kiểm tra lại mã xác nhận')
         }
     }

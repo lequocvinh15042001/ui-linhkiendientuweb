@@ -519,12 +519,18 @@ export const verifyRegisterShipper = (user) => async (dispatch) => {
         type: SHIPPER_VERIFY_REGISTER_SUCCESS,
         payload: response.data
       })
+      .catch(function (error) {
+        dispatch({
+          type: SHIPPER_VERIFY_REGISTER_FAIL,
+          payload: error
+        })
+      });
     })
 
   } catch (error) {
     dispatch({
       type: SHIPPER_VERIFY_REGISTER_FAIL,
-      payload: error?.response?.data
+      payload: error
     })
   }
 }
