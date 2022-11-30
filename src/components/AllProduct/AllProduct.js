@@ -12,9 +12,11 @@ import Stars from '../Stars';
 import StarsProduct from '../StarsProduct';
 import { Table, Button, Row, Col, Pagination, Modal, Form, Image } from 'react-bootstrap'
 import { useParams, useNavigate } from 'react-router-dom';
+import Loader from '../Loader';
 const List = () => {
 
-  const [data, setData] = useState([])
+    const [data, setData] = useState([])
+    
   const [showAll, setShowAll] = useState(true)
 
   const refContainer = useRef(null);
@@ -38,20 +40,15 @@ const List = () => {
   const dispatch = useDispatch()
 
   const { categories } = useSelector(state => state.categoryList)
-  // console.log(products);
+  const productList = useSelector(state => state.productList)
+    const { loading, error, products, page } = productList
 
-  // const categories = getUniqueValues(allProducts, "category");
-  // const companies = getUniqueValues(allProducts, "company");
-  // const colors = getUniqueValues(allProducts, "colors");
+    console.log(products);
 
-  useEffect(() => {
-    getCategoryId()
-    dispatch(listCategory())
-    // refContainer.current.focus();
-  }, []);
+
 
   console.log(categories);
-  let arrProductGetCateId = []
+  const arrProductGetCateId = []
 
   const getProductByCategotyId = (products, id) => {
     products.forEach(product => {
@@ -59,37 +56,32 @@ const List = () => {
         arrProductGetCateId.push(product)
       }
     });
-  }
-  console.log('==', arrProductGetCateId)
 
+  }
+  
   const getCategoryId = (id) => {
-    if (!id) {
-      return setData(products?.data?.list)
-    }
-    console.log("Loc cate -----");
+    console.log(id);
+    if(!id || id === undefined)
+    {
+        setData(products.data?.list)
+        return;
+    }else
+    {
     arrProductGetCateId.length = 0
     getProductByCategotyId(products.data.list, id)
     setData(arrProductGetCateId)
     setShowAll(false)
-    navigate(`/products#${id}`)
-    console.log(data);
-    // window.location.href = `#${id}`
-    // console.log('==', id)
+    return;
+    }
+
   }
+  useEffect(() => {
+    getCategoryId()
+    dispatch(listCategory())
+  }, [loading, error]);
 
-
-  const cateId = useParams();
-  console.log("kdasbjđjsn", cateId);
-
-  const [pageNum, setPageNum] = useState(1);
-  const [pageSize, setPageSize] = useState(5);
-  const [idCate, setIdCate] = useState("");
-  console.log("id Cate: ", idCate);
-
-  const productList = useSelector(state => state.productList)
-  const { loading, error, products, page } = productList
-
-  console.log(products);
+    const [pageNum, setPageNum] = useState(1);
+    const [pageSize, setPageSize] = useState(5);
 
   const num = products?.data?.totalQuantity
   // console.log(num);
@@ -114,23 +106,12 @@ const List = () => {
   return (
     <Wrapperr className="page">
 
-      <div className="section-center products">
-        <Wrapper>
-          <div className="content">
-            <form className="form" onSubmit={(e) => e.preventDefault()}>
-              {/* <div className="form-control">
-            <input
-              ref={refContainer}
-              type="text"
-              name="text"
-              placeholder="search"
-              className="search-input"
-              value={text}
-              // onChange={updateFilters}
-            />
-          </div> */}
-              <div className="form-control">
-                <h5 className="content">Danh mục sản phẩm</h5>
+        <div className="section-center products">
+ <Wrapper>
+      <div className="content">
+        <form className="form" onSubmit={(e) => e.preventDefault()}>
+          <div className="form-control">
+            <h5 className="content">Danh mục sản phẩm</h5>
 
                 <div>
                   <button
@@ -253,42 +234,45 @@ const List = () => {
                     <option value="15">15</option>
                     <option value="20">Tất cả</option>
                     </Form.Select> */}
-            {/* </Row> */}
-          </div>
-          <div className='container'>
-            <div className='product-content'>
-
-              <div className='product-items grid'>
-                {
-                  data?.map(product => (
-                    <div className='product-item bg-white' key={product.id}>
-                      <div className='product-item-img'>
-                        <NavLink to={`/products/${product.id}`} className="link">
-                          <img src={product.images[0].url} alt="" />
-                        </NavLink>
-                        <div className="product-item-cat text-white text-uppercase bg-black">
-                          <StarsProduct stars={(product.rate)} className="product-item-cat-text" />
-                        </div>
-                      </div>
-                      <div style={{
-                        border: "2px solid black", backgroundColor: "darkgoldenrod",
-                        padding: "2px",
-                        textAlign: "center",
-                        borderRadius: "3px",
-                        justifyContent: "center",
-                        alignItems: "center"
-                      }}>
-                        <span className='text-white fw-5'>
-                          {product.category.name}
-                        </span>
-                      </div>
-                      <div className='product-item-body'>
-                        <h6 className="product-item-title text-pine-green fw-4 fs-15">{product.name}</h6>
-                        <div className="product-item-price text-regal-blue fw-7 fs-18">{(product.price).toLocaleString('vi', { style: 'currency', currency: 'VND' })}</div>
-                      </div>
+                {/* </Row> */}
+            {/* </div> */}
+            <div className='container'>
+                <div className='product-content'>
+                {loading && <Loader />}
+                    <div className='product-items grid'>
+                        {
+                            data?.map(product => (
+                                <div className='product-item bg-white' key={product.id}>
+                                    <div className='product-item-img'>
+                                    <NavLink to={`/products/${product.id}`} className="link">
+                                        <img src={product.images[0].url} alt="" />
+                                    </NavLink>
+                                    <div className="product-item-cat text-white text-uppercase bg-black">
+                                        <StarsProduct stars={(product.rate)} className="product-item-cat-text"/>
+                                    </div>
+                                    </div>
+                                    <div style={{
+                                    border:"2px solid black", backgroundColor:"darkgoldenrod",
+                                    padding:"2px",
+                                    textAlign: "center",
+                                    borderRadius: "3px",
+                                    justifyContent:"center",
+                                    alignItems:"center"
+                                    }}>
+                                        <span  className='text-white fw-5'>
+                                            {product.category.name}
+                                        </span>
+                                    </div>
+                                    <div className='product-item-body'>
+                                        <h6 className="product-item-title text-pine-green fw-4 fs-15">{product.name}</h6>
+                                        <div className="product-item-price text-regal-blue fw-7 fs-18">{(product.price).toLocaleString('vi', { style: 'currency', currency: 'VND' })}</div>
+                                    </div>
+                                </div>
+                            ))
+                        }
                     </div>
-                  ))
-                }
+                  {/* )) */}
+                {/* } */}
               </div>
             </div>
           </div>
