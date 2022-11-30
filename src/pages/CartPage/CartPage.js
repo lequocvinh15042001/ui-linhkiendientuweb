@@ -133,24 +133,24 @@ const CartPage = () => {
                         <h3 className="text-uppercase fw-7 text-regal-blue ls-1">Giỏ hàng</h3>
                     </div>
                     {loading && <Loader />}
-                    {
-                        carts?.data?.totalProduct === undefined || carts?.data?.totalProduct === 0 ? emptyCartMsg : (
-                            <div className="cart-content grid">
-                                <div className='cart-left'>
-                                    <div className="cart-items grid">
-                                        {
-                                            carts.data?.items?.map(cartProduct => (
-                                                <Item cartProduct={cartProduct} func={funcTinh} />
-                                            ))
-                                        }
-                                    </div>
+
+                    {carts?.data?.totalProduct === undefined || carts?.data?.totalProduct === 0 ? emptyCartMsg : (
+                        <div className="cart-content grid">
+                            <div className='cart-left'>
+                                <div className="cart-items grid">
+                                    {
+                                        carts.data?.items?.map(cartProduct => (
+                                            <Item cartProduct={cartProduct} func={funcTinh} key={cartProduct?.id} loading={loading} />
+                                        ))
+                                    }
                                 </div>
-                                <div className='cart-right bg-white'>
-                                    <div className='cart-summary text-light-blue'>
-                                        {/* <div className='cart-summary-title'>
+                            </div>
+                            <div className='cart-right bg-white'>
+                                <div className='cart-summary text-light-blue'>
+                                    {/* <div className='cart-summary-title'>
                                         <h6 className='fs-20 fw-5'>Thông tin đơn hàng</h6>
                                     </div> */}
-                                        {/* <ul className = 'cart-summary-info'>
+                                    {/* <ul className = 'cart-summary-info'>
                                         <li className = "flex flex-between">
                                             <span className='fw-4'>Đã chọn {carts.data?.totalProduct} sản phẩm - Giá</span>
                                             <span className='fw-7'>{(total)?.toLocaleString('vi', { style: 'currency', currency: 'VND' })}</span>
@@ -170,30 +170,30 @@ const CartPage = () => {
                                             </span>
                                         </li>
                                     </ul> */}
-                                        <div className='cart-summary-total flex flex-between fs-18'>
-                                            <span className='fw-6'>Tổng cộng: </span>
-                                            <span className='fw-6'>
-                                                {(carts.data?.totalPrice + total).toLocaleString('vi', { style: 'currency', currency: 'VND' })}
-                                            </span>
-                                        </div>
-                                        <div className='cart-summary-btn'>
-                                            {userLogin.userInfo ? (
-                                                <Link to={`/shipping/${carts?.data?.id}`}>
-                                                    <button className="btn-secondary">
-                                                        Thanh toán
-                                                    </button>
-                                                </Link>
-                                            ) : (
-                                                <button type="button" onClick={null} className="btn-secondary">
-                                                    Đăng nhập để thanh toán
-                                                </button>
-                                            )}
-                                        </div>
-                                        {/* <button type = "button" className='btn-secondary'>Proceed to Checkout</button> */}
+                                    <div className='cart-summary-total flex flex-between fs-18'>
+                                        <span className='fw-6'>Tổng cộng: </span>
+                                        <span className='fw-6'>
+                                            {(carts.data?.totalPrice + total).toLocaleString('vi', { style: 'currency', currency: 'VND' })}
+                                        </span>
                                     </div>
+                                    <div className='cart-summary-btn'>
+                                        {userLogin.userInfo ? (
+                                            <Link to={`/shipping/${carts?.data?.id}`}>
+                                                <button className="btn-secondary">
+                                                    Thanh toán
+                                                </button>
+                                            </Link>
+                                        ) : (
+                                            <button type="button" onClick={null} className="btn-secondary">
+                                                Đăng nhập để thanh toán
+                                            </button>
+                                        )}
+                                    </div>
+                                    {/* <button type = "button" className='btn-secondary'>Proceed to Checkout</button> */}
                                 </div>
                             </div>
-                        )
+                        </div>
+                    )
                     }
                 </div>
             </div>
