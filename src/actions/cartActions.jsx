@@ -3,7 +3,7 @@ import { CART_ADD_ITEM, CART_REMOVE_ITEM, CART_SAVE_SHIPPING_ADDRESS, CART_SAVE_
 
 export const addToCart = (productId, quantity) => async(dispatch, getState) => {
 
-    console.log('ạknfshbdshjda',quantity);
+    console.log('số lượng mới: ',quantity);
     const {
         userLogin: { userInfo },
     } = getState()
@@ -17,7 +17,7 @@ export const addToCart = (productId, quantity) => async(dispatch, getState) => {
 
     console.log(config);
     const {data} = await axios.post(`http://localhost:8080/api/cart`,{productId,quantity}, config)
-    console.log('=--data=', data);
+    console.log('Cart mới cập nhật: ', data);
 
     // dispatch({
     //     type: CART_ADD_ITEM,

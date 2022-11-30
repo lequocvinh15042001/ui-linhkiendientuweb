@@ -113,11 +113,13 @@ const HistoryContent = ({history}) => {
                             style={{
                             color: "darkblue", 
                             fontWeight: "500",
-                            width: '50px',
+                            width: '100px',
                             paddingLeft:"5px",
                             lineHeight:'18px',
+                  
                             }}>
-                                {item.name}
+                            
+                               SL: {item.quantity} cái <br></br> SP: {item.name} <br></br> Giá: {(item.price).toLocaleString('vi', { style: 'currency', currency: 'VND' })}
                             </span>
                             <br></br>
                         </td>
@@ -160,7 +162,7 @@ const HistoryContent = ({history}) => {
                   </td>
 
                   {/* Trạng thái*/}
-                  <td className='text-center'>
+                  <td className='text-center' style={{width:"100px"}}>
                     {
                       (product.state === 'delivery') ?
                         <div className='d-flex justify-content-center align-items-center'>
@@ -184,7 +186,7 @@ const HistoryContent = ({history}) => {
                   <td className='text-end'>
                     {product.createdDate}
                   </td>
-                  <td className='text-justify'>
+                  <td className='text-center' style={{width:"100px"}}>
                     {
                         (product.state === 'delivery') ?
                         <div className='d-flex justify-content-center align-items-center'>

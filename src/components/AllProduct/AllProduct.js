@@ -358,7 +358,7 @@ const Wrapper = styled.section`
     color: var(--clr-grey-5);
     cursor: pointer;
     
-    transition: transform 250ms;
+    transition: transform 500ms;
     :hover{
       transform: translateY(-10px);
     }
