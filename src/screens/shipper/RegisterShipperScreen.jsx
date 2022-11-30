@@ -106,7 +106,7 @@ const RegisterShipperScreen = () => {
                         </Form>
                     </Form.Group>
                     <Form.Group className='d-flex justify-content-center py-3'>
-                        <Button type='submit' disabled={((password.length < 8 || password.length > 20) || !password.match(/[A-Z]/) || !password.match(/[a-z]/) || !password.match(/[\`~!@#$%\^&*()+=|;:'",.<>\/?\\\-]/) || !password.match(/[\d]/)) ? 'true' : ''} style={{ background: '#eeb808', border: 'none' }}>Đăng ký</Button>
+                        <Button type='submit' disabled={((password.trim().length === 0 || name.trim().length === 0 || email.trim().length === 0 || phone.trim().length === 0 || address.trim().length === 0) || (password.length < 8 || password.length > 20) || !password.match(/[A-Z]/) || !password.match(/[a-z]/) || !password.match(/[\`~!@#$%\^&*()+=|;:'",.<>\/?\\\-]/) || !password.match(/[\d]/)) ? 'true' : ''} style={{ background: '#eeb808', border: 'none' }}>Đăng ký</Button>
                     </Form.Group>
                 </Form>
 
