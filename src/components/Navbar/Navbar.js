@@ -249,7 +249,7 @@ const Navbar = () => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 type="text"
-                placeholder="Nhập tên danh mục"
+                placeholder="Nhập tên người dùng"
                 autoFocus
               />
             </Form.Group>
@@ -260,7 +260,7 @@ const Navbar = () => {
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 type="text"
-                placeholder="Nhập tên danh mục"
+                placeholder="Nhập số điện thoại"
                 autoFocus
               />
             </Form.Group>
@@ -271,7 +271,7 @@ const Navbar = () => {
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
                 type="text"
-                placeholder="Nhập tên danh mục"
+                placeholder="Nhập địa chỉ"
                 autoFocus
               />
             </Form.Group>
