@@ -41,6 +41,7 @@ const Item = ({cartProduct,func, key, loading} ) => {
             return;
         }else {
             func(totalPrices())
+            setChanTru(false)
             setChanCong(false)
         }
         // setChanCong(false)
@@ -56,7 +57,7 @@ const Item = ({cartProduct,func, key, loading} ) => {
         if(counter <= 2)
         {
             setChanTru(true)
-            // setChanCong(false)
+            setChanCong(false)
         }
         setCounter(counter - 1)
         console.log(cartProduct.productid);
