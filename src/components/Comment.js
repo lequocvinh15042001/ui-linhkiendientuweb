@@ -2,7 +2,7 @@ import { Rating } from '@material-ui/lab'
 import React from 'react'
 import { useState } from 'react'
 import { useEffect } from 'react'
-import { Button, Form, Row, Col } from 'react-bootstrap'
+import { Button, Form, Row, Col, Modal } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams, useNavigate } from 'react-router-dom'
 import { getOrder } from '../actions/orderActions'
@@ -45,8 +45,14 @@ const Comment = () => {
         if (userInfo) {
             dispatch(createProductReview(content, productId, rate))
             window.location.reload()
+            setShow(true)
         }
     }
+
+    // Alert Commetn
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
 
     // view Comment
     const viewComment = () => {
@@ -124,12 +130,26 @@ const Comment = () => {
                             <Form.Control placeholder='Viết bình luận của bạn' value={content} onChange={(e) => setContent(e.target.value)} as="textarea" rows={3} />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                            <Button style={{width: 'auto'}} onClick={() => submitComment()}>Đăng bình luận</Button>
+                            <Button style={{ width: 'auto' }} onClick={() => submitComment()}>Đăng bình luận</Button>
                         </Form.Group>
                     </Form> :
-                    <p>Vui lòng mua hàng để được mở khóa đánh giá</p>
+                    <p>Vui lòng mua hàng và thanh toán để được mở khóa đánh giá</p>
                 }
             </Row>
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Modal heading</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={handleClose}>
+                        Save Changes
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </div>
     )
 }
