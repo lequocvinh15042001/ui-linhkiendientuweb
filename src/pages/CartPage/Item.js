@@ -2,9 +2,10 @@ import React, {useEffect, useState} from 'react';
 import "./CartPage.scss";
 import { useDispatch } from 'react-redux';
 import { useNavigate} from "react-router-dom";
-import { addToCart, deleteProductInCart } from '../../actions/cartActions';
+import { addToCart, deleteProductInCart, getCart } from '../../actions/cartActions';
+import Loader from '../../components/Loader';
 
-const Item = ({cartProduct,func} ) => {
+const Item = ({cartProduct,func, key, loading} ) => {
     // console.log("sdhabdjhsdh: ",cartProduct.name);
     const [counter, setCounter] = useState(cartProduct.quantity);
     const [chanTru, setChanTru] = useState(false)
@@ -36,6 +37,7 @@ const Item = ({cartProduct,func} ) => {
         if(counter >= cartProduct.totalquanlityproduct)
         {
             setChanCong(true)
+            setChanTru(false)
             return;
         }else {
             func(totalPrices())
@@ -62,11 +64,11 @@ const Item = ({cartProduct,func} ) => {
         dispatch(addToCart(cartProduct.productid, -1))
     };
 
-    useEffect(()=>{
-        // dispatch(addShippingToCart(cartProduct.itemId, counter))
-        // func(totalPrices())
+    // useEffect(()=>{
+    //     // dispatch(addShippingToCart(cartProduct.itemId, counter))
+    //     // func(totalPrices())
     
-    },[counter])
+    // },[counter])
 
     if(counter<=0) {
         decrementCounter = () => setCounter(1);
@@ -77,16 +79,18 @@ const Item = ({cartProduct,func} ) => {
     }
 
     const removeFromCartHandler = (id) => {
-        dispatch(deleteProductInCart(id, navigate))
+        dispatch(deleteProductInCart(id))
+        // dispatch(getCart())
         window.location.reload();
     }
     const emptyCartMsg = <h4 className='text-red fw-6'>Không có sản phẩm được chọn!</h4>;
 
     return (
-    <div className='cart-item grid' key = {cartProduct.id}>
+    <div className='cart-item grid' key={key}>
+    {loading && <Loader />}
         <div className='cart-item-img flex flex-column bg-white'>
             <img src = {cartProduct?.image[0]?.url} alt = {cartProduct.name} />
-            <button type = "button" className='btn-square rmv-from-cart-btn' onClick={() => dispatch(removeFromCartHandler(cartProduct.itemId))}>
+            <button key={key} type = "button" className='btn-square rmv-from-cart-btn' onClick={() => removeFromCartHandler(cartProduct?.itemId)}>
                 <span className='btn-square-icon'><i className='fas fa-trash'></i></span>
             </button>
         </div>

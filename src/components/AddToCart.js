@@ -36,9 +36,9 @@ const AddToCart = ({ product }) => {
   const addToCartHandler = () => {
     //navigate(`/cart`)
     dispatch(addToCart(product.data?.id, amount))
-    console.log("-------------------", product.data?.id, amount);
+    // console.log("-------------------", product.data?.id, amount);
     navigate(`/cart/${product.data?.id}?qty=${amount}`)
-    window.location.reload()
+    // window.location.reload()
   }
   return (
     <Wrapper>

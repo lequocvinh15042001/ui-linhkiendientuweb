@@ -8,11 +8,12 @@ import { listProductDetails } from '../../actions/productActions';
 import { AddToCart } from '../../components';
 import Item from './Item';
 import { CART_LIST_SUCCESS } from '../../constants/cartsConstants';
+import Loader from '../../components/Loader';
 
 const CartPage = () => {
     let location = useLocation();
     const productId = useParams().id
-    const [amount, setAmount] = useState(1);
+    // const [amount, setAmount] = useState(1);
 
     // const [total, setTotal] = useState(0);
     // console.log('==', productId)
@@ -27,11 +28,14 @@ const CartPage = () => {
     const navigate = useNavigate()
   
     const {carts} = useSelector(state => state.cartList)
+    const productDetails = useSelector(state => state.productDetails)
+    const { loading, error, product } = productDetails
+    console.log(product);
 
     useEffect(() => {
         dispatch(getCart())
         dispatch(listProductDetails(productId))
-    }, [productId])
+    }, [error,productId])
     // const { cartItems } = cart
     console.log('-=-=', carts)
 
@@ -50,9 +54,7 @@ const CartPage = () => {
         // console.log(tien);
     }
 
-    const productDetails = useSelector(state => state.productDetails)
-    const { loading, error, product } = productDetails
-    console.log(product);
+  
     
 
     // //nút cộng trừ
@@ -125,14 +127,15 @@ const CartPage = () => {
                 <div className='section-title bg-ghost-white'>
                     <h3 className = "text-uppercase fw-7 text-regal-blue ls-1">Giỏ hàng</h3>
                 </div>
-                {
-                    carts?.data?.totalProduct === undefined || carts?.data?.totalProduct === 0 ? emptyCartMsg : (
+                {loading && <Loader />}
+                
+                {carts?.data?.totalProduct === undefined || carts?.data?.totalProduct === 0 ? emptyCartMsg : (
                         <div className = "cart-content grid">
                             <div className='cart-left'>
                                 <div className = "cart-items grid">
                                     {
                                         carts.data?.items?.map(cartProduct => (
-                                            <Item cartProduct={cartProduct} func={funcTinh}/>   
+                                            <Item cartProduct={cartProduct} func={funcTinh}  key = {cartProduct?.id} loading={loading}/>   
                                         ))
                                     }
                                 </div>

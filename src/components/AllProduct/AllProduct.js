@@ -12,9 +12,11 @@ import Stars from '../Stars';
 import StarsProduct from '../StarsProduct';
 import { Table, Button, Row, Col, Pagination, Modal, Form, Image } from 'react-bootstrap'
 import { useParams, useNavigate } from 'react-router-dom';
+import Loader from '../Loader';
 const List = () => {
 
     const [data, setData] = useState([])
+    
   const [showAll, setShowAll] = useState(true)
 
   const refContainer = useRef(null);
@@ -38,20 +40,15 @@ const List = () => {
   const dispatch = useDispatch()
 
   const { categories } = useSelector(state => state.categoryList)
-    // console.log(products);
+  const productList = useSelector(state => state.productList)
+    const { loading, error, products, page } = productList
 
-  // const categories = getUniqueValues(allProducts, "category");
-  // const companies = getUniqueValues(allProducts, "company");
-  // const colors = getUniqueValues(allProducts, "colors");
+    console.log(products);
 
-  useEffect(() => {
-    getCategoryId()
-    dispatch(listCategory())
-    // refContainer.current.focus();
-  }, []);
+
 
   console.log(categories);
-  let arrProductGetCateId = []
+  const arrProductGetCateId = []
 
   const getProductByCategotyId = (products, id) => {
     products.forEach(product => {
@@ -59,38 +56,32 @@ const List = () => {
         arrProductGetCateId.push(product)
       }
     });
-  }
-  console.log('==', arrProductGetCateId)
 
+  }
+  
   const getCategoryId = (id) => {
-    if(!id)
+    console.log(id);
+    if(!id || id === undefined)
     {
-        return setData(products?.data?.list)
-    }
-    console.log("Loc cate -----");
+        setData(products.data?.list)
+        return;
+    }else
+    {
     arrProductGetCateId.length = 0
     getProductByCategotyId(products.data.list, id)
     setData(arrProductGetCateId)
     setShowAll(false)
-    navigate(`/products#${id}`)
-    console.log(data);
-    // window.location.href = `#${id}`
-    // console.log('==', id)
+    return;
+    }
+
   }
-
-
-    const cateId = useParams();
-    console.log("kdasbjđjsn",cateId);
+  useEffect(() => {
+    getCategoryId()
+    dispatch(listCategory())
+  }, [loading, error]);
 
     const [pageNum, setPageNum] = useState(1);
     const [pageSize, setPageSize] = useState(5);
-    const [idCate, setIdCate]=useState("");
-    console.log("id Cate: ", idCate);
-
-    const productList = useSelector(state => state.productList)
-    const { loading, error, products, page } = productList
-
-    console.log(products);
 
     const num = products?.data?.totalQuantity
     // console.log(num);
@@ -119,17 +110,6 @@ const List = () => {
  <Wrapper>
       <div className="content">
         <form className="form" onSubmit={(e) => e.preventDefault()}>
-          {/* <div className="form-control">
-            <input
-              ref={refContainer}
-              type="text"
-              name="text"
-              placeholder="search"
-              className="search-input"
-              value={text}
-              // onChange={updateFilters}
-            />
-          </div> */}
           <div className="form-control">
             <h5 className="content">Danh mục sản phẩm</h5>
 
@@ -259,7 +239,7 @@ const List = () => {
             </div>
             <div className='container'>
                 <div className='product-content'>
-
+                {loading && <Loader />}
                     <div className='product-items grid'>
                         {
                             data?.map(product => (
